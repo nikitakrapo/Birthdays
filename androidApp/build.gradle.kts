@@ -1,13 +1,15 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.firebaseCrashlytics)
 }
 
 android {
-    namespace = "com.nikitakrapo.trips.android"
+    namespace = "com.nikitakrapo.trips"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.nikitakrapo.trips.android"
+        applicationId = "com.nikitakrapo.trips"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -44,5 +46,7 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
     debugImplementation(libs.compose.ui.tooling)
 }
