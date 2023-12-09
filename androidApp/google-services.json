@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "458753193527",
+    "project_id": "nikitakrapo-trips",
+    "storage_bucket": "nikitakrapo-trips.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458753193527:android:95fc4445277ced4070f1b2",
+        "android_client_info": {
+          "package_name": "com.nikitakrapo.android.trips"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458753193527-tngh8qq9392qijp1q5j998n7tq5bepor.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrqSn_mKlvzyP_TXM3l0YHvq_WLmtTNo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458753193527-tngh8qq9392qijp1q5j998n7tq5bepor.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458753193527:android:12aafccecec729e570f1b2",
+        "android_client_info": {
+          "package_name": "com.nikitakrapo.trips"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458753193527-tngh8qq9392qijp1q5j998n7tq5bepor.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrqSn_mKlvzyP_TXM3l0YHvq_WLmtTNo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458753193527-tngh8qq9392qijp1q5j998n7tq5bepor.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
