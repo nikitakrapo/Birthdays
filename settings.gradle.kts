@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "Trips"
 include(":androidApp")
 include(":shared")
+include(":strings")

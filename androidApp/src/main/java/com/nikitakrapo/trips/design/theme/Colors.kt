@@ -1,4 +1,4 @@
-package com.nikitakrapo.trips.design
+package com.nikitakrapo.trips.design.theme
 
 import androidx.compose.ui.graphics.Color
 

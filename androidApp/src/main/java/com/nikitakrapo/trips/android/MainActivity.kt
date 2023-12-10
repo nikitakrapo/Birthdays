@@ -3,39 +3,37 @@ package com.nikitakrapo.trips.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.nikitakrapo.trips.Greeting
-import com.nikitakrapo.trips.design.TripsTheme
+import com.arkivanov.decompose.defaultComponentContext
+import com.nikitakrapo.trips.design.theme.TripsTheme
+import com.nikitakrapo.trips.root.RootComponentImpl
+import com.nikitakrapo.trips.root.RootScreen
 
 class MainActivity : ComponentActivity() {
+
+    private val componentContext by lazy { defaultComponentContext() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             TripsTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = TripsTheme.colorScheme.background
                 ) {
-                    GreetingView(Greeting().greet())
+                    val rootComponent = remember {
+                        RootComponentImpl(componentContext = componentContext)
+                    }
+                    RootScreen(
+                        rootComponent = rootComponent,
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    TripsTheme {
-        GreetingView("Hello, Android!")
     }
 }
