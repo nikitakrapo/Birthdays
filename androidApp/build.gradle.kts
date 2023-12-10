@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.firebaseCrashlytics)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -42,9 +43,13 @@ android {
 
 dependencies {
     implementation(projects.shared)
+    implementation(projects.strings)
+    implementation(libs.decompose)
+    implementation(libs.decompose.extensions.compose)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
     implementation(libs.androidx.activity.compose)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
