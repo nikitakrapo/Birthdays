@@ -15,24 +15,24 @@ kotlin {
         }
     }
 
-
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.network)
-                implementation(libs.koin)
+                api(libs.ktor.core)
+                implementation(libs.ktor.logging)
+                implementation(libs.napier)
             }
         }
-        val commonTest by getting {
+        val androidMain by getting {
             dependencies {
-                implementation(libs.kotlin.test)
+                api(libs.ktor.okhttp)
             }
         }
     }
 }
 
 android {
-    namespace = "com.nikitakrapo.trips"
+    namespace = "com.nikitakrapo.trips.network"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
