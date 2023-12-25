@@ -44,6 +44,7 @@ android {
 dependencies {
     implementation(projects.shared)
     implementation(projects.strings)
+    implementation(projects.network)
     implementation(libs.decompose)
     implementation(libs.decompose.extensions.compose)
     implementation(libs.compose.ui)
@@ -53,5 +54,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
+    implementation(libs.koin)
+    implementation(libs.napier)
     debugImplementation(libs.compose.ui.tooling)
 }
