@@ -1,7 +1,7 @@
 package com.nikitakrapo.trips.mainscreen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Text
@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.nikitakrapo.trips.bottomnav.BottomNavigationBar
 import com.nikitakrapo.trips.design.theme.TripsTheme
+import com.nikitakrapo.trips.feed.TripsFeedScreen
 
 @Composable
 fun MainScreen(
@@ -22,18 +23,17 @@ fun MainScreen(
     Column(
         modifier = modifier
             .statusBarsPadding(),
+        verticalArrangement = Arrangement.SpaceBetween,
     ) {
         val child by mainComponent.stack.collectAsState()
         Children(
+            modifier = Modifier.weight(1f),
             stack = child,
             animation = mainScreenChildrenAnimation(),
         ) {
-            val instance = it.instance
-            when (instance) {
-                MainComponent.MainChild.Trips -> Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    text = "Trips",
+            when (val instance = it.instance) {
+                is MainComponent.MainChild.TripsFeed -> TripsFeedScreen(
+                    component = instance.component,
                 )
                 MainComponent.MainChild.Profile -> Text(
                     modifier = Modifier
@@ -42,8 +42,9 @@ fun MainScreen(
                 )
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
-        BottomNavigationBar(component = mainComponent.bottomNavigationComponent)
+        BottomNavigationBar(
+            component = mainComponent.bottomNavigationComponent,
+        )
     }
 }
 

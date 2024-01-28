@@ -11,6 +11,7 @@ import com.nikitakrapo.trips.bottomnav.BottomNavigationItem
 import com.nikitakrapo.trips.coroutines.collectIn
 import com.nikitakrapo.trips.decompose.asStateFlow
 import com.nikitakrapo.trips.decompose.coroutineScope
+import com.nikitakrapo.trips.feed.TripsFeedComponentImpl
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 
@@ -26,7 +27,7 @@ class MainComponentImpl(
         key = "MainStack",
         source = navigation,
         serializer = MainConfig.serializer(),
-        initialStack = { listOf(MainConfig.Trips) },
+        initialStack = { listOf(MainConfig.TripsFeed) },
         childFactory = ::child,
     ).asStateFlow()
 
@@ -40,14 +41,16 @@ class MainComponentImpl(
         bottomNavigationComponent.state.collectIn(componentScope) {
             when (it.selectedNavigationItem) {
                 BottomNavigationItem.Profile -> navigation.bringToFront(MainConfig.Profile)
-                BottomNavigationItem.Trips -> navigation.bringToFront(MainConfig.Trips)
+                BottomNavigationItem.Trips -> navigation.bringToFront(MainConfig.TripsFeed)
             }
         }
     }
 
     private fun child(config: MainConfig, componentContext: ComponentContext): MainComponent.MainChild {
         return when (config) {
-            MainConfig.Trips -> MainComponent.MainChild.Trips
+            MainConfig.TripsFeed -> MainComponent.MainChild.TripsFeed(
+                component = TripsFeedComponentImpl(componentContext = componentContext),
+            )
             MainConfig.Profile -> MainComponent.MainChild.Profile
         }
     }
@@ -55,7 +58,7 @@ class MainComponentImpl(
     @Serializable
     private sealed interface MainConfig {
         @Serializable
-        data object Trips : MainConfig
+        data object TripsFeed : MainConfig
 
         @Serializable
         data object Profile : MainConfig

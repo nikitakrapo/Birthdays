@@ -16,7 +16,10 @@ fun RootScreen(
 ) {
     val stack by rootComponent.stack.collectAsState()
 
-    Children(stack = stack) { child ->
+    Children(
+        modifier = modifier,
+        stack = stack
+    ) { child ->
         val instance = child.instance
         when (instance) {
             is RootComponent.RootChild.Main -> MainScreen(mainComponent = instance.component)

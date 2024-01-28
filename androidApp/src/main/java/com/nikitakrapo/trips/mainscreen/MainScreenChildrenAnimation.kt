@@ -20,7 +20,7 @@ internal fun mainScreenChildrenAnimation(): StackAnimation<Any, MainComponent.Ma
     }
 
 val MainComponent.MainChild.index get() = when (this) {
-    MainComponent.MainChild.Trips -> 1
+    is MainComponent.MainChild.TripsFeed -> 1
     MainComponent.MainChild.Profile -> 2
 }
 
