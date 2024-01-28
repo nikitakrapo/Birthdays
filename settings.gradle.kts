@@ -18,4 +18,7 @@ rootProject.name = "Trips"
 include(":androidApp")
 include(":shared")
 include(":strings")
-include(":network")
+include(":features:feed")
+include(":features:network")
+include(":features:design:compose")
+include(":features:utils:decompose")
