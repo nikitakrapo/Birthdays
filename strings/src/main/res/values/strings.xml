@@ -3,4 +3,6 @@
     <string name="app_name">Trips</string>
     <string name="trips">Trips</string>
     <string name="profile">Profile</string>
+    <string name="cd_overflow_menu">More</string>
+    <string name="cd_add_trip">Add trip</string>
 </resources>

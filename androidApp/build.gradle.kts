@@ -44,7 +44,8 @@ android {
 dependencies {
     implementation(projects.shared)
     implementation(projects.strings)
-    implementation(projects.network)
+    implementation(projects.features.network)
+    implementation(projects.features.design.compose)
     implementation(libs.decompose)
     implementation(libs.decompose.extensions.compose)
     implementation(libs.compose.ui)
