@@ -1,5 +1,6 @@
 package com.nikitakrapo.trips.root
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,6 +24,7 @@ fun RootScreen(
         val instance = child.instance
         when (instance) {
             is RootComponent.RootChild.Main -> MainScreen(mainComponent = instance.component)
+            is RootComponent.RootChild.Login -> Text("Login screen")
         }
     }
 }

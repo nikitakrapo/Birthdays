@@ -1,4 +1,4 @@
-package com.nikitakrapo.trips.coroutines
+package com.nikitakrapo.trips.utils.coroutines
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

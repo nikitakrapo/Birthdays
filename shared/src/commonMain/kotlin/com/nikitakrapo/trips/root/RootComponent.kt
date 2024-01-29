@@ -15,5 +15,6 @@ interface RootComponent {
 
     sealed class RootChild {
         class Main(val component: MainComponent) : RootChild()
+        data object Login : RootChild()
     }
 }

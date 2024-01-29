@@ -21,9 +21,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.feed)
+                implementation(projects.features.account)
                 implementation(projects.features.network)
                 implementation(libs.decompose)
                 implementation(projects.features.utils.decompose)
+                implementation(projects.features.utils.coroutines)
                 implementation(libs.koin)
             }
         }
