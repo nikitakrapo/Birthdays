@@ -15,7 +15,7 @@ class TripsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Napier.base(DebugAntilog())
-        AppDi.start()
+        com.nikitakrapo.trips.di.AppDi.start()
         analytics = Firebase.analytics
     }
 }

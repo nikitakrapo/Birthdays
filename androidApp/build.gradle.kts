@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.features.di)
     implementation(projects.shared)
     implementation(projects.strings)
     implementation(projects.features.network)

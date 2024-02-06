@@ -5,9 +5,10 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.navigate
+import com.nikitakrapo.trips.AuthorizationComponentImpl
+import com.nikitakrapo.trips.account.Account
 import com.nikitakrapo.trips.account.AccountManager
 import com.nikitakrapo.trips.account.isAuthorized
-import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.mainscreen.MainComponentImpl
 import com.nikitakrapo.trips.utils.coroutines.collectIn
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
@@ -21,7 +22,7 @@ class RootComponentImpl(
 
     private val coroutineScope = coroutineScope()
 
-    private val accountManager: AccountManager by Di.inject()
+    private val accountManager: AccountManager by com.nikitakrapo.trips.di.Di.inject()
 
     private val navigation = StackNavigation<RootConfig>()
 
@@ -30,19 +31,22 @@ class RootComponentImpl(
         source = navigation,
         serializer = RootConfig.serializer(),
         initialStack = {
-            val config = if (accountManager.isAuthorized) RootConfig.Main else RootConfig.Login
+            val config = if (accountManager.isAuthorized) RootConfig.Main else RootConfig.Authorization
             listOf(config)
         },
         childFactory = ::child,
     ).asStateFlow()
 
     init {
-        accountManager.account.collectIn(coroutineScope) { account ->
-            if (account == null) {
-                navigation.navigate { listOf(RootConfig.Login) }
-            } else {
-                navigation.navigate { listOf(RootConfig.Main) }
-            }
+        accountManager.account
+            .collectIn(coroutineScope, ::handleNewAccount)
+    }
+
+    private fun handleNewAccount(account: Account?) {
+        if (account == null) {
+            navigation.navigate { listOf(RootConfig.Authorization) }
+        } else {
+            navigation.navigate { listOf(RootConfig.Main) }
         }
     }
 
@@ -54,7 +58,9 @@ class RootComponentImpl(
             RootConfig.Main -> RootComponent.RootChild.Main(
                 component = MainComponentImpl(componentContext)
             )
-            RootConfig.Login -> RootComponent.RootChild.Login
+            RootConfig.Authorization -> RootComponent.RootChild.Authorization(
+                component = AuthorizationComponentImpl(componentContext)
+            )
         }
     }
 
@@ -63,6 +69,6 @@ class RootComponentImpl(
         @Serializable
         data object Main : RootConfig
         @Serializable
-        data object Login : RootConfig
+        data object Authorization : RootConfig
     }
 }
