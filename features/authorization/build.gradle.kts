@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -20,13 +21,16 @@ kotlin {
             dependencies {
                 api(projects.features.account)
                 api(projects.features.di)
+                api(projects.features.utils.decompose)
                 implementation(libs.decompose)
+                implementation(libs.napier)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(projects.strings)
                 implementation(projects.features.design.compose)
+                implementation(libs.decompose.extensions.compose)
             }
         }
     }
