@@ -16,19 +16,14 @@ kotlin {
         }
     }
 
-
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(projects.features.account)
                 api(projects.features.di)
-                api(projects.features.authorization)
-                api(projects.features.feed)
-                implementation(projects.features.account)
-                implementation(projects.features.network)
+                api(projects.features.utils.decompose)
                 implementation(libs.decompose)
-                implementation(projects.features.utils.decompose)
-                implementation(projects.features.utils.coroutines)
-                implementation(libs.koin)
+                implementation(libs.napier)
             }
         }
         val androidMain by getting {
@@ -42,11 +37,9 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.trips"
+    namespace = "com.nikitakrapo.trips.authorization"
     compileSdk = 34
-    defaultConfig {
-        minSdk = 24
-    }
+    defaultConfig.minSdk = 24
     buildFeatures {
         compose = true
     }

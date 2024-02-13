@@ -17,7 +17,7 @@ interface MainComponent {
     fun onProfileClicked()
 
     sealed interface MainChild {
-        class TripsFeed(val component: com.nikitakrapo.trips.feed.TripsFeedComponent) : MainChild
+        class TripsFeed(val component: TripsFeedComponent) : MainChild
         data object Profile : MainChild
     }
 }

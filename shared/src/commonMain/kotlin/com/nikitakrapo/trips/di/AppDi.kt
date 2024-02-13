@@ -1,5 +1,6 @@
 package com.nikitakrapo.trips.di
 
+import com.nikitakrapo.trips.account.AccountManager
 import com.nikitakrapo.trips.network.NetworkClientProvider
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
@@ -15,4 +16,5 @@ object AppDi {
 
 private val appModule = module {
     single<HttpClient> { NetworkClientProvider.httpClient() }
+    single<AccountManager> { AccountManager() }
 }

@@ -5,4 +5,12 @@
     <string name="profile">Profile</string>
     <string name="cd_overflow_menu">More</string>
     <string name="cd_add_trip">Add trip</string>
+    <string name="cd_back">Go back</string>
+    <string name="login_login">Login</string>
+    <string name="login_create_new_account">Create new account?</string>
+    <string name="login_title">Log in to Trips</string>
+    <string name="login_email_label">Email</string>
+    <string name="login_password_label">Password</string>
+    <string name="register_title">Register to Trips</string>
+    <string name="register_register">Register</string>
 </resources>

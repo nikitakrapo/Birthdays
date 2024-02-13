@@ -2,6 +2,7 @@ package com.nikitakrapo.trips.root
 
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.trips.AuthorizationComponent
 import com.nikitakrapo.trips.mainscreen.MainComponent
 import kotlinx.coroutines.flow.StateFlow
 
@@ -15,5 +16,6 @@ interface RootComponent {
 
     sealed class RootChild {
         class Main(val component: MainComponent) : RootChild()
+        class Authorization(val component: AuthorizationComponent) : RootChild()
     }
 }
