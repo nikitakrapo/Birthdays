@@ -2,12 +2,10 @@ package com.nikitakrapo.trips.mainscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AirplaneTicket
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,6 +16,8 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.nikitakrapo.trips.design.components.BottomBarItem
 import com.nikitakrapo.trips.design.components.BottomNavigationBar
 import com.nikitakrapo.trips.design.theme.TripsTheme
+import com.nikitakrapo.trips.feed.TripsFeedScreen
+import com.nikitakrapo.trips.profile.ProfileScreen
 import strings.R
 
 @Composable
@@ -37,13 +37,11 @@ fun MainScreen(
             animation = mainScreenChildrenAnimation(),
         ) {
             when (val instance = it.instance) {
-                is MainComponent.MainChild.TripsFeed -> com.nikitakrapo.trips.feed.TripsFeedScreen(
+                is MainComponent.MainChild.TripsFeed -> TripsFeedScreen(
                     component = instance.component,
                 )
-                MainComponent.MainChild.Profile -> Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    text = "Profile",
+                is MainComponent.MainChild.Profile -> ProfileScreen(
+                    component = instance.component,
                 )
             }
         }
@@ -61,7 +59,7 @@ fun MainScreen(
             ),
             selectedItem = when (child.active.instance) {
                 is MainComponent.MainChild.TripsFeed -> 0
-                MainComponent.MainChild.Profile -> 1
+                is MainComponent.MainChild.Profile -> 1
             },
             onItemClick = {
                 when (it) {

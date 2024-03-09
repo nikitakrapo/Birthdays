@@ -3,6 +3,7 @@ package com.nikitakrapo.trips.mainscreen
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.trips.feed.TripsFeedComponent
+import com.nikitakrapo.trips.profile.ProfileComponent
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -18,6 +19,6 @@ interface MainComponent {
 
     sealed interface MainChild {
         class TripsFeed(val component: TripsFeedComponent) : MainChild
-        data object Profile : MainChild
+        class Profile(val component: ProfileComponent) : MainChild
     }
 }

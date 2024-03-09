@@ -77,6 +77,7 @@ internal class FirebaseAccountManager : AccountManager {
     private fun FirebaseUser.toDomainModel(): Account {
         return Account(
             uid = uid,
+            email = email,
         )
     }
 }

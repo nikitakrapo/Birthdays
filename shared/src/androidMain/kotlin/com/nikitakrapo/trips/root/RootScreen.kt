@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.nikitakrapo.trips.AuthorizationScreen
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import com.nikitakrapo.trips.mainscreen.MainScreen
@@ -20,7 +21,8 @@ fun RootScreen(
 
     Children(
         modifier = modifier,
-        stack = stack
+        stack = stack,
+        animation = stackAnimation(),
     ) { child ->
         val instance = child.instance
         when (instance) {

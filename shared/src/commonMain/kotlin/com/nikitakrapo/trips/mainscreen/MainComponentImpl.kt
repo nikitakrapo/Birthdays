@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.nikitakrapo.trips.feed.TripsFeedComponentImpl
+import com.nikitakrapo.trips.profile.ProfileComponentImpl
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
@@ -37,7 +38,9 @@ class MainComponentImpl(
             MainConfig.TripsFeed -> MainComponent.MainChild.TripsFeed(
                 component = TripsFeedComponentImpl(componentContext = componentContext),
             )
-            MainConfig.Profile -> MainComponent.MainChild.Profile
+            MainConfig.Profile -> MainComponent.MainChild.Profile(
+                component = ProfileComponentImpl(componentContext = componentContext),
+            )
         }
     }
 
