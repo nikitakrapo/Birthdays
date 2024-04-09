@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    id(libs.plugins.kotlinMultiplatform.get().pluginId)
+    id(libs.plugins.androidLibrary.get().pluginId)
     alias(libs.plugins.kotlinSerialization)
 }
 
@@ -26,6 +26,7 @@ kotlin {
                 api(projects.features.feed)
                 implementation(projects.features.account)
                 implementation(projects.features.network)
+                implementation(projects.features.repositories)
                 implementation(libs.decompose)
                 implementation(projects.features.utils.decompose)
                 implementation(projects.features.utils.coroutines)

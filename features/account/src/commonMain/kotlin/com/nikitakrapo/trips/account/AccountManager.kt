@@ -17,4 +17,6 @@ interface AccountManager {
     ): RegistrationResult
 
     suspend fun logout()
+
+    suspend fun getToken(): String?
 }

@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    id(libs.plugins.kotlinMultiplatform.get().pluginId)
+    id(libs.plugins.androidLibrary.get().pluginId)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -19,8 +20,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.ktor.core)
+                implementation(libs.ktor.auth)
                 implementation(libs.ktor.logging)
+                implementation(libs.ktor.contentNegotiation)
+                implementation(libs.ktor.contentNegotiation.json)
                 implementation(libs.napier)
+                implementation(projects.features.di)
             }
         }
         val androidMain by getting {

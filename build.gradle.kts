@@ -1,9 +1,9 @@
 plugins {
-    //trick: for the same plugin versions in all sub-modules
-    alias(libs.plugins.androidApplication).apply(false)
-    alias(libs.plugins.androidLibrary).apply(false)
-    alias(libs.plugins.kotlinAndroid).apply(false)
-    alias(libs.plugins.kotlinMultiplatform).apply(false)
+    // TODO: https://github.com/gradle/gradle/issues/17968
+    id(libs.plugins.androidApplication.get().pluginId).apply(false)
+    id(libs.plugins.androidLibrary.get().pluginId).apply(false)
+    id(libs.plugins.kotlinAndroid.get().pluginId).apply(false)
+    id(libs.plugins.kotlinMultiplatform.get().pluginId).apply(false)
     alias(libs.plugins.googleServices).apply(false)
     alias(libs.plugins.firebaseCrashlytics).apply(false)
 }
