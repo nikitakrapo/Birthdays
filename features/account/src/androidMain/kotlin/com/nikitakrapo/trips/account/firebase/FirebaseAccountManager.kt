@@ -7,6 +7,7 @@ import com.nikitakrapo.trips.account.Account
 import com.nikitakrapo.trips.account.AccountManager
 import com.nikitakrapo.trips.account.LoginResult
 import com.nikitakrapo.trips.account.RegistrationResult
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -72,6 +73,18 @@ internal class FirebaseAccountManager : AccountManager {
 
     override suspend fun logout() {
         firebaseAuth.signOut()
+    }
+
+    override suspend fun getToken(): String? {
+        return try {
+            firebaseAuth.currentUser
+                ?.getIdToken(false)
+                ?.await()
+                ?.token
+        } catch (e: Exception) {
+            Napier.e("AccountManager.getToken() error", e)
+            null
+        }
     }
 
     private fun FirebaseUser.toDomainModel(): Account {

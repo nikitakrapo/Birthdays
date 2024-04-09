@@ -1,24 +1,18 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    id(libs.plugins.kotlinMultiplatform.get().pluginId)
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id("trips.module-config")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
+    moduleConfigurationPlugin.configureMultiplatformDefaults()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.features.network)
+                implementation(projects.features.repositories)
+                implementation(projects.features.di)
                 implementation(libs.decompose)
             }
         }
@@ -33,12 +27,6 @@ kotlin {
 
 android {
     namespace = "com.nikitakrapo.trips.feed"
-    compileSdk = 34
-    defaultConfig.minSdk = 24
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
+    moduleConfigurationPlugin.configureAndroidDefaults()
+    moduleConfigurationPlugin.configureCompose()
 }
