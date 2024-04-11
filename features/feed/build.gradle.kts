@@ -13,6 +13,7 @@ kotlin {
             dependencies {
                 implementation(projects.features.repositories)
                 implementation(projects.features.di)
+                implementation(projects.features.utils.decompose)
                 implementation(libs.decompose)
             }
         }

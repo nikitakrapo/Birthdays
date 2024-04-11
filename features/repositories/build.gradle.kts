@@ -17,6 +17,7 @@ kotlin {
                 api(projects.features.di)
                 api(projects.features.utils.coroutines)
                 implementation(libs.kotlin.serialization)
+                implementation(libs.napier)
             }
         }
     }

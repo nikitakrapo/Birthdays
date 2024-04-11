@@ -1,6 +1,7 @@
 package com.nikitakrapo.trips.config
 
 import com.android.build.gradle.LibraryExtension
+import com.nikitakrapo.trips.libs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -23,8 +24,7 @@ abstract class ModuleConfigurationExtension(private val project: Project) {
                 compose = true
             }
             composeOptions {
-                // TODO: use libs
-                kotlinCompilerExtensionVersion = "1.5.3"
+                kotlinCompilerExtensionVersion = project.libs.versions.compose.compiler.get()
             }
         }
     }
@@ -33,6 +33,12 @@ abstract class ModuleConfigurationExtension(private val project: Project) {
     fun configureMultiplatformDefaults() {
         project.configure<KotlinMultiplatformExtension> {
             targetHierarchy.default()
+
+            this.sourceSets.getByName("commonMain") {
+                dependencies {
+                    implementation(project.libs.napier)
+                }
+            }
 
             androidTarget {
                 compilations.all {

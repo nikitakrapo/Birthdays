@@ -12,7 +12,7 @@ internal object MainComponentPreview : MainComponent {
             ChildStack(
                 Child.Created(
                     configuration = "Main",
-                    instance = MainComponent.MainChild.TripsFeed(TripsFeedComponentPreview)
+                    instance = MainComponent.MainChild.TripsFeed(TripsFeedComponentPreview())
                 )
             )
         )
