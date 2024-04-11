@@ -4,7 +4,6 @@ import com.android.build.gradle.LibraryExtension
 import com.nikitakrapo.trips.libs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 abstract class ModuleConfigurationExtension(private val project: Project) {
@@ -29,12 +28,11 @@ abstract class ModuleConfigurationExtension(private val project: Project) {
         }
     }
 
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
     fun configureMultiplatformDefaults() {
         project.configure<KotlinMultiplatformExtension> {
-            targetHierarchy.default()
+            applyDefaultHierarchyTemplate()
 
-            this.sourceSets.getByName("commonMain") {
+            sourceSets.getByName("commonMain") {
                 dependencies {
                     implementation(project.libs.napier)
                 }
