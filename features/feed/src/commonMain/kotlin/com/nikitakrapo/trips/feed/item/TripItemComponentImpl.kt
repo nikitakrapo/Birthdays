@@ -10,7 +10,7 @@ class TripItemComponentImpl(
     private val onTripClick: (Trip) -> Unit,
 ) : TripItemComponent {
 
-    private val stateFlow = MutableStateFlow(TripItemState.fromTrip(trip))
+    private val stateFlow = MutableStateFlow(trip.toItemState())
     override val state: StateFlow<TripItemState> = stateFlow.asStateFlow()
 
     override fun onTripClick() {

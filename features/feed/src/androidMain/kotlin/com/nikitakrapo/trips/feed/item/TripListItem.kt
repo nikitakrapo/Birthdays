@@ -4,7 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,20 +30,25 @@ fun TripListItem(
         modifier = modifier
             .clip(TripsTheme.shapes.medium)
             .background(TripsTheme.colorScheme.surfaceVariant)
-            .clickable(onClick = component::onTripClick),
+            .clickable(onClick = component::onTripClick)
+            .padding(16.dp),
     ) {
         Row(
             modifier = Modifier
                 .wrapContentWidth(),
         ) {
             Text(
-                modifier = Modifier
-                    .padding(16.dp),
                 text = state.title,
                 style = TripsTheme.typography.titleMedium,
-                color = TripsTheme.colorScheme.onSurfaceVariant,
+                color = TripsTheme.colorScheme.onSurface,
             )
         }
+        Spacer(modifier = Modifier.height(2.dp))
+        Text(
+            text = state.date,
+            style = TripsTheme.typography.bodyMedium,
+            color = TripsTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 
@@ -50,6 +58,11 @@ private fun TripListItem_Preview() {
     TripsTheme {
         Surface(color = TripsTheme.colorScheme.background) {
             TripListItem(
+                modifier = Modifier
+                    .size(
+                        width = 300.dp,
+                        height = 200.dp,
+                    ),
                 component = TripItemComponentPreview,
             )
         }

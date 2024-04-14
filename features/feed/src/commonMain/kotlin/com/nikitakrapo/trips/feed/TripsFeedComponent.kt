@@ -2,6 +2,7 @@ package com.nikitakrapo.trips.feed
 
 import androidx.compose.runtime.Stable
 import com.nikitakrapo.trips.feed.item.TripItemComponent
+import com.nikitakrapo.trips.model.Trip
 import kotlinx.coroutines.flow.StateFlow
 
 @Stable
@@ -11,5 +12,5 @@ interface TripsFeedComponent {
 
     fun onAddTripClicked()
 
-    fun createTripItemComponent(index: Int): TripItemComponent
+    fun createTripItemComponent(trip: Trip): TripItemComponent
 }

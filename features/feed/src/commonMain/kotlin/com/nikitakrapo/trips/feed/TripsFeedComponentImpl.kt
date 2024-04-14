@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.feed.item.TripItemComponent
 import com.nikitakrapo.trips.feed.item.TripItemComponentImpl
+import com.nikitakrapo.trips.model.Trip
 import com.nikitakrapo.trips.model.TripCreate
 import com.nikitakrapo.trips.repositories.TripsRepository
 import com.nikitakrapo.trips.utils.coroutines.collectIn
@@ -37,11 +38,10 @@ class TripsFeedComponentImpl(
         scope.launch(Dispatchers.IO) { repository.addTrip(newTrip) }
     }
 
-    override fun createTripItemComponent(index: Int): TripItemComponent {
-        val trip = (state.value as TripsFeedScreenState.Loaded).trips[index]
+    override fun createTripItemComponent(trip: Trip): TripItemComponent {
         return TripItemComponentImpl(
             trip = trip,
-            onTripClick = {}
+            onTripClick = { TODO() }
         )
     }
 }

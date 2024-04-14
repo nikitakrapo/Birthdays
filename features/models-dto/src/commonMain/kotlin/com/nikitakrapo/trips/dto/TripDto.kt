@@ -7,4 +7,6 @@ import kotlinx.serialization.Serializable
 data class TripDto(
     @SerialName("id") val id: String,
     @SerialName("title") val title: String,
+    @SerialName("startTime") val startDatetime: String,
+    @SerialName("endTime") val endDatetime: String,
 )

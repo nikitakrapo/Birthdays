@@ -26,8 +26,7 @@ fun MainScreen(
     mainComponent: MainComponent,
 ) {
     Column(
-        modifier = modifier
-            .statusBarsPadding(),
+        modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
         val child by mainComponent.stack.collectAsState()
@@ -41,6 +40,8 @@ fun MainScreen(
                     component = instance.component,
                 )
                 is MainComponent.MainChild.Profile -> ProfileScreen(
+                    modifier = Modifier
+                        .statusBarsPadding(),
                     component = instance.component,
                 )
             }
