@@ -9,6 +9,8 @@ import kotlinx.datetime.DayOfWeek
 @Stable
 data class CalendarMonthState(
     val weekList: List<List<Day>>,
+    val selectedDay: Int?,
+    val lastDay: Int?,
 ) {
     data class Day(
         val value: Int,

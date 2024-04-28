@@ -20,4 +20,6 @@
 
     <string name="day_of_month">Day of month</string>
     <string name="cd_day_of_month">Day of month %1$d</string>
+    <string name="cd_birthday_chooser_calendar_mode">Switch to calendar chooser mode</string>
+    <string name="cd_birthday_chooser_text_mode">Switch to text chooser mode</string>
 </resources>

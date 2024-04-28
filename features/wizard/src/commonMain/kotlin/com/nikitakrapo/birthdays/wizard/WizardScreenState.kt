@@ -1,10 +1,8 @@
 package com.nikitakrapo.birthdays.wizard
 
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalDate
 
 data class WizardScreenState(
-    val selectedDate: LocalDateTime,
-    val selectableDateTimes: Pair<LocalDateTime, LocalDateTime>,
-) {
-    val yearRange = selectableDateTimes.first.year..selectableDateTimes.second.year
-}
+    val initialDate: LocalDate,
+    val yearRange: IntRange,
+)

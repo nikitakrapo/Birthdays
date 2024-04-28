@@ -1,12 +1,11 @@
 package com.nikitakrapo.birthdays.components.calendar
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarMonthState
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import kotlinx.datetime.DayOfWeek
-import kotlinx.datetime.format.DayOfWeekNames
 
 @Composable
 fun CalendarMonth(
@@ -24,7 +22,8 @@ fun CalendarMonth(
     onDayClicked: (day: CalendarMonthState.Day) -> Unit,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .width(CalendarDefaults.MediumWidth),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         month.weekList.forEachIndexed { rowIndex, weekDays ->
@@ -34,6 +33,8 @@ fun CalendarMonth(
                     if (day != null) {
                         CalendarDay(
                             day = day.value,
+                            isChosen = day.value == month.selectedDay,
+                            isActive = month.lastDay?.let { it >= day.value } ?: true,
                             onClick = { onDayClicked(day) },
                         )
                     } else {
@@ -68,7 +69,9 @@ private fun CalendarMonthPreview() {
                                 }
                             }
                         }.takeIf { it.isNotEmpty() }
-                    }
+                    },
+                    selectedDay = 5,
+                    lastDay = 25,
                 ),
                 onDayClicked = {},
             )
