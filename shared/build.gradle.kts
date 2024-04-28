@@ -2,6 +2,7 @@ plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
     alias(libs.plugins.kotlinSerialization)
+    id("trips.module-config")
 }
 
 kotlin {
@@ -44,14 +45,6 @@ kotlin {
 
 android {
     namespace = "com.nikitakrapo.trips"
-    compileSdk = 34
-    defaultConfig {
-        minSdk = 24
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
+    moduleConfigurationPlugin.configureAndroidDefaults()
+    moduleConfigurationPlugin.configureCompose()
 }

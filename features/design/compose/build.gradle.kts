@@ -1,20 +1,13 @@
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.kotlinAndroid.get().pluginId)
+    id("trips.module-config")
 }
 
 android {
+    moduleConfigurationPlugin.configureAndroidDefaults()
+    moduleConfigurationPlugin.configureCompose()
     namespace = "com.nikitakrapo.design.compose"
-    compileSdk = 34
-    defaultConfig {
-        minSdk = 24
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -26,5 +19,6 @@ dependencies {
     api(libs.compose.ui.tooling.preview)
     api(libs.compose.material3)
     api(libs.compose.material.icons)
+    api(libs.kotlin.datetime)
     debugImplementation(libs.compose.ui.tooling)
 }

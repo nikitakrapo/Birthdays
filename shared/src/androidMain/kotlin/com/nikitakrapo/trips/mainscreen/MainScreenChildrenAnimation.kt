@@ -20,8 +20,9 @@ internal fun mainScreenChildrenAnimation(): StackAnimation<Any, MainComponent.Ma
     }
 
 val MainComponent.MainChild.index get() = when (this) {
-    is MainComponent.MainChild.TripsFeed -> 1
-    is MainComponent.MainChild.Profile -> 2
+    is MainComponent.MainChild.BirthdaysFeed -> 1
+    is MainComponent.MainChild.TripsFeed -> 2
+    is MainComponent.MainChild.Profile -> 3
 }
 
 private fun StackAnimator.flipSide(): StackAnimator =

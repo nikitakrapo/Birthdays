@@ -1,18 +1,58 @@
 package com.nikitakrapo.trips.config
 
 import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.nikitakrapo.trips.libs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import kotlin.math.min
 
 abstract class ModuleConfigurationExtension(private val project: Project) {
 
+    companion object {
+        private const val COMPILE_SDK = 34
+        private const val MIN_SDK = 26
+    }
+
     fun configureAndroidDefaults() {
         project.configure<LibraryExtension> {
-            compileSdk = 34
+            compileSdk = COMPILE_SDK
             defaultConfig {
-                minSdk = 24
+                minSdk = MIN_SDK
+            }
+        }
+    }
+
+    fun configureAndroidApp(appId: String, appVersionCode: Int, appVersionName: String) {
+        project.configure<BaseAppModuleExtension> {
+            compileSdk = COMPILE_SDK
+            defaultConfig {
+                minSdk = MIN_SDK
+            }
+            buildFeatures {
+                compose = true
+            }
+            composeOptions {
+                kotlinCompilerExtensionVersion = project.libs.versions.compose.compiler.get()
+            }
+            defaultConfig {
+                applicationId = appId
+                targetSdk = 34
+                versionCode = appVersionCode
+                versionName = appVersionName
+            }
+            packaging {
+                resources {
+                    excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                }
+            }
+            buildTypes {
+                getByName("release") {
+                    isMinifyEnabled = false
+                    // FIXME: remove before publishing
+                    signingConfig = signingConfigs.getByName("debug")
+                }
             }
         }
     }

@@ -14,10 +14,12 @@ interface MainComponent {
 
     val stack: StateFlow<ChildStack<*, MainChild>>
 
+    fun onFeedClicked()
     fun onTripsClicked()
     fun onProfileClicked()
 
     sealed interface MainChild {
+        class BirthdaysFeed(val component: Unit) : MainChild
         class TripsFeed(val component: TripsFeedComponent) : MainChild
         class Profile(val component: ProfileComponent) : MainChild
     }

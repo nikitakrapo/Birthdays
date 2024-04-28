@@ -12,10 +12,12 @@ internal object MainComponentPreview : MainComponent {
             ChildStack(
                 Child.Created(
                     configuration = "Main",
-                    instance = MainComponent.MainChild.TripsFeed(TripsFeedComponentPreview())
+                    instance = MainComponent.MainChild.BirthdaysFeed(Unit)
                 )
             )
         )
+
+    override fun onFeedClicked() {}
 
     override fun onTripsClicked() {}
 

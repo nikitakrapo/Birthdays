@@ -20,7 +20,7 @@ fun TripsTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        typography = AppTypography,
+        typography = com.nikitakrapo.birthdays.theme.AppTypography,
         content = content,
     )
 }

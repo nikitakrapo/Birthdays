@@ -1,25 +1,39 @@
 package com.nikitakrapo.trips.mainscreen
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AirplaneTicket
+import androidx.compose.material.icons.automirrored.outlined.AirplaneTicket
+import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
+import com.nikitakrapo.birthdays.components.calendar.Calendar
+import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
+import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.trips.design.components.BottomBarItem
 import com.nikitakrapo.trips.design.components.BottomNavigationBar
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import com.nikitakrapo.trips.feed.TripsFeedScreen
 import com.nikitakrapo.trips.profile.ProfileScreen
+import kotlinx.datetime.Month
 import strings.R
+import java.time.Year
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -36,6 +50,28 @@ fun MainScreen(
             animation = mainScreenChildrenAnimation(),
         ) {
             when (val instance = it.instance) {
+                is MainComponent.MainChild.BirthdaysFeed -> BirthdaysTheme {
+                    Box(
+                        modifier = Modifier
+                            .statusBarsPadding(),
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .animateContentSize(),
+                        ) {
+                            Calendar(
+                                modifier = Modifier
+                                    .padding(8.dp),
+                                state = rememberCalendarState(
+                                    initialMonth = Month.APRIL,
+                                    initialYear = Year.of(2024),
+                                    yearRange = 2000..2025,
+                                )
+                            )
+                        }
+                    }
+                }
                 is MainComponent.MainChild.TripsFeed -> TripsFeedScreen(
                     component = instance.component,
                 )
@@ -50,8 +86,12 @@ fun MainScreen(
         BottomNavigationBar(
             items = listOf(
                 BottomBarItem(
+                    title = context.getString(R.string.birthdays),
+                    icon = Icons.Outlined.CalendarMonth,
+                ),
+                BottomBarItem(
                     title = context.getString(R.string.trips),
-                    icon = Icons.Outlined.AirplaneTicket,
+                    icon = Icons.AutoMirrored.Outlined.AirplaneTicket,
                 ),
                 BottomBarItem(
                     title = context.getString(R.string.profile),
@@ -59,13 +99,15 @@ fun MainScreen(
                 )
             ),
             selectedItem = when (child.active.instance) {
-                is MainComponent.MainChild.TripsFeed -> 0
-                is MainComponent.MainChild.Profile -> 1
+                is MainComponent.MainChild.BirthdaysFeed -> 0
+                is MainComponent.MainChild.TripsFeed -> 1
+                is MainComponent.MainChild.Profile -> 2
             },
             onItemClick = {
                 when (it) {
-                    0 -> mainComponent.onTripsClicked()
-                    1 -> mainComponent.onProfileClicked()
+                    0 -> mainComponent.onFeedClicked()
+                    1 -> mainComponent.onTripsClicked()
+                    2 -> mainComponent.onProfileClicked()
                     else -> error("Unhandled bottom bar click with $it index")
                 }
             },
@@ -77,6 +119,8 @@ fun MainScreen(
 @Composable
 private fun MainScreen_Preview() {
     TripsTheme {
-        MainScreen(mainComponent = MainComponentPreview)
+        Surface(color = TripsTheme.colorScheme.background) {
+            MainScreen(mainComponent = MainComponentPreview)
+        }
     }
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.nikitakrapo.trips.design.theme.TripsTheme
+import strings.R
 
 @Composable
 fun BottomNavigationBar(
@@ -83,11 +84,11 @@ private fun BottomNavigationBar_Preview() {
                 .fillMaxWidth(),
             items = listOf(
                 BottomBarItem(
-                    title = context.getString(strings.R.string.trips),
+                    title = context.getString(R.string.trips),
                     icon = Icons.Outlined.AirplaneTicket,
                 ),
                 BottomBarItem(
-                    title = context.getString(strings.R.string.profile),
+                    title = context.getString(R.string.profile),
                     icon = Icons.Outlined.Person,
                 )
             ),

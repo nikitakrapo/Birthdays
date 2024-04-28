@@ -25,6 +25,10 @@ class MainComponentImpl(
         childFactory = ::child,
     ).asStateFlow()
 
+    override fun onFeedClicked() {
+        navigation.bringToFront(MainConfig.BirthdaysFeed)
+    }
+
     override fun onTripsClicked() {
         navigation.bringToFront(MainConfig.TripsFeed)
     }
@@ -35,6 +39,9 @@ class MainComponentImpl(
 
     private fun child(config: MainConfig, componentContext: ComponentContext): MainComponent.MainChild {
         return when (config) {
+            MainConfig.BirthdaysFeed -> MainComponent.MainChild.BirthdaysFeed(
+                component = Unit,
+            )
             MainConfig.TripsFeed -> MainComponent.MainChild.TripsFeed(
                 component = TripsFeedComponentImpl(componentContext = componentContext),
             )
@@ -46,6 +53,10 @@ class MainComponentImpl(
 
     @Serializable
     private sealed interface MainConfig {
+
+        @Serializable
+        data object BirthdaysFeed : MainConfig
+
         @Serializable
         data object TripsFeed : MainConfig
 
