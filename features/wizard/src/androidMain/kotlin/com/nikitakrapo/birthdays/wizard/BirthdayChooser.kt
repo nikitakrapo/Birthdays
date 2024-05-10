@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.components.calendar.CalendarDateChooser
 import com.nikitakrapo.birthdays.components.calendar.CalendarDefaults
+import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponent
@@ -51,13 +52,12 @@ fun BirthdayChooser(
         )
 
         Spacer(modifier = Modifier.height(4.dp))
-
         val calendarState = rememberCalendarState(
-            initialMonth = state.initialDate.month,
-            initialYear = state.initialDate.year,
-            initialDay = state.initialDate.dayOfMonth,
-            yearRange = state.yearRange,
-            lastDay = state.lastDay,
+            initialDate = state.initialDate,
+            calendarRange = CalendarRange(
+                startDate = state.startDate,
+                endDate = state.endDate,
+            ),
         )
         CalendarDateChooser(
             state = calendarState,

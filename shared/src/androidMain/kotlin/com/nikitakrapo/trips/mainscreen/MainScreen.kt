@@ -1,6 +1,5 @@
 package com.nikitakrapo.trips.mainscreen
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,15 +19,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
-import com.nikitakrapo.birthdays.components.calendar.CalendarDateChooser
-import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
+import com.nikitakrapo.birthdays.wizard.BirthdayChooser
+import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
 import com.nikitakrapo.trips.design.components.BottomBarItem
 import com.nikitakrapo.trips.design.components.BottomNavigationBar
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import com.nikitakrapo.trips.feed.TripsFeedScreen
 import com.nikitakrapo.trips.profile.ProfileScreen
-import kotlinx.datetime.Month
 import strings.R
 
 @Composable
@@ -54,19 +52,12 @@ fun MainScreen(
                     ) {
                         Card(
                             modifier = Modifier
-                                .padding(16.dp)
-                                .animateContentSize(),
+                                .padding(16.dp),
                         ) {
-                            CalendarDateChooser(
+                            BirthdayChooser(
                                 modifier = Modifier
                                     .padding(8.dp),
-                                state = rememberCalendarState(
-                                    initialMonth = Month.APRIL,
-                                    initialYear = 2024,
-                                    initialDay = 28,
-                                    yearRange = 2000..2025,
-                                ),
-                                onDaySelected = {},
+                                component = DateChooserComponentPreview,
                             )
                         }
                     }

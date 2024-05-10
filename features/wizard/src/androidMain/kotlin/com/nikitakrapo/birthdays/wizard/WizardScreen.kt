@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.nikitakrapo.birthdays.components.calendar.CalendarDateChooser
-import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.trips.design.theme.TripsTheme
 
 @Composable
@@ -16,14 +15,7 @@ fun WizardScreen(
     component: WizardComponent,
 ) {
     val state by component.state.collectAsState()
-
-    val calendarState = rememberCalendarState(
-        initialMonth = state.initialDate.month,
-        initialYear = state.initialDate.year,
-        initialDay = state.initialDate.dayOfMonth,
-        yearRange = state.yearRange,
-    )
-    CalendarDateChooser(state = calendarState, onDaySelected = {})
+    CalendarDateChooser(state = TODO(), onDaySelected = {})
 }
 
 @Preview(device = "spec:id=reference_phone,shape=Normal,width=411,height=891,unit=dp,dpi=420",)

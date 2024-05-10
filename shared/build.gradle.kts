@@ -27,6 +27,7 @@ kotlin {
                 implementation(projects.features.account)
                 implementation(projects.features.network)
                 implementation(projects.features.repositories)
+                implementation(projects.features.wizard)
                 implementation(libs.decompose)
                 implementation(projects.features.utils.decompose)
                 implementation(projects.features.utils.coroutines)

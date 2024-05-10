@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format
+import kotlinx.datetime.format.DayOfWeekNames
+import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
 
 object DateChooserComponentPreview : DateChooserComponent {
@@ -13,8 +16,8 @@ object DateChooserComponentPreview : DateChooserComponent {
     override val state: StateFlow<DateChooserState> = MutableStateFlow(
         DateChooserState(
             initialDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
-            lastDay = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
-            yearRange = 1900..2024,
+            startDate = LocalDate(1900, 1, 1),
+            endDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
             title = "Choose your birthday",
             mode = DateChooserState.ChooserMode.Text,
         )
@@ -24,5 +27,16 @@ object DateChooserComponentPreview : DateChooserComponent {
         (state as MutableStateFlow).update { it.copy(mode = mode) }
     }
 
-    override fun onDatePicked(date: LocalDate) = Unit
+    override fun onDatePicked(date: LocalDate) {
+        (state as MutableStateFlow).update {
+            val format = LocalDate.Format {
+                dayOfMonth()
+                char(' ')
+                dayOfWeek(DayOfWeekNames.ENGLISH_ABBREVIATED)
+                chars(", ")
+                year()
+            }
+            it.copy(title = "Selected: ${date.format(format)}")
+        }
+    }
 }

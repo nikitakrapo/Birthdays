@@ -34,7 +34,7 @@ fun CalendarMonth(
                         CalendarDay(
                             day = day.value,
                             isChosen = day.value == month.selectedDay,
-                            isActive = month.lastDay?.let { it >= day.value } ?: true,
+                            isActive = day.value in month.dayRange,
                             onClick = { onDayClicked(day) },
                         )
                     } else {
@@ -71,7 +71,7 @@ private fun CalendarMonthPreview() {
                         }.takeIf { it.isNotEmpty() }
                     },
                     selectedDay = 5,
-                    lastDay = 25,
+                    dayRange = 1..25,
                 ),
                 onDayClicked = {},
             )
