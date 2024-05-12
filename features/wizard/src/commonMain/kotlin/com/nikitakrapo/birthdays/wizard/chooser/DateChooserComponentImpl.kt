@@ -22,7 +22,7 @@ class DateChooserComponentImpl(
             startDate = LocalDate(1900, 1, 1),
             endDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
             title = "Choose your birthday",
-            mode = DateChooserState.ChooserMode.Text,
+            mode = DateChooserState.ChooserMode.Calendar,
         )
     )
     override val state: StateFlow<DateChooserState> = stateFlow.asStateFlow()

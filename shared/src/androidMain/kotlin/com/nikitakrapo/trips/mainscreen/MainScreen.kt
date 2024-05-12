@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
-import com.nikitakrapo.birthdays.wizard.chooser.DateChooser
 import com.nikitakrapo.birthdays.wizard.WizardScreen
+import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserContent
 import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
 import com.nikitakrapo.trips.design.components.BottomBarItem
 import com.nikitakrapo.trips.design.components.BottomNavigationBar
@@ -58,7 +58,7 @@ fun MainScreen(
                             modifier = Modifier
                                 .padding(16.dp),
                         ) {
-                            DateChooser(
+                            BirthdayChooserContent(
                                 modifier = Modifier
                                     .padding(8.dp),
                                 component = DateChooserComponentPreview,

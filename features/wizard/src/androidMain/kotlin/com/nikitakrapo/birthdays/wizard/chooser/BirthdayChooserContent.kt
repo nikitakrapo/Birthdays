@@ -31,7 +31,7 @@ import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.wizard.chooser.DateChooserState.ChooserMode
 
 @Composable
-fun DateChooser(
+fun BirthdayChooserContent(
     modifier: Modifier = Modifier,
     component: DateChooserComponent,
 ) {
@@ -41,14 +41,13 @@ fun DateChooser(
         modifier = modifier
             .width(CalendarDefaults.MediumWidth),
     ) {
-        DateChooserHeader(
+        BirthdayChooserHeader(
             modifier = Modifier
                 .fillMaxWidth(),
             title = state.title,
             mode = state.mode,
             onChooserModeSelected = component::onChooserModeSelected,
         )
-
         Spacer(modifier = Modifier.height(4.dp))
         val calendarState = rememberCalendarState(
             initialDate = state.initialDate,
@@ -65,7 +64,7 @@ fun DateChooser(
 }
 
 @Composable
-fun DateChooserHeader(
+fun BirthdayChooserHeader(
     modifier: Modifier = Modifier,
     title: String,
     mode: ChooserMode,
@@ -111,10 +110,10 @@ fun DateChooserHeader(
 
 @Preview
 @Composable
-private fun DateChooserPreview() {
+private fun BirthdayChooserContentPreview() {
     BirthdaysTheme {
         Surface(color = BirthdaysTheme.colorScheme.background) {
-            DateChooser(
+            BirthdayChooserContent(
                 component = DateChooserComponentPreview,
             )
         }

@@ -18,6 +18,7 @@
     <string name="logout">Log out</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
 
     <string name="day_of_month">Day of month</string>
     <string name="cd_day_of_month">Day of month %1$d</string>
@@ -26,4 +27,6 @@
 
     <string name="birthdays_onboarding_title">Welcome, %1$s!\nAdd your Birthday to proceed</string>
     <string name="birthdays_onboarding_add_birthday">Add your birthday</string>
+    <string name="cd_date_picker_switch_to_next_month">Change to next month</string>
+    <string name="cd_date_picker_switch_to_previous_month">Change to previous month</string>
 </resources>
