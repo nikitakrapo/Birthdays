@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.wizard
+package com.nikitakrapo.birthdays.wizard.chooser
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +28,10 @@ import com.nikitakrapo.birthdays.components.calendar.CalendarDefaults
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
-import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponent
-import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
 import com.nikitakrapo.birthdays.wizard.chooser.DateChooserState.ChooserMode
 
 @Composable
-fun BirthdayChooser(
+fun DateChooser(
     modifier: Modifier = Modifier,
     component: DateChooserComponent,
 ) {
@@ -43,7 +41,7 @@ fun BirthdayChooser(
         modifier = modifier
             .width(CalendarDefaults.MediumWidth),
     ) {
-        BirthdayChooserHeader(
+        DateChooserHeader(
             modifier = Modifier
                 .fillMaxWidth(),
             title = state.title,
@@ -67,7 +65,7 @@ fun BirthdayChooser(
 }
 
 @Composable
-fun BirthdayChooserHeader(
+fun DateChooserHeader(
     modifier: Modifier = Modifier,
     title: String,
     mode: ChooserMode,
@@ -113,10 +111,10 @@ fun BirthdayChooserHeader(
 
 @Preview
 @Composable
-private fun BirthdayChooserPreview() {
+private fun DateChooserPreview() {
     BirthdaysTheme {
         Surface(color = BirthdaysTheme.colorScheme.background) {
-            BirthdayChooser(
+            DateChooser(
                 component = DateChooserComponentPreview,
             )
         }

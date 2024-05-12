@@ -20,6 +20,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation(libs.decompose.extensions.compose)
                 implementation(projects.strings)
                 implementation(projects.features.design.compose)
             }

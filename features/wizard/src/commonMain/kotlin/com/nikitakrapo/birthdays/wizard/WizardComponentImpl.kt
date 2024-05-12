@@ -1,10 +1,15 @@
 package com.nikitakrapo.birthdays.wizard
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.slot.ChildSlot
+import com.arkivanov.decompose.router.slot.SlotNavigation
+import com.arkivanov.decompose.router.slot.childSlot
+import com.arkivanov.decompose.router.slot.navigate
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
+import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserComponentImpl
+import com.nikitakrapo.birthdays.wizard.landing.WizardLandingComponentImpl
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
@@ -16,11 +21,23 @@ class WizardComponentImpl(
     private val navigation = StackNavigation<WizardConfig>()
 
     override val childStack: StateFlow<ChildStack<*, WizardComponent.WizardChild>> = childStack(
-        key = "MainStack",
+        key = "WizardStack",
         source = navigation,
         serializer = WizardConfig.serializer(),
         initialStack = { listOf(WizardConfig.Landing) },
         childFactory = ::child,
+        handleBackButton = true,
+    ).asStateFlow()
+
+    private val dialogNavigation = SlotNavigation<WizardDialogConfig>()
+
+    override val dialogSlot: StateFlow<ChildSlot<*, WizardComponent.WizardDialog>> = childSlot(
+        key = "WizardSlot",
+        source = dialogNavigation,
+        serializer = WizardDialogConfig.serializer(),
+        initialConfiguration = { null },
+        childFactory = ::dialogChild,
+        handleBackButton = true,
     ).asStateFlow()
 
     private fun child(
@@ -28,10 +45,28 @@ class WizardComponentImpl(
         componentContext: ComponentContext,
     ): WizardComponent.WizardChild {
         return when (config) {
-            WizardConfig.Landing -> WizardComponent.WizardChild.Landing
+            WizardConfig.Landing -> WizardComponent.WizardChild.Landing(
+                component = WizardLandingComponentImpl(
+                    componentContext = componentContext,
+                    navigateToBirthdayChooser = {
+                        dialogNavigation.navigate { WizardDialogConfig.BirthdayChooser }
+                    }
+                )
+            )
+        }
+    }
 
-            WizardConfig.BirthdayChooser -> WizardComponent.WizardChild.BirthdayChooser(
-                component = DateChooserComponentPreview,
+    private fun dialogChild(
+        config: WizardDialogConfig,
+        componentContext: ComponentContext,
+    ): WizardComponent.WizardDialog {
+        return when (config) {
+            WizardDialogConfig.BirthdayChooser -> WizardComponent.WizardDialog.BirthdayChooser(
+                component = BirthdayChooserComponentImpl(
+                    componentContext = componentContext,
+                    onBirthdayConfirmed = {},
+                    dismissDialog = { dialogNavigation.navigate { null } },
+                )
             )
         }
     }
@@ -41,8 +76,12 @@ class WizardComponentImpl(
 
         @Serializable
         data object Landing : WizardConfig
+    }
+
+    @Serializable
+    private sealed interface WizardDialogConfig {
 
         @Serializable
-        data object BirthdayChooser : WizardConfig
+        data object BirthdayChooser : WizardDialogConfig
     }
 }
