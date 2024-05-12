@@ -1,8 +1,10 @@
 package com.nikitakrapo.birthdays.wizard
 
-import kotlinx.datetime.LocalDate
+sealed interface WizardScreenState {
 
-data class WizardScreenState(
-    val initialDate: LocalDate,
-    val yearRange: IntRange,
-)
+    data object Landing : WizardScreenState
+
+    data class BirthdayChoosing(
+        val isYearSpecified: Boolean,
+    ) : WizardScreenState
+}

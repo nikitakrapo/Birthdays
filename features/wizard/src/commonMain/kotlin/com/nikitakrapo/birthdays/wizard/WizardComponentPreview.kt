@@ -1,18 +1,19 @@
 package com.nikitakrapo.birthdays.wizard
 
+import com.arkivanov.decompose.Child
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 
 object WizardComponentPreview : WizardComponent {
 
-    private val endLocalDateTime = LocalDate(2024, 4, 26)
-
-    override val state: StateFlow<WizardScreenState> = MutableStateFlow(
-        WizardScreenState(
-            initialDate = endLocalDateTime,
-            yearRange = 1900..2024,
+    override val childStack: StateFlow<ChildStack<*, WizardComponent.WizardChild>> = MutableStateFlow(
+        ChildStack(
+            Child.Created(
+                configuration = "Main",
+                instance = WizardComponent.WizardChild.BirthdayChooser(DateChooserComponentPreview)
+            )
         )
     )
 }

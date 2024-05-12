@@ -2,6 +2,7 @@ package com.nikitakrapo.trips.mainscreen
 
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.birthdays.wizard.WizardComponent
 import com.nikitakrapo.trips.feed.TripsFeedComponent
 import com.nikitakrapo.trips.profile.ProfileComponent
 import kotlinx.coroutines.flow.StateFlow
@@ -18,9 +19,12 @@ interface MainComponent {
     fun onTripsClicked()
     fun onProfileClicked()
 
-    sealed interface MainChild {
-        class BirthdaysFeed(val component: Unit) : MainChild
-        class TripsFeed(val component: TripsFeedComponent) : MainChild
-        class Profile(val component: ProfileComponent) : MainChild
+    sealed class MainChild(
+        val hasBottomSheet: Boolean,
+    ) {
+        class BirthdaysFeed(val component: Unit) : MainChild(hasBottomSheet = true)
+        class TripsFeed(val component: TripsFeedComponent) : MainChild(hasBottomSheet = true)
+        class Profile(val component: ProfileComponent) : MainChild(hasBottomSheet = true)
+        class Wizard(val component: WizardComponent) : MainChild(hasBottomSheet = false)
     }
 }

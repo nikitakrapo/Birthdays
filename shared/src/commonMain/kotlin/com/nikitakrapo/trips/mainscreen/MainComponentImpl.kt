@@ -5,6 +5,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
+import com.nikitakrapo.birthdays.wizard.WizardComponentImpl
 import com.nikitakrapo.trips.feed.TripsFeedComponentImpl
 import com.nikitakrapo.trips.profile.ProfileComponentImpl
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
@@ -23,6 +24,7 @@ class MainComponentImpl(
         serializer = MainConfig.serializer(),
         initialStack = { listOf(MainConfig.TripsFeed) },
         childFactory = ::child,
+        handleBackButton = true,
     ).asStateFlow()
 
     override fun onFeedClicked() {
@@ -48,6 +50,9 @@ class MainComponentImpl(
             MainConfig.Profile -> MainComponent.MainChild.Profile(
                 component = ProfileComponentImpl(componentContext = componentContext),
             )
+            MainConfig.Wizard -> MainComponent.MainChild.Wizard(
+                component = WizardComponentImpl(componentContext = componentContext),
+            )
         }
     }
 
@@ -62,5 +67,8 @@ class MainComponentImpl(
 
         @Serializable
         data object Profile : MainConfig
+
+        @Serializable
+        data object Wizard : MainConfig
     }
 }

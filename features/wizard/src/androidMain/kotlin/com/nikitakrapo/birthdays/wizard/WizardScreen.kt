@@ -2,11 +2,8 @@ package com.nikitakrapo.birthdays.wizard
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.nikitakrapo.birthdays.components.calendar.CalendarDateChooser
 import com.nikitakrapo.trips.design.theme.TripsTheme
 
 @Composable
@@ -14,8 +11,6 @@ fun WizardScreen(
     modifier: Modifier = Modifier,
     component: WizardComponent,
 ) {
-    val state by component.state.collectAsState()
-    CalendarDateChooser(state = TODO(), onDaySelected = {})
 }
 
 @Preview(device = "spec:id=reference_phone,shape=Normal,width=411,height=891,unit=dp,dpi=420",)

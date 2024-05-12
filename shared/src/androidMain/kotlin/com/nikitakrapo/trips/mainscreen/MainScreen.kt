@@ -1,5 +1,6 @@
 package com.nikitakrapo.trips.mainscreen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
+import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.wizard.BirthdayChooser
 import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
@@ -26,6 +28,7 @@ import com.nikitakrapo.trips.design.components.BottomBarItem
 import com.nikitakrapo.trips.design.components.BottomNavigationBar
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import com.nikitakrapo.trips.feed.TripsFeedScreen
+import com.nikitakrapo.trips.mainscreen.MainComponent.MainChild
 import com.nikitakrapo.trips.profile.ProfileScreen
 import strings.R
 
@@ -45,7 +48,7 @@ fun MainScreen(
             animation = mainScreenChildrenAnimation(),
         ) {
             when (val instance = it.instance) {
-                is MainComponent.MainChild.BirthdaysFeed -> BirthdaysTheme {
+                is MainChild.BirthdaysFeed -> BirthdaysTheme {
                     Box(
                         modifier = Modifier
                             .statusBarsPadding(),
@@ -62,16 +65,31 @@ fun MainScreen(
                         }
                     }
                 }
-                is MainComponent.MainChild.TripsFeed -> TripsFeedScreen(
+                is MainChild.TripsFeed -> TripsFeedScreen(
                     component = instance.component,
                 )
-                is MainComponent.MainChild.Profile -> ProfileScreen(
+                is MainChild.Profile -> ProfileScreen(
                     modifier = Modifier
                         .statusBarsPadding(),
                     component = instance.component,
                 )
             }
         }
+        MainScreenBottomBar(
+            isVisible = child.active.instance.hasBottomSheet,
+            child = child,
+            mainComponent = mainComponent,
+        )
+    }
+}
+
+@Composable
+private fun MainScreenBottomBar(
+    isVisible: Boolean,
+    child: ChildStack<*, MainChild>,
+    mainComponent: MainComponent,
+) {
+    AnimatedVisibility(visible = isVisible) {
         val context = LocalContext.current
         BottomNavigationBar(
             items = listOf(
@@ -89,11 +107,12 @@ fun MainScreen(
                 )
             ),
             selectedItem = when (child.active.instance) {
-                is MainComponent.MainChild.BirthdaysFeed -> 0
-                is MainComponent.MainChild.TripsFeed -> 1
-                is MainComponent.MainChild.Profile -> 2
+                is MainChild.BirthdaysFeed -> 0
+                is MainChild.TripsFeed -> 1
+                is MainChild.Profile -> 2
             },
             onItemClick = {
+                if (!isVisible) return@BottomNavigationBar
                 when (it) {
                     0 -> mainComponent.onFeedClicked()
                     1 -> mainComponent.onTripsClicked()
