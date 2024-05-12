@@ -49,6 +49,8 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.DayOfWeekNames
 import kotlinx.datetime.toLocalDateTime
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 fun CalendarDateChooser(
@@ -132,15 +134,17 @@ private fun CalendarMonthHeader(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text = "${state.selectedMonth} ${state.selectedYear}")
-        Row {
+        Spacer(modifier = Modifier.width(1.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onPreviousMonthClicked, enabled = previousMonthAvailable) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = stringResource(strings.R.string.cd_date_picker_switch_to_next_month)
                 )
             }
+            Text(text = state.selectedMonth.getDisplayName(TextStyle.SHORT, Locale.getDefault()))
             IconButton(onClick = onNextMonthClicked, enabled = nextMonthAvailable) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
