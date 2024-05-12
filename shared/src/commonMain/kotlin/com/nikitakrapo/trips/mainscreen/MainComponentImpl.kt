@@ -22,7 +22,7 @@ class MainComponentImpl(
         key = "MainStack",
         source = navigation,
         serializer = MainConfig.serializer(),
-        initialStack = { listOf(MainConfig.TripsFeed) },
+        initialStack = { listOf(MainConfig.TripsFeed, MainConfig.Wizard) },
         childFactory = ::child,
         handleBackButton = true,
     ).asStateFlow()
@@ -41,13 +41,13 @@ class MainComponentImpl(
 
     private fun child(config: MainConfig, componentContext: ComponentContext): MainComponent.MainChild {
         return when (config) {
-            MainConfig.BirthdaysFeed -> MainComponent.MainChild.BirthdaysFeed(
+            MainConfig.BirthdaysFeed -> MainComponent.MainChild.BottomBarChild.BirthdaysFeed(
                 component = Unit,
             )
-            MainConfig.TripsFeed -> MainComponent.MainChild.TripsFeed(
+            MainConfig.TripsFeed -> MainComponent.MainChild.BottomBarChild.TripsFeed(
                 component = TripsFeedComponentImpl(componentContext = componentContext),
             )
-            MainConfig.Profile -> MainComponent.MainChild.Profile(
+            MainConfig.Profile -> MainComponent.MainChild.BottomBarChild.Profile(
                 component = ProfileComponentImpl(componentContext = componentContext),
             )
             MainConfig.Wizard -> MainComponent.MainChild.Wizard(

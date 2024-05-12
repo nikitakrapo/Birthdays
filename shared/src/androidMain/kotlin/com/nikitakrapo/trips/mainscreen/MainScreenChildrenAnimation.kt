@@ -8,21 +8,27 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackA
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.isBack
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
+import com.nikitakrapo.trips.mainscreen.MainComponent.MainChild
 
 @OptIn(FaultyDecomposeApi::class)
 @Composable
-internal fun mainScreenChildrenAnimation(): StackAnimation<Any, MainComponent.MainChild> =
+internal fun mainScreenChildrenAnimation(): StackAnimation<Any, MainChild> =
     stackAnimation { child, otherChild, direction ->
-        val index = child.instance.index
-        val otherIndex = otherChild.instance.index
-        val anim = slide()
-        if ((index > otherIndex) == !direction.isBack) anim else anim.flipSide()
+        if (child.instance is MainChild.BottomBarChild && otherChild.instance is MainChild.BottomBarChild) {
+            val index = child.instance.index
+            val otherIndex = otherChild.instance.index
+            val anim = slide()
+            if ((index > otherIndex) == !direction.isBack) anim else anim.flipSide()
+        } else {
+            slide().let { if (direction.isBack) it.flipSide() else it }
+        }
     }
 
-val MainComponent.MainChild.index get() = when (this) {
-    is MainComponent.MainChild.BirthdaysFeed -> 1
-    is MainComponent.MainChild.TripsFeed -> 2
-    is MainComponent.MainChild.Profile -> 3
+val MainChild.index get() = when (this) {
+    is MainChild.BottomBarChild.BirthdaysFeed -> 1
+    is MainChild.BottomBarChild.TripsFeed -> 2
+    is MainChild.BottomBarChild.Profile -> 3
+    else -> 0
 }
 
 private fun StackAnimator.flipSide(): StackAnimator =

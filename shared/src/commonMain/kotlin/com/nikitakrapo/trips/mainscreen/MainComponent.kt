@@ -19,12 +19,14 @@ interface MainComponent {
     fun onTripsClicked()
     fun onProfileClicked()
 
-    sealed class MainChild(
-        val hasBottomSheet: Boolean,
-    ) {
-        class BirthdaysFeed(val component: Unit) : MainChild(hasBottomSheet = true)
-        class TripsFeed(val component: TripsFeedComponent) : MainChild(hasBottomSheet = true)
-        class Profile(val component: ProfileComponent) : MainChild(hasBottomSheet = true)
-        class Wizard(val component: WizardComponent) : MainChild(hasBottomSheet = false)
+    sealed interface MainChild {
+
+        sealed interface BottomBarChild : MainChild {
+            class BirthdaysFeed(val component: Unit) : BottomBarChild
+            class TripsFeed(val component: TripsFeedComponent) : BottomBarChild
+            class Profile(val component: ProfileComponent) : BottomBarChild
+        }
+
+        class Wizard(val component: WizardComponent) : MainChild
     }
 }

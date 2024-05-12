@@ -2,7 +2,6 @@ package com.nikitakrapo.trips.mainscreen
 
 import com.arkivanov.decompose.Child
 import com.arkivanov.decompose.router.stack.ChildStack
-import com.nikitakrapo.trips.feed.TripsFeedComponentPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -12,7 +11,7 @@ internal object MainComponentPreview : MainComponent {
             ChildStack(
                 Child.Created(
                     configuration = "Main",
-                    instance = MainComponent.MainChild.BirthdaysFeed(Unit)
+                    instance = MainComponent.MainChild.BottomBarChild.BirthdaysFeed(Unit)
                 )
             )
         )

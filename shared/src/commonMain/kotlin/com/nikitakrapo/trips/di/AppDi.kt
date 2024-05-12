@@ -1,5 +1,6 @@
 package com.nikitakrapo.trips.di
 
+import com.nikitakrapo.birthdays.account.accountModule
 import com.nikitakrapo.trips.account.AccountManager
 import com.nikitakrapo.trips.feed.tripsFeedModule
 import com.nikitakrapo.trips.network.AuthorizationTokenProvider
@@ -16,6 +17,7 @@ object AppDi {
         startKoin {
             modules(
                 appModule,
+                accountModule,
                 tripsFeedModule,
                 networkModule,
                 repositoriesModule,

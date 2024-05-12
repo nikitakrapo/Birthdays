@@ -20,6 +20,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.coroutines)
                 implementation(libs.napier)
+                implementation(libs.koin)
             }
         }
         val androidMain by getting {

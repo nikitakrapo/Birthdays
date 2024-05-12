@@ -1,6 +1,6 @@
 package com.nikitakrapo.trips.mainscreen
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.wizard.BirthdayChooser
+import com.nikitakrapo.birthdays.wizard.WizardScreen
 import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
 import com.nikitakrapo.trips.design.components.BottomBarItem
 import com.nikitakrapo.trips.design.components.BottomNavigationBar
@@ -48,7 +49,7 @@ fun MainScreen(
             animation = mainScreenChildrenAnimation(),
         ) {
             when (val instance = it.instance) {
-                is MainChild.BirthdaysFeed -> BirthdaysTheme {
+                is MainChild.BottomBarChild.BirthdaysFeed -> BirthdaysTheme {
                     Box(
                         modifier = Modifier
                             .statusBarsPadding(),
@@ -65,10 +66,18 @@ fun MainScreen(
                         }
                     }
                 }
-                is MainChild.TripsFeed -> TripsFeedScreen(
+
+                is MainChild.BottomBarChild.TripsFeed -> TripsFeedScreen(
                     component = instance.component,
                 )
-                is MainChild.Profile -> ProfileScreen(
+
+                is MainChild.BottomBarChild.Profile -> ProfileScreen(
+                    modifier = Modifier
+                        .statusBarsPadding(),
+                    component = instance.component,
+                )
+
+                is MainChild.Wizard -> WizardScreen(
                     modifier = Modifier
                         .statusBarsPadding(),
                     component = instance.component,
@@ -76,7 +85,6 @@ fun MainScreen(
             }
         }
         MainScreenBottomBar(
-            isVisible = child.active.instance.hasBottomSheet,
             child = child,
             mainComponent = mainComponent,
         )
@@ -85,42 +93,50 @@ fun MainScreen(
 
 @Composable
 private fun MainScreenBottomBar(
-    isVisible: Boolean,
     child: ChildStack<*, MainChild>,
     mainComponent: MainComponent,
 ) {
-    AnimatedVisibility(visible = isVisible) {
-        val context = LocalContext.current
-        BottomNavigationBar(
-            items = listOf(
-                BottomBarItem(
-                    title = context.getString(R.string.birthdays),
-                    icon = Icons.Outlined.CalendarMonth,
-                ),
-                BottomBarItem(
-                    title = context.getString(R.string.trips),
-                    icon = Icons.AutoMirrored.Outlined.AirplaneTicket,
-                ),
-                BottomBarItem(
-                    title = context.getString(R.string.profile),
-                    icon = Icons.Outlined.Person,
+    AnimatedContent(
+        targetState = child,
+        label = "MainScreen BottomBar",
+        contentKey = { it.active.instance is MainChild.BottomBarChild },
+    ) { child ->
+        when (val instance = child.active.instance) {
+            is MainChild.BottomBarChild -> {
+                val context = LocalContext.current
+                BottomNavigationBar(
+                    items = listOf(
+                        BottomBarItem(
+                            title = context.getString(R.string.birthdays),
+                            icon = Icons.Outlined.CalendarMonth,
+                        ),
+                        BottomBarItem(
+                            title = context.getString(R.string.trips),
+                            icon = Icons.AutoMirrored.Outlined.AirplaneTicket,
+                        ),
+                        BottomBarItem(
+                            title = context.getString(R.string.profile),
+                            icon = Icons.Outlined.Person,
+                        )
+                    ),
+                    selectedItem = when (instance) {
+                        is MainChild.BottomBarChild.BirthdaysFeed -> 0
+                        is MainChild.BottomBarChild.TripsFeed -> 1
+                        is MainChild.BottomBarChild.Profile -> 2
+                    },
+                    onItemClick = {
+                        if (child.active.instance !is MainChild.BottomBarChild) return@BottomNavigationBar
+                        when (it) {
+                            0 -> mainComponent.onFeedClicked()
+                            1 -> mainComponent.onTripsClicked()
+                            2 -> mainComponent.onProfileClicked()
+                            else -> error("Unhandled bottom bar click with $it index")
+                        }
+                    },
                 )
-            ),
-            selectedItem = when (child.active.instance) {
-                is MainChild.BirthdaysFeed -> 0
-                is MainChild.TripsFeed -> 1
-                is MainChild.Profile -> 2
-            },
-            onItemClick = {
-                if (!isVisible) return@BottomNavigationBar
-                when (it) {
-                    0 -> mainComponent.onFeedClicked()
-                    1 -> mainComponent.onTripsClicked()
-                    2 -> mainComponent.onProfileClicked()
-                    else -> error("Unhandled bottom bar click with $it index")
-                }
-            },
-        )
+            }
+            else -> {}
+        }
     }
 }
 
