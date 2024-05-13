@@ -1,9 +1,13 @@
 package com.nikitakrapo.birthdays.components.calendar
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.snapping.SnapFlingBehavior
 import androidx.compose.foundation.gestures.snapping.SnapLayoutInfoProvider
@@ -14,24 +18,36 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.invisibleToUser
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarDateChooserState
@@ -56,6 +72,7 @@ import java.util.Locale
 fun CalendarDateChooser(
     modifier: Modifier = Modifier,
     state: CalendarDateChooserState,
+    yearPickerEnabled: Boolean,
     onDaySelected: (LocalDate) -> Unit,
 ) {
     LaunchedEffect(state.selectedDate) {
@@ -68,6 +85,7 @@ fun CalendarDateChooser(
     ) {
         val scope = rememberCoroutineScope()
         val monthLazyListState = rememberCalendarLazyListState(state)
+        var yearSelectorShowed by remember { mutableStateOf(false) }
         CalendarMonthHeader(
             state = state,
             onNextMonthClicked = {
@@ -82,40 +100,22 @@ fun CalendarDateChooser(
             },
             nextMonthAvailable = monthLazyListState.canScrollForward,
             previousMonthAvailable = monthLazyListState.canScrollBackward,
+            showMonthsNavigation = !yearSelectorShowed,
+            onSelectYearClicked = { yearSelectorShowed = !yearSelectorShowed },
+            yearSelectorShowed = yearSelectorShowed,
+            enableYearPicker = yearPickerEnabled,
         )
-        LazyRow(
-            state = monthLazyListState,
-            flingBehavior = rememberDateChooserSnapFlingBehavior(lazyListState = monthLazyListState),
-        ) {
-            items(state.numberOfMonths) { monthIndexAbsolute ->
-                val currentMonth = state.getMonthFromAbsoluteMonth(monthIndexAbsolute)
-                val currentYear = state.getYearFromAbsoluteMonth(monthIndexAbsolute)
-                val selectedDay = state.selectedDate?.let { selectedDate ->
-                    selectedDate.dayOfMonth.takeIf {
-                        selectedDate.year == currentYear && selectedDate.month == currentMonth
-                    }
+        AnimatedContent(targetState = yearSelectorShowed) { showSelector ->
+            if (showSelector) {
+                Box(modifier = Modifier.height(264.dp))
+            } else {
+                Column {
+                    WeekdaysNames()
+                    MonthsPager(
+                        state = state,
+                        monthLazyListState = monthLazyListState,
+                    )
                 }
-                val firstDay = state.calendarRange.startDate
-                    .takeIf { it.year == currentYear && it.month == currentMonth }
-                    ?.dayOfMonth
-                val lastDay = state.calendarRange.endDate
-                    .takeIf { it.year == currentYear && it.month == currentMonth }
-                    ?.dayOfMonth
-                val monthState = rememberMonthState(
-                    year = currentYear,
-                    month = currentMonth,
-                    selectedDay = selectedDay,
-                    dayRange = (firstDay ?: 0)..(lastDay ?: 31),
-                )
-                CalendarMonth(
-                    modifier = Modifier
-                        .fillParentMaxWidth(),
-                    month = monthState,
-                    onDayClicked = {
-                        val localDate = LocalDate(currentYear, currentMonth, it.value)
-                        state.selectedDate = localDate
-                    },
-                )
             }
         }
     }
@@ -128,37 +128,75 @@ private fun CalendarMonthHeader(
     onPreviousMonthClicked: () -> Unit,
     nextMonthAvailable: Boolean,
     previousMonthAvailable: Boolean,
+    showMonthsNavigation: Boolean,
+    onSelectYearClicked: () -> Unit,
+    yearSelectorShowed: Boolean,
+    enableYearPicker: Boolean,
 ) {
     Spacer(modifier = Modifier.height(4.dp))
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .minimumInteractiveComponentSize(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Spacer(modifier = Modifier.width(1.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onPreviousMonthClicked, enabled = previousMonthAvailable) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    contentDescription = stringResource(strings.R.string.cd_date_picker_switch_to_next_month)
-                )
+        Row(
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable(onClick = onSelectYearClicked)
+                .padding(start = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val dateText = buildString {
+                append(state.selectedMonth.getDisplayName(TextStyle.SHORT, Locale.getDefault()))
+                if (!enableYearPicker) return@buildString
+                append(" ")
+                append(state.selectedYear)
             }
-            Text(text = state.selectedMonth.getDisplayName(TextStyle.SHORT, Locale.getDefault()))
-            IconButton(onClick = onNextMonthClicked, enabled = nextMonthAvailable) {
+            Text(
+                text = dateText,
+            )
+            if (enableYearPicker) {
+                val rotation by animateFloatAsState(targetValue = if (yearSelectorShowed) 180f else 0f)
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = stringResource(strings.R.string.cd_date_picker_switch_to_previous_month)
+                    modifier = Modifier
+                        .rotate(rotation),
+                    imageVector = Icons.Outlined.ArrowDropDown,
+                    contentDescription = stringResource(strings.R.string.cd_date_picker_choose_year)
                 )
             }
         }
+        Spacer(modifier = Modifier.width(1.dp))
+        AnimatedVisibility(visible = showMonthsNavigation) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onPreviousMonthClicked, enabled = previousMonthAvailable) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        contentDescription = stringResource(strings.R.string.cd_date_picker_switch_to_next_month)
+                    )
+                }
+                IconButton(onClick = onNextMonthClicked, enabled = nextMonthAvailable) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = stringResource(strings.R.string.cd_date_picker_switch_to_previous_month)
+                    )
+                }
+            }
+        }
     }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun WeekdaysNames() {
     Row {
         // TODO TRIPSMOBILE-12: add localization
         DayOfWeekNames.ENGLISH_ABBREVIATED.names.forEach {
             Box(
                 modifier = Modifier
-                    .size(48.dp),
+                    .size(48.dp)
+                    .semantics { invisibleToUser() },
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
@@ -167,6 +205,48 @@ private fun CalendarMonthHeader(
                     color = TripsTheme.colorScheme.onBackground,
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun MonthsPager(
+    state: CalendarDateChooserState,
+    monthLazyListState: LazyListState,
+) {
+    LazyRow(
+        state = monthLazyListState,
+        flingBehavior = rememberDateChooserSnapFlingBehavior(lazyListState = monthLazyListState),
+    ) {
+        items(state.numberOfMonths) { monthIndexAbsolute ->
+            val currentMonth = state.getMonthFromAbsoluteMonth(monthIndexAbsolute)
+            val currentYear = state.getYearFromAbsoluteMonth(monthIndexAbsolute)
+            val selectedDay = state.selectedDate?.let { selectedDate ->
+                selectedDate.dayOfMonth.takeIf {
+                    selectedDate.year == currentYear && selectedDate.month == currentMonth
+                }
+            }
+            val firstDay = state.calendarRange.startDate
+                .takeIf { it.year == currentYear && it.month == currentMonth }
+                ?.dayOfMonth
+            val lastDay = state.calendarRange.endDate
+                .takeIf { it.year == currentYear && it.month == currentMonth }
+                ?.dayOfMonth
+            val monthState = rememberMonthState(
+                year = currentYear,
+                month = currentMonth,
+                selectedDay = selectedDay,
+                dayRange = (firstDay ?: 0)..(lastDay ?: 31),
+            )
+            CalendarMonth(
+                modifier = Modifier
+                    .fillParentMaxWidth(),
+                month = monthState,
+                onDayClicked = {
+                    val localDate = LocalDate(currentYear, currentMonth, it.value)
+                    state.selectedDate = localDate
+                },
+            )
         }
     }
 }
@@ -208,6 +288,7 @@ private fun CalendarDateChooserPreview() {
                         endDate = currentDate,
                     )
                 ),
+                yearPickerEnabled = true,
                 onDaySelected = {},
             )
         }

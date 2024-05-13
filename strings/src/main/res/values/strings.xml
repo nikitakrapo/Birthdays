@@ -29,4 +29,5 @@
     <string name="birthdays_onboarding_add_birthday">Add your birthday</string>
     <string name="cd_date_picker_switch_to_next_month">Change to next month</string>
     <string name="cd_date_picker_switch_to_previous_month">Change to previous month</string>
+    <string name="cd_date_picker_choose_year">Choose year</string>
 </resources>

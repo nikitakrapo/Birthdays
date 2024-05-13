@@ -58,6 +58,7 @@ fun BirthdayChooserContent(
         )
         CalendarDateChooser(
             state = calendarState,
+            yearPickerEnabled = true,
             onDaySelected = component::onDatePicked,
         )
     }
