@@ -47,6 +47,16 @@ fun CalendarDateChooserState.getYearFromAbsoluteMonth(absoluteMonth: Int): Int {
     return (absoluteMonth + startMonthsOffset) / 12 + calendarRange.startDate.year
 }
 
+fun CalendarDateChooserState.getAbsoluteMonthForYear(year: Int): Int {
+    check(year >= calendarRange.startDate.year && year <= calendarRange.endDate.year) {
+        "Wrong year"
+    }
+    val absoluteYearMonth = (year - calendarRange.startDate.year) * 12
+    val startMonthsOffset = calendarRange.startMonthsOffset
+    return (absoluteYearMonth - startMonthsOffset + selectedMonth.ordinal)
+        .coerceAtMost(numberOfMonths - 1)
+}
+
 private val CalendarRange.startMonthsOffset get() = startDate.month.ordinal
 
 @Composable
