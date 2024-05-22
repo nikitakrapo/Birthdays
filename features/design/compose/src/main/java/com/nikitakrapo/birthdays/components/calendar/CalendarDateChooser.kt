@@ -107,7 +107,7 @@ fun CalendarDateChooser(
         )
         AnimatedContent(targetState = yearSelectorShowed) { showSelector ->
             if (showSelector) {
-                Box(modifier = Modifier.height(264.dp))
+                Text("TODO: year selector")
             } else {
                 Column {
                     WeekdaysNames()

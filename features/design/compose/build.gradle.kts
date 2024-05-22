@@ -15,6 +15,7 @@ android {
 
 dependencies {
     implementation(projects.strings)
+    implementation(projects.features.experiments)
     api(libs.compose.ui)
     api(libs.compose.ui.tooling.preview)
     api(libs.compose.material3)

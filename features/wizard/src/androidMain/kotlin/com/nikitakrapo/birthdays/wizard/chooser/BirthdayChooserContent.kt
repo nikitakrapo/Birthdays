@@ -27,6 +27,7 @@ import com.nikitakrapo.birthdays.components.calendar.CalendarDateChooser
 import com.nikitakrapo.birthdays.components.calendar.CalendarDefaults
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
+import com.nikitakrapo.birthdays.experiments.FeatureToggle
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.wizard.chooser.DateChooserState.ChooserMode
 
@@ -41,14 +42,16 @@ fun BirthdayChooserContent(
         modifier = modifier
             .width(CalendarDefaults.MediumWidth),
     ) {
+        Spacer(modifier = Modifier.height(8.dp))
         BirthdayChooserHeader(
             modifier = Modifier
                 .fillMaxWidth(),
             title = state.title,
             mode = state.mode,
-            onChooserModeSelected = component::onChooserModeSelected,
+            onChooserModeSelected = component::onChooserModeSelected
+                .takeIf { FeatureToggle.inputDatePickerEnabled },
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         val calendarState = rememberCalendarState(
             initialDate = state.initialDate,
             calendarRange = CalendarRange(
@@ -65,11 +68,11 @@ fun BirthdayChooserContent(
 }
 
 @Composable
-fun BirthdayChooserHeader(
+private fun BirthdayChooserHeader(
     modifier: Modifier = Modifier,
     title: String,
     mode: ChooserMode,
-    onChooserModeSelected: (ChooserMode) -> Unit,
+    onChooserModeSelected: ((ChooserMode) -> Unit)?,
 ) {
     Row(
         modifier = modifier
@@ -81,30 +84,32 @@ fun BirthdayChooserHeader(
             text = title,
             style = BirthdaysTheme.typography.titleLarge,
         )
-        IconButton(
-            onClick = {
-                when (mode) {
-                    ChooserMode.Calendar -> onChooserModeSelected(ChooserMode.Text)
-                    ChooserMode.Text -> onChooserModeSelected(ChooserMode.Calendar)
-                }
-            },
-        ) {
-            Icon(
-                imageVector = when (mode) {
-                    ChooserMode.Calendar ->
-                        Icons.Outlined.EditCalendar
-
-                    ChooserMode.Text ->
-                        Icons.Outlined.Edit
+        onChooserModeSelected?.let {
+            IconButton(
+                onClick = {
+                    when (mode) {
+                        ChooserMode.Calendar -> onChooserModeSelected(ChooserMode.Text)
+                        ChooserMode.Text -> onChooserModeSelected(ChooserMode.Calendar)
+                    }
                 },
-                contentDescription = when (mode) {
-                    ChooserMode.Calendar ->
-                        stringResource(strings.R.string.cd_birthday_chooser_calendar_mode)
+            ) {
+                Icon(
+                    imageVector = when (mode) {
+                        ChooserMode.Calendar ->
+                            Icons.Outlined.EditCalendar
 
-                    ChooserMode.Text ->
-                        stringResource(strings.R.string.cd_birthday_chooser_text_mode)
-                },
-            )
+                        ChooserMode.Text ->
+                            Icons.Outlined.Edit
+                    },
+                    contentDescription = when (mode) {
+                        ChooserMode.Calendar ->
+                            stringResource(strings.R.string.cd_birthday_chooser_calendar_mode)
+
+                        ChooserMode.Text ->
+                            stringResource(strings.R.string.cd_birthday_chooser_text_mode)
+                    },
+                )
+            }
         }
     }
 }

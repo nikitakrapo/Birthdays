@@ -13,6 +13,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.features.di)
+                implementation(projects.features.experiments)
                 implementation(projects.features.utils.decompose)
                 implementation(libs.decompose)
                 implementation(libs.kotlin.datetime)
