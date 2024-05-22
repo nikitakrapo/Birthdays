@@ -98,12 +98,14 @@ fun CalendarDateChooser(
             state = state,
             onNextMonthClicked = {
                 scope.launch {
-                    monthLazyListState.animateScrollToItem(monthLazyListState.firstVisibleItemIndex + 1)
+                    val index = (monthLazyListState.firstVisibleItemIndex + 1).coerceAtMost(state.numberOfMonths - 1)
+                    monthLazyListState.animateScrollToItem(index)
                 }
             },
             onPreviousMonthClicked = {
                 scope.launch {
-                    monthLazyListState.animateScrollToItem(monthLazyListState.firstVisibleItemIndex - 1)
+                    val index = (monthLazyListState.firstVisibleItemIndex - 1).coerceAtLeast(0)
+                    monthLazyListState.animateScrollToItem(index)
                 }
             },
             nextMonthAvailable = monthLazyListState.canScrollForward,
