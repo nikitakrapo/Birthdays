@@ -17,10 +17,11 @@ import kotlinx.datetime.Month
 @Stable
 class CalendarDateChooserState internal constructor(
     initialDate: LocalDate,
+    initialSelectedDate: LocalDate?,
     val calendarRange: CalendarRange,
 ) {
 
-    internal var selectedDate: LocalDate? by mutableStateOf(null)
+    internal var selectedDate: LocalDate? by mutableStateOf(initialSelectedDate)
 
     internal var selectedMonth by mutableStateOf(initialDate.month)
 
@@ -100,11 +101,13 @@ fun rememberCalendarLazyListState(
 @Composable
 fun rememberCalendarState(
     initialDate: LocalDate,
+    initialSelectedDate: LocalDate?,
     calendarRange: CalendarRange,
 ) : CalendarDateChooserState {
     return remember(calendarRange) {
         CalendarDateChooserState(
             initialDate = initialDate,
+            initialSelectedDate = initialSelectedDate,
             calendarRange = calendarRange,
         )
     }

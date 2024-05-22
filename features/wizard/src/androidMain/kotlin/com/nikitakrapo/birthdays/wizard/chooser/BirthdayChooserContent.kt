@@ -54,6 +54,7 @@ fun BirthdayChooserContent(
         Spacer(modifier = Modifier.height(8.dp))
         val calendarState = rememberCalendarState(
             initialDate = state.initialDate,
+            initialSelectedDate = state.initialSelectedDate,
             calendarRange = CalendarRange(
                 startDate = state.startDate,
                 endDate = state.endDate,

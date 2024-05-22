@@ -9,6 +9,12 @@ import kotlinx.coroutines.flow.StateFlow
 
 object WizardComponentPreview : WizardComponent {
 
+    override val state: StateFlow<WizardScreenState> = MutableStateFlow(
+        WizardScreenState(
+            birthday = null,
+        )
+    )
+
     override val childStack: StateFlow<ChildStack<*, WizardComponent.WizardChild>> = MutableStateFlow(
         ChildStack(
             Child.Created(

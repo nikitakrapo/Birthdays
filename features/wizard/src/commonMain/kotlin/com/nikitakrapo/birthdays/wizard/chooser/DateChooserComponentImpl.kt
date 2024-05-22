@@ -13,12 +13,14 @@ import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
 
 class DateChooserComponentImpl(
+    initialSelectedDate: LocalDate?,
     private val onDateUpdated: (LocalDate) -> Unit,
 ) : DateChooserComponent {
 
     private val stateFlow = MutableStateFlow(
         DateChooserState(
-            initialDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
+            initialDate = initialSelectedDate ?: Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
+            initialSelectedDate = initialSelectedDate,
             startDate = LocalDate(1900, 1, 1),
             endDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
             title = "Choose your birthday",

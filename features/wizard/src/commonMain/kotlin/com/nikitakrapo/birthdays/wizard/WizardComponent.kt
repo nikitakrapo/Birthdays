@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface WizardComponent {
 
+    val state: StateFlow<WizardScreenState>
+
     val childStack: StateFlow<ChildStack<*, WizardChild>>
 
     val dialogSlot: StateFlow<ChildSlot<*, WizardDialog>>

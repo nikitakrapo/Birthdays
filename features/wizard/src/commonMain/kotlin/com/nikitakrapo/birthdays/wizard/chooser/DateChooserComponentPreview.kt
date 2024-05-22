@@ -16,6 +16,7 @@ object DateChooserComponentPreview : DateChooserComponent {
     override val state: StateFlow<DateChooserState> = MutableStateFlow(
         DateChooserState(
             initialDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
+            initialSelectedDate = null,
             startDate = LocalDate(1900, 1, 1),
             endDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
             title = "Choose your birthday",

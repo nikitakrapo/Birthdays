@@ -12,13 +12,14 @@ import kotlinx.datetime.toLocalDateTime
 
 internal class BirthdayChooserComponentImpl(
     componentContext: ComponentContext,
+    private val initialDate: LocalDate?,
     private val onBirthdayConfirmed: (LocalDate) -> Unit,
     private val dismissDialog: () -> Unit,
 ) : BirthdayChooserComponent, ComponentContext by componentContext {
 
     private val stateFlow = MutableStateFlow(
         BirthdayChooserState(
-            chosenDate = null,
+            chosenDate = initialDate,
             yearRange = 1900..Clock.System.now().toLocalDateTime(TimeZone.UTC).year,
         )
     )
@@ -38,6 +39,9 @@ internal class BirthdayChooserComponentImpl(
     }
 
     override fun createDateChooserComponent(): DateChooserComponent {
-        return DateChooserComponentImpl(onDateUpdated = ::onBirthdayChosen)
+        return DateChooserComponentImpl(
+            initialSelectedDate = initialDate,
+            onDateUpdated = ::onBirthdayChosen,
+        )
     }
 }

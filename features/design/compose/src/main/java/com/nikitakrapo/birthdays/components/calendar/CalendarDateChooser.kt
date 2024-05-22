@@ -328,6 +328,7 @@ private fun CalendarDateChooserPreview() {
             CalendarDateChooser(
                 state = rememberCalendarState(
                     initialDate = currentDate,
+                    initialSelectedDate = null,
                     calendarRange = CalendarRange(
                         startDate = LocalDate(1900, 1, 1),
                         endDate = currentDate,

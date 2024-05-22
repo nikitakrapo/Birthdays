@@ -6,6 +6,7 @@ import kotlinx.datetime.LocalDate
 @Stable
 data class DateChooserState(
     val initialDate: LocalDate,
+    val initialSelectedDate: LocalDate?,
     val startDate: LocalDate,
     val endDate: LocalDate,
     val title: String,

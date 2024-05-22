@@ -11,12 +11,23 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserComponentImpl
 import com.nikitakrapo.birthdays.wizard.landing.WizardLandingComponentImpl
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
 
 class WizardComponentImpl(
     componentContext: ComponentContext,
 ) : WizardComponent, ComponentContext by componentContext {
+
+    private val stateFlow = MutableStateFlow(
+        WizardScreenState(
+            birthday = null,
+        )
+    )
+    override val state: StateFlow<WizardScreenState> = stateFlow.asStateFlow()
 
     private val navigation = StackNavigation<WizardConfig>()
 
@@ -49,7 +60,8 @@ class WizardComponentImpl(
                 component = WizardLandingComponentImpl(
                     componentContext = componentContext,
                     navigateToBirthdayChooser = {
-                        dialogNavigation.navigate { WizardDialogConfig.BirthdayChooser }
+                        val chooserConfig = WizardDialogConfig.BirthdayChooser(state.value.birthday)
+                        dialogNavigation.navigate { chooserConfig }
                     }
                 )
             )
@@ -61,10 +73,14 @@ class WizardComponentImpl(
         componentContext: ComponentContext,
     ): WizardComponent.WizardDialog {
         return when (config) {
-            WizardDialogConfig.BirthdayChooser -> WizardComponent.WizardDialog.BirthdayChooser(
+            is WizardDialogConfig.BirthdayChooser -> WizardComponent.WizardDialog.BirthdayChooser(
                 component = BirthdayChooserComponentImpl(
                     componentContext = componentContext,
-                    onBirthdayConfirmed = {},
+                    initialDate = config.date,
+                    onBirthdayConfirmed = { birthday ->
+                        stateFlow.update { it.copy(birthday = birthday) }
+                        dialogNavigation.navigate { null }
+                    },
                     dismissDialog = { dialogNavigation.navigate { null } },
                 )
             )
@@ -82,6 +98,6 @@ class WizardComponentImpl(
     private sealed interface WizardDialogConfig {
 
         @Serializable
-        data object BirthdayChooser : WizardDialogConfig
+        data class BirthdayChooser(val date: LocalDate?) : WizardDialogConfig
     }
 }
