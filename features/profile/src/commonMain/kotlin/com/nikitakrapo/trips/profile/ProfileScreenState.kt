@@ -1,6 +1,6 @@
 package com.nikitakrapo.trips.profile
 
 data class ProfileScreenState(
-    val email: String,
+    val username: String,
     val showLogoutDialog: Boolean,
 )

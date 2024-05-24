@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserDialog
+import com.nikitakrapo.birthdays.chooser.BirthdayChooserDialog
 import com.nikitakrapo.trips.design.theme.TripsTheme
 
 @Composable

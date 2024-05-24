@@ -66,7 +66,7 @@ fun ProfileScreen(
                 .padding(horizontal = 16.dp),
         ) {
             Text(
-                text = state.email,
+                text = state.username,
                 style = TripsTheme.typography.headlineSmall,
             )
         }

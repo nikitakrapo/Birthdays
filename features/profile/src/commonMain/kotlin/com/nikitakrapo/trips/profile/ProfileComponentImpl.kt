@@ -20,7 +20,9 @@ class ProfileComponentImpl(
 
     private val stateFlow = MutableStateFlow(
         ProfileScreenState(
-            email = accountManager.account.value?.email.orEmpty(),
+            username = accountManager.account.value
+                ?.let { it.username ?: it.email ?: "" }
+                ?: "",
             showLogoutDialog = false,
         )
     )

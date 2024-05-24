@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.wizard.chooser
+package com.nikitakrapo.birthdays.chooser
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,13 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.nikitakrapo.birthdays.chooser.DateChooserState.ChooserMode
 import com.nikitakrapo.birthdays.components.calendar.CalendarDateChooser
 import com.nikitakrapo.birthdays.components.calendar.CalendarDefaults
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.birthdays.experiments.FeatureToggle
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
-import com.nikitakrapo.birthdays.wizard.chooser.DateChooserState.ChooserMode
 
 @Composable
 fun BirthdayChooserContent(

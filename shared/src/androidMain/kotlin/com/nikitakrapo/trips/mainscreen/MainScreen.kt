@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
@@ -13,6 +12,7 @@ import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,8 +24,6 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.wizard.WizardScreen
-import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserContent
-import com.nikitakrapo.birthdays.wizard.chooser.DateChooserComponentPreview
 import com.nikitakrapo.trips.design.components.BottomBarItem
 import com.nikitakrapo.trips.design.components.BottomNavigationBar
 import com.nikitakrapo.trips.design.theme.TripsTheme
@@ -59,11 +57,7 @@ fun MainScreen(
                             modifier = Modifier
                                 .padding(16.dp),
                         ) {
-                            BirthdayChooserContent(
-                                modifier = Modifier
-                                    .padding(8.dp),
-                                component = DateChooserComponentPreview,
-                            )
+                            Text("Birthdays Feed")
                         }
                     }
                 }

@@ -1,6 +1,7 @@
 package com.nikitakrapo.trips.account.firebase
 
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.nikitakrapo.trips.account.Account
@@ -49,12 +50,22 @@ internal class FirebaseAccountManager : AccountManager {
         }
     }
 
-    override suspend fun register(email: String, password: String): RegistrationResult {
+    override suspend fun register(
+        username: String,
+        email: String,
+        password: String,
+    ): RegistrationResult {
         return wrapWithRegistrationResult {
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
+            val fbUser = firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .await()
                 .user
-                ?.toDomainModel()
+            val changeRequest = UserProfileChangeRequest.Builder()
+                .setDisplayName(username)
+                .build()
+            fbUser
+                ?.updateProfile(changeRequest)
+                ?.await()
+            fbUser?.toDomainModel()
         }
     }
 
@@ -90,6 +101,7 @@ internal class FirebaseAccountManager : AccountManager {
     private fun FirebaseUser.toDomainModel(): Account {
         return Account(
             uid = uid,
+            username = displayName,
             email = email,
         )
     }

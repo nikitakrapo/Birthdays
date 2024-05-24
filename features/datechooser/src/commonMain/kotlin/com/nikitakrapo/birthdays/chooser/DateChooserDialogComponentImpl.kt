@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.wizard.chooser
+package com.nikitakrapo.birthdays.chooser
 
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,12 +10,12 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-internal class BirthdayChooserComponentImpl(
+class DateChooserDialogComponentImpl(
     componentContext: ComponentContext,
     private val initialDate: LocalDate?,
     private val onBirthdayConfirmed: (LocalDate) -> Unit,
     private val dismissDialog: () -> Unit,
-) : BirthdayChooserComponent, ComponentContext by componentContext {
+) : DateChooserDialogComponent, ComponentContext by componentContext {
 
     private val stateFlow = MutableStateFlow(
         BirthdayChooserState(

@@ -5,7 +5,7 @@ import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.navigate
-import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserComponentImpl
+import com.nikitakrapo.birthdays.chooser.DateChooserDialogComponentImpl
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -44,7 +44,7 @@ class WizardComponentImpl(
     ): WizardComponent.WizardDialog {
         return when (config) {
             is WizardDialogConfig.BirthdayChooser -> WizardComponent.WizardDialog.BirthdayChooser(
-                component = BirthdayChooserComponentImpl(
+                component = DateChooserDialogComponentImpl(
                     componentContext = componentContext,
                     initialDate = config.date,
                     onBirthdayConfirmed = { birthday ->

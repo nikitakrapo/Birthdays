@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.wizard.chooser
+package com.nikitakrapo.birthdays.chooser
 
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.LocalDate

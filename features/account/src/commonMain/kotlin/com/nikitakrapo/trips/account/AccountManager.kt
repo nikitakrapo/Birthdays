@@ -12,6 +12,7 @@ interface AccountManager {
     ): LoginResult
 
     suspend fun register(
+        username: String,
         email: String,
         password: String,
     ): RegistrationResult

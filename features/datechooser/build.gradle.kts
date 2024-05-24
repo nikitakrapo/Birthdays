@@ -13,7 +13,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.features.di)
-                implementation(projects.features.datechooser)
                 implementation(projects.features.experiments)
                 implementation(projects.features.utils.decompose)
                 implementation(libs.decompose)
@@ -31,7 +30,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.birthdays.wizard"
+    namespace = "com.nikitakrapo.birthdays.datechooser"
     moduleConfigurationPlugin.configureAndroidDefaults()
     moduleConfigurationPlugin.configureCompose()
 }

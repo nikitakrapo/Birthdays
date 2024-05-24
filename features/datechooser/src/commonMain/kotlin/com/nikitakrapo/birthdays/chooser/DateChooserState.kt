@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.wizard.chooser
+package com.nikitakrapo.birthdays.chooser
 
 import androidx.compose.runtime.Stable
 import kotlinx.datetime.LocalDate

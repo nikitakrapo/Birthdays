@@ -1,7 +1,6 @@
 package com.nikitakrapo.birthdays.wizard
 
 import com.arkivanov.decompose.router.slot.ChildSlot
-import com.nikitakrapo.birthdays.wizard.WizardScreenState.WizardScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -9,7 +8,9 @@ object WizardComponentPreview : WizardComponent {
 
     override val state: StateFlow<WizardScreenState> = MutableStateFlow(
         WizardScreenState(
-            screens = listOf(WizardScreen.Landing, WizardScreen.BirthdayChooser, WizardScreen.Final),
+            screens = listOf(WizardScreenState.WizardScreen.Landing,
+                WizardScreenState.WizardScreen.BirthdayChooser, WizardScreenState.WizardScreen.Final
+            ),
             lastAvailableScreen = 1,
             birthday = null,
         )

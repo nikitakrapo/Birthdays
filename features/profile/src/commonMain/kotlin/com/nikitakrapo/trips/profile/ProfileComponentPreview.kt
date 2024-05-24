@@ -7,7 +7,7 @@ object ProfileComponentPreview : ProfileComponent {
 
     override val state: StateFlow<ProfileScreenState> = MutableStateFlow(
         ProfileScreenState(
-            email = "sample@email.net",
+            username = "sample@email.net",
             showLogoutDialog = false,
         )
     )

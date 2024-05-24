@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.wizard.chooser
+package com.nikitakrapo.birthdays.chooser
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,15 +19,15 @@ import com.nikitakrapo.birthdays.components.calendar.CalendarDefaults
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 
 @Composable
-internal fun BirthdayChooserComponent.rememberDateChooserComponent(): DateChooserComponent {
+fun DateChooserDialogComponent.rememberDateChooserComponent(): DateChooserComponent {
     return remember { createDateChooserComponent() }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun BirthdayChooserDialog(
+fun BirthdayChooserDialog(
     modifier: Modifier = Modifier,
-    component: BirthdayChooserComponent,
+    component: DateChooserDialogComponent,
 ) {
     val state by component.state.collectAsState()
 
@@ -63,7 +63,7 @@ private fun BirthdayChooserDialogPreview() {
     BirthdaysTheme {
         Surface(color = BirthdaysTheme.colorScheme.background) {
             BirthdayChooserDialog(
-                component = BirthdayChooserComponentPreview,
+                component = DateChooserDialogComponentPreview,
             )
         }
     }

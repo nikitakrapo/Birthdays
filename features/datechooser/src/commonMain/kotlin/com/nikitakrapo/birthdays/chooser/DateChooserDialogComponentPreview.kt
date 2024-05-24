@@ -1,10 +1,10 @@
-package com.nikitakrapo.birthdays.wizard.chooser
+package com.nikitakrapo.birthdays.chooser
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.LocalDate
 
-internal object BirthdayChooserComponentPreview : BirthdayChooserComponent {
+internal object DateChooserDialogComponentPreview : DateChooserDialogComponent {
 
     override val state: StateFlow<BirthdayChooserState> = MutableStateFlow(
         BirthdayChooserState(

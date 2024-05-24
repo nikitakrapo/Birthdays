@@ -1,7 +1,7 @@
 package com.nikitakrapo.birthdays.wizard
 
 import com.arkivanov.decompose.router.slot.ChildSlot
-import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserComponent
+import com.nikitakrapo.birthdays.chooser.DateChooserDialogComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface WizardComponent {
@@ -15,7 +15,7 @@ interface WizardComponent {
     sealed interface WizardDialog {
 
         data class BirthdayChooser internal constructor(
-            internal val component: BirthdayChooserComponent,
+            internal val component: DateChooserDialogComponent,
         ) : WizardDialog
     }
 }
