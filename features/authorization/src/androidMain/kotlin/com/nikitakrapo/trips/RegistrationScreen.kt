@@ -1,6 +1,7 @@
 package com.nikitakrapo.trips
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,10 +22,12 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowRight
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -39,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.nikitakrapo.birthdays.chooser.BirthdayChooserDialog
+import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.trips.design.components.PasswordTextField
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import com.nikitakrapo.trips.registration.RegistrationComponent
@@ -130,12 +134,23 @@ internal fun RegistrationScreen(
             Spacer(modifier = Modifier.height(4.dp))
             val density = LocalDensity.current
             Spacer(modifier = Modifier.height(with (density) { 8.sp.toDp() }))
+            val buttonColor by animateColorAsState(
+                targetValue = if (state.isBirthdaySelected) {
+                    BirthdaysTheme.colorScheme.primary
+                } else {
+                    BirthdaysTheme.colorScheme.secondary
+                }
+            )
             Button(
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
                     .height(56.dp)
                     .fillMaxWidth(),
                 onClick = component::onSelectBirthdayClicked,
+                enabled = !state.isLoading,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = buttonColor,
+                ),
                 contentPadding = PaddingValues(
                     vertical = 8.dp,
                     horizontal = 16.dp,
@@ -189,9 +204,11 @@ internal fun RegistrationScreen(
 @Preview
 @Composable
 private fun RegistrationScreen_Preview() {
-    TripsTheme {
-        RegistrationScreen(
-            component = RegistrationComponentPreview,
-        )
+    BirthdaysTheme {
+        Surface {
+            RegistrationScreen(
+                component = RegistrationComponentPreview,
+            )
+        }
     }
 }
