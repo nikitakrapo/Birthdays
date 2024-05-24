@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
+import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import com.nikitakrapo.trips.root.RootComponentImpl
 import com.nikitakrapo.trips.root.RootScreen
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TripsTheme {
+            BirthdaysTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = TripsTheme.colorScheme.background

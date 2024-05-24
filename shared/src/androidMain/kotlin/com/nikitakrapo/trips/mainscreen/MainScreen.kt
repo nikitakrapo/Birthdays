@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
@@ -78,8 +79,7 @@ fun MainScreen(
                 )
 
                 is MainChild.Wizard -> WizardScreen(
-                    modifier = Modifier
-                        .statusBarsPadding(),
+                    modifier = Modifier,
                     component = instance.component,
                 )
             }

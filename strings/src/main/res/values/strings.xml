@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Trips</string>
     <string name="trips">Trips</string>
-    <string name="birthdays">Birthdays</string>
+    <string name="birthdays">Monke Birthdays</string>
     <string name="profile">Profile</string>
     <string name="cd_overflow_menu">More</string>
     <string name="cd_add_trip">Add trip</string>
@@ -19,14 +19,17 @@
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
     <string name="dismiss">Dismiss</string>
+    <string name="select_birthday">Select your Birthday</string>
+    <string name="edit_birthday">Edit your Birthday</string>
 
     <string name="day_of_month">Day of month</string>
     <string name="cd_day_of_month">Day of month %1$d</string>
     <string name="cd_birthday_chooser_calendar_mode">Switch to calendar chooser mode</string>
     <string name="cd_birthday_chooser_text_mode">Switch to text chooser mode</string>
 
-    <string name="birthdays_onboarding_title">Welcome, %1$s!\nAdd your Birthday to proceed</string>
-    <string name="birthdays_onboarding_add_birthday">Add your birthday</string>
+    <string name="birthdays_onboarding_slogan">Make Birthdays fun again</string>
+    <string name="birthdays_onboarding_add_birthday_title">Please select your birthday</string>
+    <string name="birthdays_onboarding_add_birthday_subtitle">This will help your friends to prepare for it in advance</string>
     <string name="cd_date_picker_switch_to_next_month">Change to next month</string>
     <string name="cd_date_picker_switch_to_previous_month">Change to previous month</string>
     <string name="cd_date_picker_choose_year">Choose year</string>

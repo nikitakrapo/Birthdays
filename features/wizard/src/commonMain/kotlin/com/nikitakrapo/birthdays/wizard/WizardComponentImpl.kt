@@ -5,11 +5,7 @@ import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.navigate
-import com.arkivanov.decompose.router.stack.ChildStack
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.childStack
 import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserComponentImpl
-import com.nikitakrapo.birthdays.wizard.landing.WizardLandingComponentImpl
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,21 +20,12 @@ class WizardComponentImpl(
 
     private val stateFlow = MutableStateFlow(
         WizardScreenState(
+            screens = listOf(WizardScreenState.WizardScreen.Landing, WizardScreenState.WizardScreen.BirthdayChooser, WizardScreenState.WizardScreen.Final),
+            lastAvailableScreen = 1,
             birthday = null,
         )
     )
     override val state: StateFlow<WizardScreenState> = stateFlow.asStateFlow()
-
-    private val navigation = StackNavigation<WizardConfig>()
-
-    override val childStack: StateFlow<ChildStack<*, WizardComponent.WizardChild>> = childStack(
-        key = "WizardStack",
-        source = navigation,
-        serializer = WizardConfig.serializer(),
-        initialStack = { listOf(WizardConfig.Landing) },
-        childFactory = ::child,
-        handleBackButton = true,
-    ).asStateFlow()
 
     private val dialogNavigation = SlotNavigation<WizardDialogConfig>()
 
@@ -51,23 +38,6 @@ class WizardComponentImpl(
         handleBackButton = true,
     ).asStateFlow()
 
-    private fun child(
-        config: WizardConfig,
-        componentContext: ComponentContext,
-    ): WizardComponent.WizardChild {
-        return when (config) {
-            WizardConfig.Landing -> WizardComponent.WizardChild.Landing(
-                component = WizardLandingComponentImpl(
-                    componentContext = componentContext,
-                    navigateToBirthdayChooser = {
-                        val chooserConfig = WizardDialogConfig.BirthdayChooser(state.value.birthday)
-                        dialogNavigation.navigate { chooserConfig }
-                    }
-                )
-            )
-        }
-    }
-
     private fun dialogChild(
         config: WizardDialogConfig,
         componentContext: ComponentContext,
@@ -78,7 +48,12 @@ class WizardComponentImpl(
                     componentContext = componentContext,
                     initialDate = config.date,
                     onBirthdayConfirmed = { birthday ->
-                        stateFlow.update { it.copy(birthday = birthday) }
+                        stateFlow.update {
+                            it.copy(
+                                birthday = birthday,
+                                lastAvailableScreen = it.screens.lastIndex,
+                            )
+                        }
                         dialogNavigation.navigate { null }
                     },
                     dismissDialog = { dialogNavigation.navigate { null } },
@@ -87,11 +62,8 @@ class WizardComponentImpl(
         }
     }
 
-    @Serializable
-    private sealed interface WizardConfig {
-
-        @Serializable
-        data object Landing : WizardConfig
+    override fun onSelectBirthdayClicked() {
+        dialogNavigation.navigate { WizardDialogConfig.BirthdayChooser(state.value.birthday) }
     }
 
     @Serializable

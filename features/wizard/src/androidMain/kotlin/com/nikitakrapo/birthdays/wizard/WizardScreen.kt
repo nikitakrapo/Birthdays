@@ -7,9 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.nikitakrapo.birthdays.wizard.chooser.BirthdayChooserDialog
-import com.nikitakrapo.birthdays.wizard.landing.WizardLandingScreen
 import com.nikitakrapo.trips.design.theme.TripsTheme
 
 @Composable
@@ -17,23 +15,13 @@ fun WizardScreen(
     modifier: Modifier = Modifier,
     component: WizardComponent,
 ) {
-    val childStack by component.childStack.collectAsState()
     val dialogSlot by component.dialogSlot.collectAsState()
 
-    Children(
-        modifier = modifier,
-        stack = childStack,
-    ) { child ->
-        when (val instance = child.instance) {
-            is WizardComponent.WizardChild.Landing -> {
-                WizardLandingScreen(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    component = instance.component,
-                )
-            }
-        }
-    }
+    WizardMainScreen(
+        modifier = modifier
+            .fillMaxSize(),
+        component = component,
+    )
 
     when (val instance = dialogSlot.child?.instance) {
         is WizardComponent.WizardDialog.BirthdayChooser -> BirthdayChooserDialog(

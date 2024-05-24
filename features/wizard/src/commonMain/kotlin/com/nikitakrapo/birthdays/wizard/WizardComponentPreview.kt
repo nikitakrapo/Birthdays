@@ -1,9 +1,7 @@
 package com.nikitakrapo.birthdays.wizard
 
-import com.arkivanov.decompose.Child
 import com.arkivanov.decompose.router.slot.ChildSlot
-import com.arkivanov.decompose.router.stack.ChildStack
-import com.nikitakrapo.birthdays.wizard.landing.WizardLandingComponentPreview
+import com.nikitakrapo.birthdays.wizard.WizardScreenState.WizardScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -11,16 +9,9 @@ object WizardComponentPreview : WizardComponent {
 
     override val state: StateFlow<WizardScreenState> = MutableStateFlow(
         WizardScreenState(
+            screens = listOf(WizardScreen.Landing, WizardScreen.BirthdayChooser, WizardScreen.Final),
+            lastAvailableScreen = 1,
             birthday = null,
-        )
-    )
-
-    override val childStack: StateFlow<ChildStack<*, WizardComponent.WizardChild>> = MutableStateFlow(
-        ChildStack(
-            Child.Created(
-                configuration = "Main",
-                instance = WizardComponent.WizardChild.Landing(component = WizardLandingComponentPreview),
-            )
         )
     )
 
@@ -29,4 +20,6 @@ object WizardComponentPreview : WizardComponent {
             null,
         )
     )
+
+    override fun onSelectBirthdayClicked() = Unit
 }
