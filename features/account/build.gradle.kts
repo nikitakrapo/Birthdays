@@ -34,7 +34,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.trips.account"
+    namespace = "com.nikitakrapo.birthdays.account"
     compileSdk = 34
     defaultConfig {
         minSdk = 24

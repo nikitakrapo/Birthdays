@@ -1,7 +1,7 @@
 package com.nikitakrapo.trips.di
 
 import com.nikitakrapo.birthdays.account.accountModule
-import com.nikitakrapo.trips.account.AccountManager
+import com.nikitakrapo.birthdays.account.AccountManager
 import com.nikitakrapo.trips.feed.tripsFeedModule
 import com.nikitakrapo.trips.network.AuthorizationTokenProvider
 import com.nikitakrapo.trips.network.AuthorizationTokenProviderImpl
@@ -28,6 +28,5 @@ object AppDi {
 
 private val appModule = module {
     single<HttpClient> { NetworkClientProvider.httpClient() }
-    single<AccountManager> { AccountManager() }
     single<AuthorizationTokenProvider> { AuthorizationTokenProviderImpl(get()) }
 }

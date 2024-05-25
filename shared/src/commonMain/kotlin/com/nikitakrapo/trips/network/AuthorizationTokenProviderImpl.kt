@@ -1,6 +1,6 @@
 package com.nikitakrapo.trips.network
 
-import com.nikitakrapo.trips.account.AccountManager
+import com.nikitakrapo.birthdays.account.AccountManager
 
 class AuthorizationTokenProviderImpl(
     private val accountManager: AccountManager,

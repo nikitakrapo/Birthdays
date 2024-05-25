@@ -1,7 +1,6 @@
-package com.nikitakrapo.trips.account
+package com.nikitakrapo.birthdays.account
 
 data class Account(
     val uid: String,
-    val username: String?,
     val email: String?,
 )

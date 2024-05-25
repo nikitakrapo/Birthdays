@@ -1,8 +1,8 @@
 package com.nikitakrapo.trips.login
 
 import com.arkivanov.decompose.ComponentContext
-import com.nikitakrapo.trips.account.AccountManager
-import com.nikitakrapo.trips.account.LoginResult
+import com.nikitakrapo.birthdays.account.AccountManager
+import com.nikitakrapo.birthdays.account.LoginResult
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.utils.decompose.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,7 +63,7 @@ internal class LoginComponentImpl(
                     }
                 }
                 is LoginResult.UnknownError -> {
-                    val error = loginResult.error.message ?: "Unknown error"
+                    val error = loginResult.error
                     stateFlow.update {
                         it.copy(
                             isLoading = false,

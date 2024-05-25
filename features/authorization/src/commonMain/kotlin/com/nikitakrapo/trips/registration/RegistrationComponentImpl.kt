@@ -5,17 +5,19 @@ import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.navigate
+import com.nikitakrapo.birthdays.account.AccountManager
+import com.nikitakrapo.birthdays.account.RegistrationResult
 import com.nikitakrapo.birthdays.chooser.DateChooserDialogComponentImpl
-import com.nikitakrapo.trips.account.AccountManager
-import com.nikitakrapo.trips.account.RegistrationResult
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
 import com.nikitakrapo.trips.utils.decompose.coroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
 
@@ -101,28 +103,32 @@ internal class RegistrationComponentImpl(
     }
 
     override fun onRegisterClicked() {
+        val birthday = state.value.birthday ?: return
         stateFlow.update { it.copy(isLoading = true) }
-        coroutineScope.launch {
+        coroutineScope.launch(Dispatchers.IO) {
             val registerResult = accountManager.register(
                 username = state.value.username,
                 email = state.value.email,
+                birthday = birthday,
                 password = state.value.password,
             )
-            when (registerResult) {
-                is RegistrationResult.Success -> {
-                    stateFlow.update {
-                        it.copy(
-                            isLoading = false,
-                        )
+            withContext(Dispatchers.Main) {
+                when (registerResult) {
+                    is RegistrationResult.Success -> {
+                        stateFlow.update {
+                            it.copy(
+                                isLoading = false,
+                            )
+                        }
                     }
-                }
-                is RegistrationResult.UnknownError -> {
-                    val error = registerResult.error.message ?: "Unknown error"
-                    stateFlow.update {
-                        it.copy(
-                            isLoading = false,
-                            error = error,
-                        )
+                    is RegistrationResult.UnknownError -> {
+                        val error = registerResult.error
+                        stateFlow.update {
+                            it.copy(
+                                isLoading = false,
+                                error = error,
+                            )
+                        }
                     }
                 }
             }

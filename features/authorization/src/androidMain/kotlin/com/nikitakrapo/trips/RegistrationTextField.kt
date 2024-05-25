@@ -8,8 +8,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -19,6 +17,7 @@ internal fun RegistrationTextField(
     label: String,
     isEnabled: Boolean,
     error: String?,
+    keyboardOptions: KeyboardOptions,
 ) {
     OutlinedTextField(
         modifier = Modifier
@@ -28,10 +27,7 @@ internal fun RegistrationTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(text = label) },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Email,
-            imeAction = ImeAction.Next,
-        ),
+        keyboardOptions = keyboardOptions,
         isError = error != null,
         enabled = isEnabled,
         singleLine = true,

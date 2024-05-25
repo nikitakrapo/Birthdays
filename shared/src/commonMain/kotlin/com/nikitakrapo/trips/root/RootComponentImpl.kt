@@ -5,10 +5,10 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.navigate
+import com.nikitakrapo.birthdays.account.Account
+import com.nikitakrapo.birthdays.account.AccountManager
+import com.nikitakrapo.birthdays.account.isAuthorized
 import com.nikitakrapo.trips.AuthorizationComponentImpl
-import com.nikitakrapo.trips.account.Account
-import com.nikitakrapo.trips.account.AccountManager
-import com.nikitakrapo.trips.account.isAuthorized
 import com.nikitakrapo.trips.mainscreen.MainComponentImpl
 import com.nikitakrapo.trips.utils.coroutines.collectIn
 import com.nikitakrapo.trips.utils.decompose.asStateFlow

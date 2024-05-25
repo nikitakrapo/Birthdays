@@ -1,7 +1,7 @@
 package com.nikitakrapo.trips.profile
 
 import com.arkivanov.decompose.ComponentContext
-import com.nikitakrapo.trips.account.AccountManager
+import com.nikitakrapo.birthdays.account.AccountManager
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.utils.decompose.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ class ProfileComponentImpl(
     private val stateFlow = MutableStateFlow(
         ProfileScreenState(
             username = accountManager.account.value
-                ?.let { it.username ?: it.email ?: "" }
+                ?.let { it.email ?: "" }
                 ?: "",
             showLogoutDialog = false,
         )
