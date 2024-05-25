@@ -21,11 +21,13 @@ kotlin {
                 implementation(libs.kotlin.coroutines)
                 implementation(libs.napier)
                 implementation(libs.koin)
+                implementation(libs.kotlin.datetime)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(libs.firebase.auth)
+                implementation(libs.firebase.firestore)
             }
         }
     }

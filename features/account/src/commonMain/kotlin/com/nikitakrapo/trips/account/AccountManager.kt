@@ -1,6 +1,7 @@
 package com.nikitakrapo.trips.account
 
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.datetime.LocalDate
 
 interface AccountManager {
 
@@ -14,6 +15,7 @@ interface AccountManager {
     suspend fun register(
         username: String,
         email: String,
+        birthday: LocalDate,
         password: String,
     ): RegistrationResult
 

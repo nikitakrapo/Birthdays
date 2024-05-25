@@ -1,7 +1,6 @@
 package com.nikitakrapo.trips.account.firebase
 
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.nikitakrapo.trips.account.Account
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.tasks.await
+import kotlinx.datetime.LocalDate
 
 internal class FirebaseAccountManager : AccountManager {
 
@@ -53,19 +53,15 @@ internal class FirebaseAccountManager : AccountManager {
     override suspend fun register(
         username: String,
         email: String,
+        birthday: LocalDate,
         password: String,
     ): RegistrationResult {
         return wrapWithRegistrationResult {
             val fbUser = firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .await()
                 .user
-            val changeRequest = UserProfileChangeRequest.Builder()
-                .setDisplayName(username)
-                .build()
-            fbUser
-                ?.updateProfile(changeRequest)
-                ?.await()
-            fbUser?.toDomainModel()
+                ?: return@wrapWithRegistrationResult null
+            fbUser.toDomainModel()
         }
     }
 
