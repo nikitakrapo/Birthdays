@@ -2,16 +2,13 @@ package com.nikitakrapo.trips.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Logout
-import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
@@ -26,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.nikitakrapo.birthdays.components.screens.ErrorScreen
+import com.nikitakrapo.birthdays.components.shimmer.ShimmerTextLine
 import com.nikitakrapo.trips.design.theme.TripsTheme
 import strings.R
 
@@ -55,41 +54,44 @@ fun ProfileScreen(
         )
     }
 
+    if (state.isError) {
+        ErrorScreen(
+            modifier = modifier
+                .fillMaxSize(),
+            onRefreshClick = component::onRefreshClicked,
+        )
+        return
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(top = 16.dp),
     ) {
-        // Will be header block
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
-        ) {
+        if (!state.isLoading) {
+            ShimmerTextLine(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                textStyle = TripsTheme.typography.headlineSmall,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            ShimmerTextLine(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                textStyle = TripsTheme.typography.titleMedium,
+            )
+        } else {
             Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
                 text = state.username,
                 style = TripsTheme.typography.headlineSmall,
             )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = state.birthday,
+                style = TripsTheme.typography.titleMedium,
+            )
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        val profileListItemColors = ListItemDefaults.colors(
-            containerColor = Color.Transparent,
-            headlineColor = TripsTheme.colorScheme.onBackground,
-        )
-        ListItem(
-            modifier = Modifier
-                .clickable(onClick = component::onSettingsClick),
-            headlineContent = {
-                Text(text = "Settings")
-            },
-            leadingContent = {
-                Icon(
-                    imageVector = Icons.Outlined.Settings,
-                    contentDescription = null,
-                )
-            },
-            colors = profileListItemColors
-        )
-        HorizontalDivider()
+        Spacer(modifier = Modifier.weight(1f))
         ListItem(
             modifier = Modifier
                 .clickable(onClick = component::onLogoutClick),
@@ -98,7 +100,7 @@ fun ProfileScreen(
             },
             leadingContent = {
                 Icon(
-                    imageVector = Icons.Outlined.Logout,
+                    imageVector = Icons.AutoMirrored.Outlined.Logout,
                     tint = TripsTheme.colorScheme.primary,
                     contentDescription = null,
                 )

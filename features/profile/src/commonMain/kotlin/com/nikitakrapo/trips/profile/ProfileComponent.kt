@@ -6,8 +6,8 @@ interface ProfileComponent {
 
     val state: StateFlow<ProfileScreenState>
 
-    fun onSettingsClick()
     fun onLogoutClick()
     fun onLogoutConfirmed()
     fun onLogoutCancelled()
+    fun onRefreshClicked()
 }

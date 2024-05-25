@@ -5,11 +5,13 @@ import com.nikitakrapo.birthdays.account.AccountManager
 import com.nikitakrapo.birthdays.account.info.AccountInfoRepository
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.utils.decompose.coroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProfileComponentImpl(
     componentContext: ComponentContext,
@@ -22,16 +24,17 @@ class ProfileComponentImpl(
 
     private val stateFlow = MutableStateFlow(
         ProfileScreenState(
-            username = accountManager.account.value
-                ?.let { it.email ?: "" }
-                ?: "",
+            username = "",
+            birthday = "",
+            isLoading = true,
+            isError = false,
             showLogoutDialog = false,
         )
     )
     override val state: StateFlow<ProfileScreenState> = stateFlow.asStateFlow()
 
-    override fun onSettingsClick() {
-        TODO("Not yet implemented")
+    init {
+        fetchUserData()
     }
 
     override fun onLogoutClick() {
@@ -47,5 +50,31 @@ class ProfileComponentImpl(
 
     override fun onLogoutCancelled() {
         stateFlow.update { it.copy(showLogoutDialog = false) }
+    }
+
+    override fun onRefreshClicked() {
+        fetchUserData()
+    }
+
+    private fun fetchUserData() {
+        coroutineScope.launch(Dispatchers.IO) {
+            val uid = accountManager.account.value?.uid
+            val accountInfo = uid?.let { accountInfoRepository.getAccountInfo(it) }
+            accountInfo?.getOrNull()?.let { info ->
+                withContext(Dispatchers.Main) {
+                    stateFlow.update {
+                        it.copy(
+                            username = info.username,
+                            birthday = info.birthday.toString(),
+                            isLoading = false,
+                        )
+                    }
+                }
+            } ?: run {
+                withContext(Dispatchers.Main) {
+                    stateFlow.update { it.copy(isError = true) }
+                }
+            }
+        }
     }
 }

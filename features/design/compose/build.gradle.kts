@@ -20,6 +20,7 @@ dependencies {
     api(libs.compose.ui.tooling.preview)
     api(libs.compose.material3)
     api(libs.compose.material.icons)
+    api(libs.compose.shimmer)
     api(libs.kotlin.datetime)
     debugImplementation(libs.compose.ui.tooling)
 }

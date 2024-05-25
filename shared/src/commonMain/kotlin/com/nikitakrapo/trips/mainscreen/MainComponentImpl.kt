@@ -22,7 +22,7 @@ class MainComponentImpl(
         key = "MainStack",
         source = navigation,
         serializer = MainConfig.serializer(),
-        initialStack = { listOf(MainConfig.TripsFeed, MainConfig.Wizard) },
+        initialStack = { listOf(MainConfig.BirthdaysFeed) },
         childFactory = ::child,
         handleBackButton = true,
     ).asStateFlow()

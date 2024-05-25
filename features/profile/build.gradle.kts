@@ -31,6 +31,7 @@ kotlin {
                 implementation(projects.strings)
                 implementation(projects.features.design.compose)
                 implementation(libs.decompose.extensions.compose)
+                implementation(libs.compose.shimmer)
             }
         }
     }
