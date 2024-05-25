@@ -18,9 +18,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.features.di)
                 implementation(libs.kotlin.coroutines)
                 implementation(libs.napier)
-                implementation(libs.koin)
                 implementation(libs.kotlin.datetime)
             }
         }

@@ -4,6 +4,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.nikitakrapo.birthdays.account.FirebaseDocuments.BIRTHDAY_FIELD
+import com.nikitakrapo.birthdays.account.FirebaseDocuments.USERNAME_FIELD
+import com.nikitakrapo.birthdays.account.FirebaseDocuments.USERS_COLLECTION
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -107,12 +110,5 @@ internal class FirebaseAccountManager : AccountManager {
             uid = uid,
             email = email,
         )
-    }
-
-    companion object {
-        private const val USERS_COLLECTION = "users"
-
-        private const val USERNAME_FIELD = "username"
-        private const val BIRTHDAY_FIELD = "birthday"
     }
 }

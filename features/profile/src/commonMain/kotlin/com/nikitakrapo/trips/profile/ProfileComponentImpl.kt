@@ -2,6 +2,7 @@ package com.nikitakrapo.trips.profile
 
 import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.birthdays.account.AccountManager
+import com.nikitakrapo.birthdays.account.info.AccountInfoRepository
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.utils.decompose.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ class ProfileComponentImpl(
     private val coroutineScope = coroutineScope()
 
     private val accountManager: AccountManager by Di.inject()
+    private val accountInfoRepository: AccountInfoRepository by Di.inject()
 
     private val stateFlow = MutableStateFlow(
         ProfileScreenState(
