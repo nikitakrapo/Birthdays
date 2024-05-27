@@ -1,5 +1,6 @@
 package com.nikitakrapo.trips.registration
 
+import com.nikitakrapo.birthdays.account.models.RegistrationErrorType
 import kotlinx.datetime.LocalDate
 
 data class RegistrationScreenState(
@@ -8,7 +9,7 @@ data class RegistrationScreenState(
     val password: String,
     val birthday: LocalDate?,
     val isLoading: Boolean,
-    val error: String?,
+    val error: RegistrationErrorType?,
 ) {
     val isRegisterButtonActive: Boolean = username.isNotBlank()
             && email.isNotBlank()

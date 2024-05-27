@@ -6,7 +6,7 @@ import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.navigate
 import com.nikitakrapo.birthdays.account.AccountManager
-import com.nikitakrapo.birthdays.account.RegistrationResult
+import com.nikitakrapo.birthdays.account.models.RegistrationResult
 import com.nikitakrapo.birthdays.chooser.DateChooserDialogComponentImpl
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
@@ -121,12 +121,11 @@ internal class RegistrationComponentImpl(
                             )
                         }
                     }
-                    is RegistrationResult.UnknownError -> {
-                        val error = registerResult.error
+                    is RegistrationResult.Error -> {
                         stateFlow.update {
                             it.copy(
                                 isLoading = false,
-                                error = error,
+                                error = registerResult.type,
                             )
                         }
                     }

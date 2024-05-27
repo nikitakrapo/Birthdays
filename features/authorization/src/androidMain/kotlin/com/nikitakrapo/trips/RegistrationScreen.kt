@@ -113,7 +113,7 @@ internal fun RegistrationScreen(
                 onValueChange = component::onUsernameTextChanged,
                 label = stringResource(R.string.login_username_label),
                 isEnabled = !state.isLoading,
-                error = state.error,
+                error = state.error?.takeIf { it.isAboutUsername }?.getText(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
@@ -125,7 +125,7 @@ internal fun RegistrationScreen(
                 onValueChange = component::onEmailTextChanged,
                 label = stringResource(R.string.login_email_label),
                 isEnabled = !state.isLoading,
-                error = state.error,
+                error = state.error?.takeIf { it.isAboutEmail }?.getText(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -140,7 +140,7 @@ internal fun RegistrationScreen(
                 value = state.password,
                 onValueChange = component::onPasswordTextChanged,
                 enabled = !state.isLoading,
-                isError = state.error != null,
+                isError = state.error?.takeIf { it.isAboutPassword } != null,
             )
             Spacer(modifier = Modifier.height(4.dp))
             val density = LocalDensity.current
@@ -193,7 +193,7 @@ internal fun RegistrationScreen(
                             end = 24.dp,
                             top = 16.dp,
                         ),
-                    text = state.error ?: "",
+                    text = state.error?.getText() ?: "",
                     style = TripsTheme.typography.titleSmall,
                     color = TripsTheme.colorScheme.error,
                 )

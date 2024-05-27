@@ -2,7 +2,7 @@ package com.nikitakrapo.trips.login
 
 import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.birthdays.account.AccountManager
-import com.nikitakrapo.birthdays.account.LoginResult
+import com.nikitakrapo.birthdays.account.models.LoginResult
 import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.utils.decompose.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow

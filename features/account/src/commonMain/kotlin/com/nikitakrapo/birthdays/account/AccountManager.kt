@@ -1,5 +1,7 @@
 package com.nikitakrapo.birthdays.account
 
+import com.nikitakrapo.birthdays.account.models.LoginResult
+import com.nikitakrapo.birthdays.account.models.RegistrationResult
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.LocalDate
 
@@ -22,26 +24,4 @@ interface AccountManager {
     suspend fun logout()
 
     suspend fun getToken(): String?
-}
-
-sealed interface LoginResult {
-
-    data class Success(
-        val account: Account,
-    ) : LoginResult
-
-    data class UnknownError(
-        val error: String,
-    ) : LoginResult
-}
-
-sealed interface RegistrationResult {
-
-    data class Success(
-        val account: Account,
-    ) : RegistrationResult
-
-    data class UnknownError(
-        val error: String,
-    ) : RegistrationResult
 }
