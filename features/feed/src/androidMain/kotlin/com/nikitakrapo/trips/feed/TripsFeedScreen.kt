@@ -32,7 +32,6 @@ import com.nikitakrapo.trips.design.utils.plus
 import com.nikitakrapo.trips.feed.item.TripListItem
 import strings.R
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TripsFeedScreen(
     modifier: Modifier = Modifier,
@@ -55,7 +54,7 @@ fun TripsFeedScreen(
                         key = { trip -> trip.id }
                     ) { trip ->
                         TripListItem(
-                            modifier = Modifier.animateItemPlacement(),
+                            modifier = Modifier.animateItem(),
                             component = component.createTripItemComponent(trip),
                         )
                     }

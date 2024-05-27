@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.messaging)
     implementation(libs.koin)
     implementation(libs.napier)
     debugImplementation(libs.compose.ui.tooling)
