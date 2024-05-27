@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Trips</string>
+    <string name="app_name">Mmmonke</string>
     <string name="trips">Trips</string>
-    <string name="birthdays">Monke Birthdays</string>
+    <string name="birthdays">Birthdays</string>
     <string name="profile">Profile</string>
     <string name="cd_overflow_menu">More</string>
     <string name="cd_add_trip">Add trip</string>

@@ -10,7 +10,7 @@ plugins {
 android {
     namespace = "com.nikitakrapo.trips"
     moduleConfigurationPlugin.configureAndroidApp(
-        appId = "com.nikitakrapo.trips",
+        appId = "com.nikitakrapo.monkebdays",
         appVersionCode = 1,
         appVersionName = "1.0",
     )

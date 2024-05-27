@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:458753193527:android:95fc4445277ced4070f1b2",
+        "mobilesdk_app_id": "1:458753193527:android:53f22f486cbbe54a70f1b2",
         "android_client_info": {
-          "package_name": "com.nikitakrapo.android.trips"
+          "package_name": "com.nikitakrapo.monkebdays"
         }
       },
       "oauth_client": [
