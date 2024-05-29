@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.asStateFlow
 
 fun <T : Any> Value<T>.asStateFlow(): StateFlow<T> {
     val mutableStackFlow = MutableStateFlow(value)
-    observe { mutableStackFlow.value = it }
+    subscribe { mutableStackFlow.value = it }
     return mutableStackFlow.asStateFlow()
 }

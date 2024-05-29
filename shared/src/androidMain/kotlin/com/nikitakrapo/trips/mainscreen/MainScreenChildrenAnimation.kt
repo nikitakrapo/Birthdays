@@ -2,12 +2,12 @@ package com.nikitakrapo.trips.mainscreen
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.FaultyDecomposeApi
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.Direction
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimation
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimator
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.isBack
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.slide
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.Direction
+import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimator
+import com.arkivanov.decompose.extensions.compose.stack.animation.isBack
+import com.arkivanov.decompose.extensions.compose.stack.animation.slide
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.nikitakrapo.trips.mainscreen.MainComponent.MainChild
 
 @OptIn(FaultyDecomposeApi::class)
