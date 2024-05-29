@@ -18,8 +18,6 @@ kotlin {
                 implementation(projects.features.utils.coroutines)
                 implementation(libs.napier)
                 implementation(libs.multiplatformSettings)
-                implementation(libs.kotlin.serialization)
-                implementation(libs.ktor.contentNegotiation.json)
             }
         }
         val androidMain by getting {

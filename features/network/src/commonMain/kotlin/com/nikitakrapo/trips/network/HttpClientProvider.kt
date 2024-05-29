@@ -9,6 +9,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.plugin
 import io.ktor.client.request.header
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -20,6 +21,7 @@ object HttpClientProvider {
     fun httpClient() = httpClient {
         install(DefaultRequest) {
             url(NetworkConfig.baseUrl)
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
         install(ContentNegotiation) {
             json(json = Di.get<Json>())
