@@ -20,10 +20,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.ktor.core)
-                implementation(libs.ktor.auth)
-                implementation(libs.ktor.logging)
-                implementation(libs.ktor.contentNegotiation)
-                implementation(libs.ktor.contentNegotiation.json)
+                api(libs.ktor.auth)
+                api(libs.ktor.logging)
+                api(libs.ktor.contentNegotiation)
+                api(libs.ktor.contentNegotiation.json)
                 implementation(libs.napier)
                 implementation(projects.features.di)
             }

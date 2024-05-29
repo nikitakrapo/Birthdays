@@ -4,6 +4,7 @@ import android.app.Application
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import com.nikitakrapo.birthdays.platform.PlatformContext
 import com.nikitakrapo.trips.di.AppDi
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -15,7 +16,9 @@ class BirthdaysApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Napier.base(DebugAntilog())
-        AppDi.start()
+        AppDi.start(platformContext())
         analytics = Firebase.analytics
     }
+
+    private fun platformContext() = PlatformContext(this)
 }

@@ -2,19 +2,12 @@ plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
     alias(libs.plugins.kotlinSerialization)
+    id("trips.module-config")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
+    moduleConfigurationPlugin.configureMultiplatformDefaults()
 
     sourceSets {
         val commonMain by getting {
@@ -39,12 +32,6 @@ kotlin {
 
 android {
     namespace = "com.nikitakrapo.trips.authorization"
-    compileSdk = 34
-    defaultConfig.minSdk = 24
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
+    moduleConfigurationPlugin.configureAndroidDefaults()
+    moduleConfigurationPlugin.configureCompose()
 }

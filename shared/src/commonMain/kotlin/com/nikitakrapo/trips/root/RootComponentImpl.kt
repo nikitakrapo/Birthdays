@@ -8,12 +8,15 @@ import com.arkivanov.decompose.router.stack.navigate
 import com.nikitakrapo.birthdays.account.Account
 import com.nikitakrapo.birthdays.account.AccountManager
 import com.nikitakrapo.birthdays.account.isAuthorized
+import com.nikitakrapo.birthdays.cms.PushTokenInteractor
 import com.nikitakrapo.trips.AuthorizationComponentImpl
+import com.nikitakrapo.trips.di.Di
 import com.nikitakrapo.trips.mainscreen.MainComponentImpl
 import com.nikitakrapo.trips.utils.coroutines.collectIn
 import com.nikitakrapo.trips.utils.decompose.asStateFlow
 import com.nikitakrapo.trips.utils.decompose.coroutineScope
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 class RootComponentImpl(
@@ -22,7 +25,8 @@ class RootComponentImpl(
 
     private val coroutineScope = coroutineScope()
 
-    private val accountManager: AccountManager by com.nikitakrapo.trips.di.Di.inject()
+    private val accountManager: AccountManager by Di.inject()
+    private val pushTokenInteractor: PushTokenInteractor by Di.inject()
 
     private val navigation = StackNavigation<RootConfig>()
 
@@ -40,11 +44,17 @@ class RootComponentImpl(
     init {
         accountManager.account
             .collectIn(coroutineScope, ::handleNewAccount)
+        coroutineScope.launch {
+            pushTokenInteractor.sendTokenToServer()
+        }
     }
 
     private fun handleNewAccount(account: Account?) {
         if (account == null) {
             navigation.navigate { listOf(RootConfig.Authorization) }
+            coroutineScope.launch {
+                pushTokenInteractor.sendTokenToServer()
+            }
         } else {
             navigation.navigate { listOf(RootConfig.Main) }
         }

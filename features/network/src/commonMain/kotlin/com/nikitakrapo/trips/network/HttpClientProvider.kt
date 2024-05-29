@@ -13,7 +13,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-object NetworkClientProvider {
+object HttpClientProvider {
 
     private val tokenProvider by Di.inject<AuthorizationTokenProvider>()
 

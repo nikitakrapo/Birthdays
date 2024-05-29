@@ -12,26 +12,24 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.features.account)
-                api(projects.features.di)
-                api(projects.features.utils.decompose)
-                implementation(libs.decompose)
+                implementation(projects.features.network)
+                implementation(projects.features.di)
+                implementation(projects.features.utils.platform)
+                implementation(projects.features.utils.coroutines)
                 implementation(libs.napier)
+                implementation(libs.multiplatformSettings)
+                implementation(libs.kotlin.serialization)
+                implementation(libs.ktor.contentNegotiation.json)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.strings)
-                implementation(projects.features.design.compose)
-                implementation(libs.decompose.extensions.compose)
-                implementation(libs.compose.shimmer)
             }
         }
     }
 }
 
 android {
-    namespace = "com.nikitakrapo.trips.profile"
+    namespace = "com.nikitakrapo.birthdays.cms"
     moduleConfigurationPlugin.configureAndroidDefaults()
-    moduleConfigurationPlugin.configureCompose()
 }

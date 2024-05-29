@@ -24,6 +24,8 @@ kotlin {
                 api(projects.features.authorization)
                 api(projects.features.profile)
                 api(projects.features.feed)
+                api(projects.features.cloudMessaging)
+                api(projects.features.utils.platform)
                 implementation(projects.features.account)
                 implementation(projects.features.network)
                 implementation(projects.features.repositories)

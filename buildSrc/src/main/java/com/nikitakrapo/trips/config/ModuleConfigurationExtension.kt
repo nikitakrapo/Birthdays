@@ -6,7 +6,6 @@ import com.nikitakrapo.trips.libs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import kotlin.math.min
 
 abstract class ModuleConfigurationExtension(private val project: Project) {
 
@@ -25,16 +24,11 @@ abstract class ModuleConfigurationExtension(private val project: Project) {
     }
 
     fun configureAndroidApp(appId: String, appVersionCode: Int, appVersionName: String) {
+        project.plugins.apply(project.libs.plugins.composeCompiler.get().pluginId)
         project.configure<BaseAppModuleExtension> {
             compileSdk = COMPILE_SDK
             defaultConfig {
                 minSdk = MIN_SDK
-            }
-            buildFeatures {
-                compose = true
-            }
-            composeOptions {
-                kotlinCompilerExtensionVersion = project.libs.versions.compose.compiler.get()
             }
             defaultConfig {
                 applicationId = appId
@@ -54,16 +48,17 @@ abstract class ModuleConfigurationExtension(private val project: Project) {
                     signingConfig = signingConfigs.getByName("debug")
                 }
             }
+            buildFeatures {
+                compose = true
+            }
         }
     }
 
     fun configureCompose() {
+        project.plugins.apply(project.libs.plugins.composeCompiler.get().pluginId)
         project.configure<LibraryExtension> {
             buildFeatures {
                 compose = true
-            }
-            composeOptions {
-                kotlinCompilerExtensionVersion = project.libs.versions.compose.compiler.get()
             }
         }
     }
