@@ -6,7 +6,7 @@ import com.nikitakrapo.birthdays.feed.item.TripItemComponent
 import com.nikitakrapo.birthdays.feed.item.TripItemComponentImpl
 import com.nikitakrapo.birthdays.model.Trip
 import com.nikitakrapo.birthdays.model.TripCreate
-import com.nikitakrapo.birthdays.repositories.TripsRepository
+import com.nikitakrapo.birthdays.repositories.trips.TripsRepository
 import com.nikitakrapo.birthdays.utils.coroutines.collectIn
 import com.nikitakrapo.birthdays.utils.decompose.coroutineScope
 import kotlinx.coroutines.Dispatchers

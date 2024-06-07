@@ -21,11 +21,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.components.screens.ErrorScreen
 import com.nikitakrapo.birthdays.components.shimmer.ShimmerTextLine
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
+import com.nikitakrapo.birthdays.utils.Crossfade
 import strings.R
 
 @Composable
@@ -34,8 +36,9 @@ fun ProfileScreen(
     component: ProfileComponent,
 ) {
     val state by component.state.collectAsState()
+    val showLogoutDialog by component.showLogoutDialog.collectAsState()
 
-    if (state.showLogoutDialog) {
+    if (showLogoutDialog) {
         AlertDialog(
             onDismissRequest = component::onLogoutCancelled,
             confirmButton = {
@@ -54,43 +57,61 @@ fun ProfileScreen(
         )
     }
 
-    if (state.isError) {
-        ErrorScreen(
-            modifier = modifier
-                .fillMaxSize(),
-            onRefreshClick = component::onRefreshClicked,
-        )
-        return
-    }
+    Crossfade(
+        modifier = modifier,
+        targetState = state,
+        contentKey = { it::class },
+    ) { profileScreenState ->
+        when (profileScreenState) {
+            ProfileScreenState.Loading -> {
+                ProfileScreenShimmer(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 16.dp),
+                )
+            }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(top = 16.dp),
-    ) {
-        if (!state.isLoading) {
-            ShimmerTextLine(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                textStyle = BirthdaysTheme.typography.headlineSmall,
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            ShimmerTextLine(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                textStyle = BirthdaysTheme.typography.titleMedium,
-            )
-        } else {
-            Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = state.username,
-                style = BirthdaysTheme.typography.headlineSmall,
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = state.birthday,
-                style = BirthdaysTheme.typography.titleMedium,
-            )
+            is ProfileScreenState.Loaded -> {
+                ProfileScreenLoaded(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 16.dp),
+                    state = profileScreenState,
+                    component = component,
+                )
+            }
+
+            ProfileScreenState.Error -> {
+                ErrorScreen(
+                    modifier = modifier
+                        .fillMaxSize(),
+                    onRefreshClick = component::onRefreshClicked,
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun ProfileScreenLoaded(
+    modifier: Modifier = Modifier,
+    state: ProfileScreenState.Loaded,
+    component: ProfileComponent,
+) {
+    Column(modifier = modifier) {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = state.username,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = BirthdaysTheme.typography.headlineSmall,
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = state.birthday,
+            style = BirthdaysTheme.typography.titleMedium,
+        )
         Spacer(modifier = Modifier.weight(1f))
         ListItem(
             modifier = Modifier
@@ -109,6 +130,23 @@ fun ProfileScreen(
                 containerColor = Color.Transparent,
                 headlineColor = BirthdaysTheme.colorScheme.primary,
             )
+        )
+    }
+}
+
+@Composable
+private fun ProfileScreenShimmer(
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        ShimmerTextLine(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            textStyle = BirthdaysTheme.typography.headlineSmall,
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        ShimmerTextLine(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            textStyle = BirthdaysTheme.typography.titleMedium,
         )
     }
 }

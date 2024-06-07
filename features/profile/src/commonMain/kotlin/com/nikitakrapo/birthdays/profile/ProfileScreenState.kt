@@ -1,9 +1,13 @@
 package com.nikitakrapo.birthdays.profile
 
-data class ProfileScreenState(
-    val username: String,
-    val birthday: String,
-    val isLoading: Boolean,
-    val isError: Boolean,
-    val showLogoutDialog: Boolean,
-)
+sealed interface ProfileScreenState {
+
+    data object Loading : ProfileScreenState
+
+    data class Loaded(
+        val username: String,
+        val birthday: String,
+    ) : ProfileScreenState
+
+    data object Error : ProfileScreenState
+}

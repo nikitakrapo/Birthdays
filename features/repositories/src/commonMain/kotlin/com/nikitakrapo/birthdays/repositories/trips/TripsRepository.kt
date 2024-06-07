@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.repositories
+package com.nikitakrapo.birthdays.repositories.trips
 
 import com.nikitakrapo.birthdays.model.Trip
 import com.nikitakrapo.birthdays.model.TripCreate
@@ -14,6 +14,15 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.UtcOffset
 import kotlinx.datetime.toInstant
 import java.util.UUID
+
+interface TripsRepository {
+
+    fun getTripsFlow(): Flow<List<Trip>>
+
+    suspend fun fetchTrips(): Result<List<Trip>>
+
+    suspend fun addTrip(trip: TripCreate): Result<Unit>
+}
 
 class FakeTripsRepository : TripsRepository {
 

@@ -6,14 +6,12 @@ import kotlinx.coroutines.flow.StateFlow
 object ProfileComponentPreview : ProfileComponent {
 
     override val state: StateFlow<ProfileScreenState> = MutableStateFlow(
-        ProfileScreenState(
+        ProfileScreenState.Loaded(
             username = "nikitakrapo",
             birthday = "15 Feb 2002",
-            isLoading = false,
-            isError = false,
-            showLogoutDialog = false,
         )
     )
+    override val showLogoutDialog: StateFlow<Boolean> = MutableStateFlow(false)
 
     override fun onLogoutClick() {}
     override fun onLogoutConfirmed() {}

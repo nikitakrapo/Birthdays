@@ -13,6 +13,15 @@ suspend fun <T : Any> wrapWithNetworkResult(action: suspend () -> TripsBackendRe
     }
 }
 
+suspend fun <T : Any> getNetworkResult(action: suspend () -> T): NetworkResult<T> {
+    return try {
+        val result = action()
+        NetworkResult.Success(result)
+    } catch (e: Exception) {
+        NetworkResult.Error(e)
+    }
+}
+
 fun <T : Any> NetworkResult<T>.onSuccess(action: (T) -> Unit) {
     if (this is NetworkResult.Success) {
         action(data)

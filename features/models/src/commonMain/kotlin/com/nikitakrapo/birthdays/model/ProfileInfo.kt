@@ -1,8 +1,8 @@
-package com.nikitakrapo.birthdays.account.info
+package com.nikitakrapo.birthdays.model
 
 import kotlinx.datetime.LocalDate
 
-data class AccountInfo(
+class ProfileInfo(
     val username: String,
     val birthday: LocalDate,
 )

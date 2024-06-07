@@ -2,16 +2,12 @@ package com.nikitakrapo.birthdays.profile
 
 import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.birthdays.account.AccountManager
-import com.nikitakrapo.birthdays.account.info.AccountInfoRepository
 import com.nikitakrapo.birthdays.di.Di
+import com.nikitakrapo.birthdays.repositories.profile.ProfileRepository
 import com.nikitakrapo.birthdays.utils.decompose.coroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ProfileComponentImpl(
     componentContext: ComponentContext,
@@ -20,36 +16,31 @@ class ProfileComponentImpl(
     private val coroutineScope = coroutineScope()
 
     private val accountManager: AccountManager by Di.inject()
-    private val accountInfoRepository: AccountInfoRepository by Di.inject()
+    private val profileRepository: ProfileRepository by Di.inject()
 
-    private val stateFlow = MutableStateFlow(
-        ProfileScreenState(
-            username = "",
-            birthday = "",
-            isLoading = true,
-            isError = false,
-            showLogoutDialog = false,
-        )
-    )
-    override val state: StateFlow<ProfileScreenState> = stateFlow.asStateFlow()
+    private val stateFlow: MutableStateFlow<ProfileScreenState> = MutableStateFlow(ProfileScreenState.Loading)
+    override val state = stateFlow.asStateFlow()
+
+    private val showLogoutDialogFlow = MutableStateFlow(false)
+    override val showLogoutDialog = showLogoutDialogFlow.asStateFlow()
 
     init {
         fetchUserData()
     }
 
     override fun onLogoutClick() {
-        stateFlow.update { it.copy(showLogoutDialog = true) }
+        showLogoutDialogFlow.value = true
     }
 
     override fun onLogoutConfirmed() {
-        stateFlow.update { it.copy(showLogoutDialog = false) }
+        showLogoutDialogFlow.value = false
         coroutineScope.launch {
             accountManager.logout()
         }
     }
 
     override fun onLogoutCancelled() {
-        stateFlow.update { it.copy(showLogoutDialog = false) }
+        showLogoutDialogFlow.value = false
     }
 
     override fun onRefreshClicked() {
@@ -57,23 +48,16 @@ class ProfileComponentImpl(
     }
 
     private fun fetchUserData() {
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch {
             val uid = accountManager.account.value?.uid
-            val accountInfo = uid?.let { accountInfoRepository.getAccountInfo(it) }
-            accountInfo?.getOrNull()?.let { info ->
-                withContext(Dispatchers.Main) {
-                    stateFlow.update {
-                        it.copy(
-                            username = info.username,
-                            birthday = info.birthday.toString(),
-                            isLoading = false,
-                        )
-                    }
-                }
-            } ?: run {
-                withContext(Dispatchers.Main) {
-                    stateFlow.update { it.copy(isError = true) }
-                }
+            val accountInfo = uid?.let { profileRepository.getProfileInfo(it) }?.getOrNull()
+            if (accountInfo != null) {
+                stateFlow.value = ProfileScreenState.Loaded(
+                    username = accountInfo.username,
+                    birthday = accountInfo.birthday.toString(),
+                )
+            } else {
+                stateFlow.value = ProfileScreenState.Error
             }
         }
     }

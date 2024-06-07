@@ -13,6 +13,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.account)
+                api(projects.features.repositories)
                 api(projects.features.di)
                 api(projects.features.utils.decompose)
                 implementation(libs.decompose)

@@ -3,6 +3,8 @@ package com.nikitakrapo.birthdays.remote
 import com.nikitakrapo.birthdays.network.result.NetworkResult
 import com.nikitakrapo.birthdays.network.result.TripsBackendResponse
 import com.nikitakrapo.birthdays.network.result.wrapWithNetworkResult
+import com.nikitakrapo.birthdays.remote.data.TripPostRequestDto
+import com.nikitakrapo.birthdays.remote.data.TripsResponseDto
 import com.nikitakrapo.birthdays.utils.coroutines.onIo
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

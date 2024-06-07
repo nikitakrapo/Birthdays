@@ -1,4 +1,4 @@
-package com.nikitakrapo.birthdays.repositories
+package com.nikitakrapo.birthdays.repositories.trips
 
 import com.nikitakrapo.birthdays.di.Di
 import com.nikitakrapo.birthdays.dto.TripDto
@@ -6,9 +6,9 @@ import com.nikitakrapo.birthdays.mapping.toTrip
 import com.nikitakrapo.birthdays.model.Trip
 import com.nikitakrapo.birthdays.model.TripCreate
 import com.nikitakrapo.birthdays.network.result.toResult
-import com.nikitakrapo.birthdays.remote.TripCreateDto
-import com.nikitakrapo.birthdays.remote.TripPostRequestDto
 import com.nikitakrapo.birthdays.remote.TripsApi
+import com.nikitakrapo.birthdays.remote.data.TripCreateDto
+import com.nikitakrapo.birthdays.remote.data.TripPostRequestDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface ProfileComponent {
 
     val state: StateFlow<ProfileScreenState>
+    val showLogoutDialog: StateFlow<Boolean>
 
     fun onLogoutClick()
     fun onLogoutConfirmed()
