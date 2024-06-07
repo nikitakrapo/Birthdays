@@ -17,7 +17,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
-import com.nikitakrapo.trips.design.theme.TripsTheme
 
 @Composable
 fun CalendarDay(
@@ -31,7 +30,7 @@ fun CalendarDay(
     Box(
         modifier = modifier
             .size(48.dp)
-            .clip(TripsTheme.shapes.small)
+            .clip(BirthdaysTheme.shapes.small)
             .semantics { contentDescription = dayContentDescription }
             .clickable(onClick = onClick, enabled = isActive)
             .background(
@@ -45,8 +44,8 @@ fun CalendarDay(
     ) {
         Text(
             text = day.toString(),
-            style = TripsTheme.typography.titleMedium,
-            color = if (isActive) TripsTheme.colorScheme.onSurface else TripsTheme.colorScheme.outline
+            style = BirthdaysTheme.typography.titleMedium,
+            color = if (isActive) BirthdaysTheme.colorScheme.onSurface else BirthdaysTheme.colorScheme.outline
         )
     }
 }
@@ -54,8 +53,8 @@ fun CalendarDay(
 @Preview
 @Composable
 private fun CalendarDayPreview() {
-    TripsTheme {
-        Surface(color = TripsTheme.colorScheme.background) {
+    BirthdaysTheme {
+        Surface(color = BirthdaysTheme.colorScheme.background) {
             CalendarDay(
                 day = 23,
                 onClick = {},

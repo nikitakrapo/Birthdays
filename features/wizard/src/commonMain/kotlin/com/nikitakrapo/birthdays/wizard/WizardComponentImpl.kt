@@ -6,7 +6,7 @@ import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.navigate
 import com.nikitakrapo.birthdays.chooser.DateChooserDialogComponentImpl
-import com.nikitakrapo.trips.utils.decompose.asStateFlow
+import com.nikitakrapo.birthdays.utils.decompose.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

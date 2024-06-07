@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Trips"
+rootProject.name = "Birthdays"
 include(":androidApp")
 include(":shared")
 include(":strings")

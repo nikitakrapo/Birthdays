@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarMonthState
-import com.nikitakrapo.trips.design.theme.TripsTheme
+import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import kotlinx.datetime.DayOfWeek
 
 @Composable
@@ -49,8 +49,8 @@ fun CalendarMonth(
 @Preview
 @Composable
 private fun CalendarMonthPreview() {
-    TripsTheme {
-        Surface(color = TripsTheme.colorScheme.background) {
+    BirthdaysTheme {
+        Surface(color = BirthdaysTheme.colorScheme.background) {
             val delta = 3
             CalendarMonth(
                 month = CalendarMonthState(

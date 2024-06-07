@@ -2,7 +2,7 @@ plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
     alias(libs.plugins.kotlinSerialization)
-    id("trips.module-config")
+    id("birthdays.module-config")
 }
 
 kotlin {
@@ -47,7 +47,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.trips"
+    namespace = "com.nikitakrapo.birthdays"
     moduleConfigurationPlugin.configureAndroidDefaults()
     moduleConfigurationPlugin.configureCompose()
 }

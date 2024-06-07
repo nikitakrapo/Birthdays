@@ -1,7 +1,7 @@
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.kotlinAndroid.get().pluginId)
-    id("trips.module-config")
+    id("birthdays.module-config")
 }
 
 android {

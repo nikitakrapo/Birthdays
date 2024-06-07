@@ -4,11 +4,11 @@ plugins {
     alias(libs.plugins.googleServices)
     alias(libs.plugins.firebaseCrashlytics)
     alias(libs.plugins.kotlinSerialization)
-    id("trips.module-config")
+    id("birthdays.module-config")
 }
 
 android {
-    namespace = "com.nikitakrapo.trips"
+    namespace = "com.nikitakrapo.birthdays"
     moduleConfigurationPlugin.configureAndroidApp(
         appId = "com.nikitakrapo.monkebdays",
         appVersionCode = 1,

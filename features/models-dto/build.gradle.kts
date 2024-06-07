@@ -27,7 +27,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.trips.models.dto"
+    namespace = "com.nikitakrapo.birthdays.models.dto"
     compileSdk = 34
     defaultConfig {
         minSdk = 24

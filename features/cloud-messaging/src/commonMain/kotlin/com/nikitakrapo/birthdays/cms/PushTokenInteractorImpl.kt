@@ -1,8 +1,8 @@
 package com.nikitakrapo.birthdays.cms
 
+import com.nikitakrapo.birthdays.di.Di
 import com.nikitakrapo.birthdays.platform.getDeviceId
-import com.nikitakrapo.trips.di.Di
-import com.nikitakrapo.trips.utils.coroutines.onIo
+import com.nikitakrapo.birthdays.utils.coroutines.onIo
 import com.russhwolf.settings.set
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient

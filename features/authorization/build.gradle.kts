@@ -2,7 +2,7 @@ plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
     alias(libs.plugins.kotlinSerialization)
-    id("trips.module-config")
+    id("birthdays.module-config")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -31,7 +31,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.trips.authorization"
+    namespace = "com.nikitakrapo.birthdays.authorization"
     moduleConfigurationPlugin.configureAndroidDefaults()
     moduleConfigurationPlugin.configureCompose()
 }

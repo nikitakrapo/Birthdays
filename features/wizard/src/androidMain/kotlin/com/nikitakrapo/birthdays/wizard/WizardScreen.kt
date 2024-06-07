@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.nikitakrapo.birthdays.chooser.BirthdayChooserDialog
-import com.nikitakrapo.trips.design.theme.TripsTheme
+import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 
 @Composable
 fun WizardScreen(
@@ -34,8 +34,8 @@ fun WizardScreen(
 @Preview(device = "spec:id=reference_phone,shape=Normal,width=411,height=891,unit=dp,dpi=420",)
 @Composable
 private fun WizardScreenPreview() {
-    TripsTheme {
-        Surface(color = TripsTheme.colorScheme.background) {
+    BirthdaysTheme {
+        Surface(color = BirthdaysTheme.colorScheme.background) {
             WizardScreen(component = WizardComponentPreview)
         }
     }

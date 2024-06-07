@@ -66,7 +66,6 @@ import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarLazyLi
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.birthdays.components.calendar.data.rememberMonthState
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
-import com.nikitakrapo.trips.design.theme.TripsTheme
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
@@ -246,8 +245,8 @@ private fun WeekdaysNames() {
             ) {
                 Text(
                     text = it.first().toString(),
-                    style = TripsTheme.typography.titleMedium,
-                    color = TripsTheme.colorScheme.onBackground,
+                    style = BirthdaysTheme.typography.titleMedium,
+                    color = BirthdaysTheme.colorScheme.onBackground,
                 )
             }
         }
@@ -320,8 +319,8 @@ private fun rememberDateChooserSnapFlingBehavior(
 @Preview
 @Composable
 private fun CalendarDateChooserPreview() {
-    TripsTheme {
-        Surface(color = TripsTheme.colorScheme.background) {
+    BirthdaysTheme {
+        Surface(color = BirthdaysTheme.colorScheme.background) {
             val currentDate = remember {
                 Clock.System.now().toLocalDateTime(TimeZone.UTC).date
             }

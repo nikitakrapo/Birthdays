@@ -1,7 +1,7 @@
 plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
-    id("trips.module-config")
+    id("birthdays.module-config")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -19,5 +19,5 @@ kotlin {
 
 android {
     moduleConfigurationPlugin.configureAndroidDefaults()
-    namespace = "com.nikitakrapo.trips.models"
+    namespace = "com.nikitakrapo.birthdays.models"
 }
