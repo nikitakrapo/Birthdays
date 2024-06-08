@@ -24,7 +24,7 @@ interface TripsRepository {
     suspend fun addTrip(trip: TripCreate): Result<Unit>
 }
 
-class FakeTripsRepository : TripsRepository {
+internal class FakeTripsRepository : TripsRepository {
 
     private var prevTrips: List<Trip> = listOf(
         Trip(

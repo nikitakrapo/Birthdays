@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.datetime.LocalDate
 
-class FakeProfileRepository : ProfileRepository {
+internal class FakeProfileRepository : ProfileRepository {
 
     private val profileInfoFlow = MutableSharedFlow<ProfileInfo>()
 
