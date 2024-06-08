@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -104,7 +104,7 @@ private fun MainScreenBottomBar(
                         ),
                         BottomBarItem(
                             title = context.getString(R.string.wishlist),
-                            icon = Icons.Outlined.Star,
+                            icon = Icons.Outlined.StarOutline,
                         ),
                         BottomBarItem(
                             title = context.getString(R.string.profile),
