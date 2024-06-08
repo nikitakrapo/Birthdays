@@ -136,7 +136,7 @@ fun CalendarDateChooser(
                         Box(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(BirthdaysTheme.colorScheme.secondaryContainer)
+                                .background(BirthdaysTheme.colorScheme.surfaceContainer)
                                 .clickable(onClick = {
                                     scope.launch {
                                         val monthToScroll = state.getAbsoluteMonthForYear(year)
