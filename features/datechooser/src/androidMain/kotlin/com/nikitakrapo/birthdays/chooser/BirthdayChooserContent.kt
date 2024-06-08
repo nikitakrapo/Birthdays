@@ -28,6 +28,7 @@ import com.nikitakrapo.birthdays.components.calendar.Calendar
 import com.nikitakrapo.birthdays.components.calendar.DateChooserDefaults
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
+import com.nikitakrapo.birthdays.components.calendar.info.DateInfoProvider
 import com.nikitakrapo.birthdays.experiments.FeatureToggle
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 
@@ -64,6 +65,7 @@ fun BirthdayChooserContent(
             state = calendarState,
             yearPickerEnabled = true,
             onDaySelected = component::onDatePicked,
+            dateInfoProvider = DateInfoProvider.empty(),
         )
     }
 }

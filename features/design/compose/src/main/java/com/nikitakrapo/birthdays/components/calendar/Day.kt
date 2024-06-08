@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,25 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.birthdays.components.calendar.data.DayState
+import com.nikitakrapo.birthdays.components.calendar.DateChooserDefaults.DaySize
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.utils.ThemedPreview
-import kotlinx.datetime.LocalDate
-
-@Composable
-fun Day(
-    modifier: Modifier = Modifier,
-    state: DayState,
-    onClick: () -> Unit,
-) {
-    Day(
-        modifier = modifier,
-        day = state.day.dayOfMonth,
-        isChosen = state.isChosen,
-        isActive = state.isActive,
-        onClick = onClick,
-    )
-}
 
 @Composable
 fun Day(
@@ -44,6 +29,7 @@ fun Day(
     day: Int,
     isChosen: Boolean,
     isActive: Boolean,
+    hasEvents: Boolean,
     onClick: () -> Unit,
 ) {
     val dayContentDescription = stringResource(strings.R.string.cd_day_of_month, day)
@@ -56,7 +42,7 @@ fun Day(
     )
     Box(
         modifier = modifier
-            .size(48.dp)
+            .size(DaySize)
             .clip(BirthdaysTheme.shapes.small)
             .semantics { contentDescription = dayContentDescription }
             .clickable(onClick = onClick, enabled = isActive)
@@ -75,6 +61,28 @@ fun Day(
             style = BirthdaysTheme.typography.titleMedium,
             color = textColor,
         )
+        if (hasEvents) {
+            Box(
+                modifier = Modifier
+                    .size(DaySize)
+                    .padding(4.dp),
+            ) {
+                val color by animateColorAsState(
+                    targetValue = if (isChosen) {
+                        BirthdaysTheme.colorScheme.onPrimary
+                    } else {
+                        BirthdaysTheme.colorScheme.primary
+                    }
+                )
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(6.dp)
+                        .clip(CircleShape)
+                        .background(color),
+                )
+            }
+        }
     }
 }
 
@@ -85,11 +93,10 @@ private fun DayPreview() {
         Surface(color = BirthdaysTheme.colorScheme.background) {
             Box(modifier = Modifier.padding(16.dp)) {
                 Day(
-                    state = DayState(
-                        day = LocalDate(2024, 10, 10),
-                        isActive = true,
-                        isChosen = false,
-                    ),
+                    day = 10,
+                    isActive = true,
+                    isChosen = false,
+                    hasEvents = true,
                     onClick = {},
                 )
             }
@@ -107,6 +114,7 @@ private fun DaySelectedPreview() {
                     day = 10,
                     isActive = true,
                     isChosen = true,
+                    hasEvents = true,
                     onClick = {},
                 )
             }

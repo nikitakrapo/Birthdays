@@ -56,8 +56,8 @@ import androidx.compose.ui.semantics.invisibleToUser
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.birthdays.components.calendar.data.CalendarState
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
+import com.nikitakrapo.birthdays.components.calendar.data.CalendarState
 import com.nikitakrapo.birthdays.components.calendar.data.getAbsoluteMonthForYear
 import com.nikitakrapo.birthdays.components.calendar.data.getMonthFromAbsoluteMonth
 import com.nikitakrapo.birthdays.components.calendar.data.getMonthState
@@ -65,6 +65,7 @@ import com.nikitakrapo.birthdays.components.calendar.data.getYearFromAbsoluteMon
 import com.nikitakrapo.birthdays.components.calendar.data.numberOfMonths
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarLazyListState
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
+import com.nikitakrapo.birthdays.components.calendar.info.DateInfoProvider
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -80,6 +81,7 @@ fun Calendar(
     modifier: Modifier = Modifier,
     state: CalendarState,
     yearPickerEnabled: Boolean,
+    dateInfoProvider: DateInfoProvider,
     onDaySelected: (LocalDate) -> Unit,
 ) {
     LaunchedEffect(state.selectedDate) {
@@ -158,6 +160,7 @@ fun Calendar(
                     MonthsPager(
                         state = state,
                         monthLazyListState = monthLazyListState,
+                        dateInfoProvider = dateInfoProvider,
                     )
                 }
             }
@@ -257,6 +260,7 @@ private fun WeekdaysNames() {
 private fun MonthsPager(
     state: CalendarState,
     monthLazyListState: LazyListState,
+    dateInfoProvider: DateInfoProvider,
 ) {
     LazyRow(
         state = monthLazyListState,
@@ -286,6 +290,7 @@ private fun MonthsPager(
                 modifier = Modifier
                     .fillParentMaxWidth(),
                 month = monthState,
+                dateInfoProvider = dateInfoProvider,
                 onDayClicked = {
                     val localDate = LocalDate(currentYear, currentMonth, it.day.dayOfMonth)
                     state.selectedDate = localDate
@@ -335,6 +340,7 @@ private fun CalendarPreview() {
                 ),
                 yearPickerEnabled = true,
                 onDaySelected = {},
+                dateInfoProvider = DateInfoProvider.empty(),
             )
         }
     }
