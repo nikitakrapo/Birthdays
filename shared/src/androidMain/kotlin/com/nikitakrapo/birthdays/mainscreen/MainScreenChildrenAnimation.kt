@@ -20,7 +20,7 @@ internal fun mainScreenChildrenAnimation(): StackAnimation<Any, MainChild> =
             val anim = slide()
             if ((index > otherIndex) == !direction.isBack) anim else anim.flipSide()
         } else {
-            slide().let { if (direction.isBack) it.flipSide() else it }
+            slide()
         }
     }
 

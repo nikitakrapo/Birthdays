@@ -20,14 +20,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowRight
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -45,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.nikitakrapo.birthdays.chooser.BirthdayChooserDialog
+import com.nikitakrapo.birthdays.components.buttons.BackButton
 import com.nikitakrapo.birthdays.design.components.PasswordTextField
 import com.nikitakrapo.birthdays.registration.RegistrationComponent
 import com.nikitakrapo.birthdays.registration.RegistrationComponentPreview
@@ -82,12 +81,7 @@ internal fun RegistrationScreen(
                 .zIndex(1f),
             title = {},
             navigationIcon = {
-                IconButton(onClick = component::onBackClicked) {
-                    Icon(
-                        imageVector = Icons.Outlined.ArrowBack,
-                        contentDescription = stringResource(id = R.string.cd_back)
-                    )
-                }
+                BackButton(onClick = component::onBackClicked)
             }
         )
         Column(

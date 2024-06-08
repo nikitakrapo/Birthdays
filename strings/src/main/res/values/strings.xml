@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Mmmonke</string>
     <string name="trips">Trips</string>
+    <string name="birthday">Birthday</string>
     <string name="birthdays">Birthdays</string>
     <string name="profile">Profile</string>
     <string name="cd_overflow_menu">More</string>
@@ -15,6 +16,7 @@
     <string name="login_password_label">Password</string>
     <string name="register_title">Register to Monke Birthdays</string>
     <string name="register_register">Register</string>
+    <string name="profile_info">Profile info</string>
     <string name="profile_logout_confirmation">Are you sure you want to log out?</string>
     <string name="logout">Logout</string>
     <string name="cancel">Cancel</string>
@@ -35,6 +37,10 @@
     <string name="cd_day_of_month">Day of month %1$d</string>
     <string name="cd_birthday_chooser_calendar_mode">Switch to calendar chooser mode</string>
     <string name="cd_birthday_chooser_text_mode">Switch to text chooser mode</string>
+
+    <string name="cd_edit_profile">Edit profile</string>
+    <string name="cd_edit_birthday">Edit birthday</string>
+    <string name="cd_edit_profile_confirm">Confirm changes</string>
 
     <string name="birthdays_onboarding_slogan">Make Birthdays fun again</string>
     <string name="birthdays_onboarding_add_birthday_title">Please select your birthday</string>

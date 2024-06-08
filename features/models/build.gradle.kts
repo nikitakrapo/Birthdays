@@ -1,6 +1,7 @@
 plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
+    alias(libs.plugins.kotlinSerialization)
     id("birthdays.module-config")
 }
 
@@ -12,6 +13,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.kotlin.datetime)
+                api(libs.kotlin.serialization)
             }
         }
     }

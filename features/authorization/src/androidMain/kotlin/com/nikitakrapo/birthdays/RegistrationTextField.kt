@@ -33,5 +33,4 @@ internal fun RegistrationTextField(
         singleLine = true,
         maxLines = 1,
     )
-
 }

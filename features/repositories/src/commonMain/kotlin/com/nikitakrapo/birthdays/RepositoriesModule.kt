@@ -9,6 +9,6 @@ import org.koin.dsl.module
 
 val repositoriesModule = module {
     factory<TripsApi> { TripsApi(get()) }
-    factory<ProfileRepository> { FakeProfileRepository() }
+    single<ProfileRepository> { FakeProfileRepository() }
     factory<TripsRepository> { FakeTripsRepository() }
 }

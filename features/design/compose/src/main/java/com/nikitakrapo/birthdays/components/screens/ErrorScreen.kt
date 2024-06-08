@@ -18,7 +18,7 @@ import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 @Composable
 fun ErrorScreen(
     modifier: Modifier = Modifier,
-    onRefreshClick: () -> Unit,
+    onRetryClick: () -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -27,7 +27,7 @@ fun ErrorScreen(
     ) {
         IconButton(
             modifier = Modifier,
-            onClick = onRefreshClick,
+            onClick = onRetryClick,
         ) {
             Icon(
                 imageVector = Icons.Outlined.Refresh,
@@ -46,7 +46,7 @@ private fun ErrorScreenPreview() {
     BirthdaysTheme {
         Surface(color = BirthdaysTheme.colorScheme.background) {
             ErrorScreen(
-                onRefreshClick = {},
+                onRetryClick = {},
             )
         }
     }

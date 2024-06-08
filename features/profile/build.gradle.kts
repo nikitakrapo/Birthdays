@@ -14,8 +14,10 @@ kotlin {
             dependencies {
                 api(projects.features.account)
                 api(projects.features.repositories)
+                api(projects.features.datechooser)
                 api(projects.features.di)
                 api(projects.features.utils.decompose)
+                api(projects.features.utils.platform)
                 implementation(libs.decompose)
                 implementation(libs.napier)
             }

@@ -5,7 +5,10 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
+import com.nikitakrapo.birthdays.model.ProfileInfo
 import com.nikitakrapo.birthdays.profile.ProfileComponentImpl
+import com.nikitakrapo.birthdays.profile.ProfileEditComponentImpl
 import com.nikitakrapo.birthdays.utils.decompose.asStateFlow
 import com.nikitakrapo.birthdays.wizard.WizardComponentImpl
 import kotlinx.coroutines.flow.StateFlow
@@ -47,7 +50,20 @@ class MainComponentImpl(
                 component = Unit,
             )
             MainConfig.Profile -> MainComponent.MainChild.BottomBarChild.Profile(
-                component = ProfileComponentImpl(componentContext = componentContext),
+                component = ProfileComponentImpl(
+                    componentContext = componentContext,
+                    navigateToProfileEdit = { profileInfo ->
+                        navigation.bringToFront(MainConfig.ProfileEdit(profileInfo))
+                    }
+                ),
+            )
+            is MainConfig.ProfileEdit -> MainComponent.MainChild.ProfileEdit(
+                component = ProfileEditComponentImpl(
+                    componentContext = componentContext,
+                    initialProfileInfo = config.profileInfo,
+                    onProfileUpdated = { navigation.pop() },
+                    navigateBack = { navigation.pop() },
+                ),
             )
             MainConfig.Wizard -> MainComponent.MainChild.Wizard(
                 component = WizardComponentImpl(componentContext = componentContext),
@@ -66,6 +82,11 @@ class MainComponentImpl(
 
         @Serializable
         data object Profile : MainConfig
+
+        @Serializable
+        data class ProfileEdit(
+            val profileInfo: ProfileInfo,
+        ) : MainConfig
 
         @Serializable
         data object Wizard : MainConfig

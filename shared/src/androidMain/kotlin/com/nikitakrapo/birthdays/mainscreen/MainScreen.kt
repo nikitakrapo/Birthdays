@@ -22,6 +22,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.birthdays.design.components.BottomBarItem
 import com.nikitakrapo.birthdays.design.components.BottomNavigationBar
 import com.nikitakrapo.birthdays.mainscreen.MainComponent.MainChild
+import com.nikitakrapo.birthdays.profile.ProfileEditScreen
 import com.nikitakrapo.birthdays.profile.ProfileScreen
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.wizard.WizardScreen
@@ -58,6 +59,12 @@ fun MainScreen(
                 }
 
                 is MainChild.BottomBarChild.Profile -> ProfileScreen(
+                    modifier = Modifier
+                        .statusBarsPadding(),
+                    component = instance.component,
+                )
+
+                is MainChild.ProfileEdit -> ProfileEditScreen(
                     modifier = Modifier
                         .statusBarsPadding(),
                     component = instance.component,

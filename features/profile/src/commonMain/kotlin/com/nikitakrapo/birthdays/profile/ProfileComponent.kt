@@ -7,8 +7,9 @@ interface ProfileComponent {
     val state: StateFlow<ProfileScreenState>
     val showLogoutDialog: StateFlow<Boolean>
 
-    fun onLogoutClick()
+    fun onEditProfileClicked()
+    fun onLogoutClicked()
     fun onLogoutConfirmed()
     fun onLogoutCancelled()
-    fun onRefreshClicked()
+    fun onRetryClicked()
 }
