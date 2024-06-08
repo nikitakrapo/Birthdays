@@ -18,15 +18,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.nikitakrapo.birthdays.components.calendar.data.DayState
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.utils.ThemedPreview
+import kotlinx.datetime.LocalDate
 
 @Composable
-fun CalendarDay(
+fun Day(
+    modifier: Modifier = Modifier,
+    state: DayState,
+    onClick: () -> Unit,
+) {
+    Day(
+        modifier = modifier,
+        day = state.day.dayOfMonth,
+        isChosen = state.isChosen,
+        isActive = state.isActive,
+        onClick = onClick,
+    )
+}
+
+@Composable
+fun Day(
     modifier: Modifier = Modifier,
     day: Int,
-    isChosen: Boolean = false,
-    isActive: Boolean = true,
+    isChosen: Boolean,
+    isActive: Boolean,
     onClick: () -> Unit,
 ) {
     val dayContentDescription = stringResource(strings.R.string.cd_day_of_month, day)
@@ -63,12 +80,16 @@ fun CalendarDay(
 
 @ThemedPreview
 @Composable
-private fun CalendarDayPreview() {
+private fun DayPreview() {
     BirthdaysTheme {
         Surface(color = BirthdaysTheme.colorScheme.background) {
             Box(modifier = Modifier.padding(16.dp)) {
-                CalendarDay(
-                    day = 23,
+                Day(
+                    state = DayState(
+                        day = LocalDate(2024, 10, 10),
+                        isActive = true,
+                        isChosen = false,
+                    ),
                     onClick = {},
                 )
             }
@@ -78,14 +99,15 @@ private fun CalendarDayPreview() {
 
 @ThemedPreview
 @Composable
-private fun CalendarDaySelectedPreview() {
+private fun DaySelectedPreview() {
     BirthdaysTheme {
         Surface(color = BirthdaysTheme.colorScheme.background) {
             Box(modifier = Modifier.padding(16.dp)) {
-                CalendarDay(
-                    day = 23,
-                    onClick = {},
+                Day(
+                    day = 10,
+                    isActive = true,
                     isChosen = true,
+                    onClick = {},
                 )
             }
         }

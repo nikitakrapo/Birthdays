@@ -56,15 +56,15 @@ import androidx.compose.ui.semantics.invisibleToUser
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.birthdays.components.calendar.data.CalendarDateChooserState
+import com.nikitakrapo.birthdays.components.calendar.data.CalendarState
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.getAbsoluteMonthForYear
 import com.nikitakrapo.birthdays.components.calendar.data.getMonthFromAbsoluteMonth
+import com.nikitakrapo.birthdays.components.calendar.data.getMonthState
 import com.nikitakrapo.birthdays.components.calendar.data.getYearFromAbsoluteMonth
 import com.nikitakrapo.birthdays.components.calendar.data.numberOfMonths
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarLazyListState
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
-import com.nikitakrapo.birthdays.components.calendar.data.rememberMonthState
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -76,9 +76,9 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun CalendarDateChooser(
+fun Calendar(
     modifier: Modifier = Modifier,
-    state: CalendarDateChooserState,
+    state: CalendarState,
     yearPickerEnabled: Boolean,
     onDaySelected: (LocalDate) -> Unit,
 ) {
@@ -87,13 +87,13 @@ fun CalendarDateChooser(
     }
     Column(
         modifier = modifier
-            .width(CalendarDefaults.MediumWidth),
+            .width(DateChooserDefaults.MediumWidth),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val scope = rememberCoroutineScope()
         val monthLazyListState = rememberCalendarLazyListState(state)
         var yearSelectorShowed by remember { mutableStateOf(false) }
-        CalendarMonthHeader(
+        MonthHeader(
             state = state,
             onNextMonthClicked = {
                 scope.launch {
@@ -166,8 +166,8 @@ fun CalendarDateChooser(
 }
 
 @Composable
-private fun CalendarMonthHeader(
-    state: CalendarDateChooserState,
+private fun MonthHeader(
+    state: CalendarState,
     onNextMonthClicked: () -> Unit,
     onPreviousMonthClicked: () -> Unit,
     nextMonthAvailable: Boolean,
@@ -255,7 +255,7 @@ private fun WeekdaysNames() {
 
 @Composable
 private fun MonthsPager(
-    state: CalendarDateChooserState,
+    state: CalendarState,
     monthLazyListState: LazyListState,
 ) {
     LazyRow(
@@ -276,7 +276,7 @@ private fun MonthsPager(
             val lastDay = state.calendarRange.endDate
                 .takeIf { it.year == currentYear && it.month == currentMonth }
                 ?.dayOfMonth
-            val monthState = rememberMonthState(
+            val monthState = getMonthState(
                 year = currentYear,
                 month = currentMonth,
                 selectedDay = selectedDay,
@@ -287,7 +287,7 @@ private fun MonthsPager(
                     .fillParentMaxWidth(),
                 month = monthState,
                 onDayClicked = {
-                    val localDate = LocalDate(currentYear, currentMonth, it.value)
+                    val localDate = LocalDate(currentYear, currentMonth, it.day.dayOfMonth)
                     state.selectedDate = localDate
                 },
             )
@@ -318,13 +318,13 @@ private fun rememberDateChooserSnapFlingBehavior(
 
 @Preview
 @Composable
-private fun CalendarDateChooserPreview() {
+private fun CalendarPreview() {
     BirthdaysTheme {
         Surface(color = BirthdaysTheme.colorScheme.background) {
             val currentDate = remember {
                 Clock.System.now().toLocalDateTime(TimeZone.UTC).date
             }
-            CalendarDateChooser(
+            Calendar(
                 state = rememberCalendarState(
                     initialDate = currentDate,
                     initialSelectedDate = null,

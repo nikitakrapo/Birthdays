@@ -24,8 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.chooser.DateChooserState.ChooserMode
-import com.nikitakrapo.birthdays.components.calendar.CalendarDateChooser
-import com.nikitakrapo.birthdays.components.calendar.CalendarDefaults
+import com.nikitakrapo.birthdays.components.calendar.Calendar
+import com.nikitakrapo.birthdays.components.calendar.DateChooserDefaults
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.birthdays.experiments.FeatureToggle
@@ -40,7 +40,7 @@ fun BirthdayChooserContent(
 
     Column(
         modifier = modifier
-            .width(CalendarDefaults.MediumWidth),
+            .width(DateChooserDefaults.MediumWidth),
     ) {
         Spacer(modifier = Modifier.height(8.dp))
         BirthdayChooserHeader(
@@ -60,7 +60,7 @@ fun BirthdayChooserContent(
                 endDate = state.endDate,
             ),
         )
-        CalendarDateChooser(
+        Calendar(
             state = calendarState,
             yearPickerEnabled = true,
             onDaySelected = component::onDatePicked,

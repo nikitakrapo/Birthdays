@@ -15,7 +15,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 
 @Stable
-class CalendarDateChooserState internal constructor(
+class CalendarState internal constructor(
     initialDate: LocalDate,
     initialSelectedDate: LocalDate?,
     val calendarRange: CalendarRange,
@@ -31,24 +31,25 @@ class CalendarDateChooserState internal constructor(
         12 * (selectedYear - calendarRange.startDate.year) + initialDate.month.value - 1
 }
 
-val CalendarDateChooserState.numberOfMonths: Int get() {
-    val numberOfYears = calendarRange.endDate.year - calendarRange.startDate.year + 1
-    val startMonthsTrim = calendarRange.startMonthsOffset
-    val endMonthsTrim = 12 - calendarRange.endDate.month.value
-    return numberOfYears * 12 - startMonthsTrim - endMonthsTrim
-}
+val CalendarState.numberOfMonths: Int
+    get() {
+        val numberOfYears = calendarRange.endDate.year - calendarRange.startDate.year + 1
+        val startMonthsTrim = calendarRange.startMonthsOffset
+        val endMonthsTrim = 12 - calendarRange.endDate.month.value
+        return numberOfYears * 12 - startMonthsTrim - endMonthsTrim
+    }
 
-fun CalendarDateChooserState.getMonthFromAbsoluteMonth(absoluteMonth: Int): Month {
+fun CalendarState.getMonthFromAbsoluteMonth(absoluteMonth: Int): Month {
     val startMonthsOffset = calendarRange.startMonthsOffset
     return Month((absoluteMonth + startMonthsOffset) % 12 + 1)
 }
 
-fun CalendarDateChooserState.getYearFromAbsoluteMonth(absoluteMonth: Int): Int {
+fun CalendarState.getYearFromAbsoluteMonth(absoluteMonth: Int): Int {
     val startMonthsOffset = calendarRange.startMonthsOffset
     return (absoluteMonth + startMonthsOffset) / 12 + calendarRange.startDate.year
 }
 
-fun CalendarDateChooserState.getAbsoluteMonthForYear(year: Int): Int {
+fun CalendarState.getAbsoluteMonthForYear(year: Int): Int {
     check(year >= calendarRange.startDate.year && year <= calendarRange.endDate.year) {
         "Wrong year"
     }
@@ -60,29 +61,24 @@ fun CalendarDateChooserState.getAbsoluteMonthForYear(year: Int): Int {
 
 private val CalendarRange.startMonthsOffset get() = startDate.month.ordinal
 
-@Composable
-fun rememberMonthState(
+fun getMonthState(
     year: Int,
     month: Month,
     selectedDay: Int?,
     dayRange: IntRange,
-): CalendarMonthState {
-    val weekList = remember(year, month) {
-        createListOfWeeks(year, month)
-    }
-    return remember(selectedDay, dayRange) {
-        CalendarMonthState(
-            weekList = weekList,
-            selectedDay = selectedDay,
-            dayRange = dayRange,
-        )
-    }
-}
+) = MonthState(
+    weekList = createListOfWeeks(
+        year = year,
+        month = month,
+        selectedDay = selectedDay,
+        dayRange = dayRange
+    ),
+)
 
 @Composable
 fun rememberCalendarLazyListState(
-    state: CalendarDateChooserState,
-) : LazyListState {
+    state: CalendarState,
+): LazyListState {
     val lazyListState = rememberLazyListState(
         initialFirstVisibleItemIndex = state.initialMonthAbsolute,
     )
@@ -103,9 +99,9 @@ fun rememberCalendarState(
     initialDate: LocalDate,
     initialSelectedDate: LocalDate?,
     calendarRange: CalendarRange,
-) : CalendarDateChooserState {
+): CalendarState {
     return remember(calendarRange) {
-        CalendarDateChooserState(
+        CalendarState(
             initialDate = initialDate,
             initialSelectedDate = initialSelectedDate,
             calendarRange = calendarRange,

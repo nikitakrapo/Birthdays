@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.birthdays.components.calendar.CalendarDefaults
+import com.nikitakrapo.birthdays.components.calendar.DateChooserDefaults
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 
 @Composable
@@ -32,7 +32,7 @@ fun BirthdayChooserDialog(
     val state by component.state.collectAsState()
 
     DatePickerDialog(
-        modifier = modifier.width(CalendarDefaults.MediumWidth),
+        modifier = modifier.width(DateChooserDefaults.MediumWidth),
         onDismissRequest = component::onDismiss,
         confirmButton = {
             TextButton(

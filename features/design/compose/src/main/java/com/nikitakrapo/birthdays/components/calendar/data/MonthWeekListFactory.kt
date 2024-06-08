@@ -11,7 +11,9 @@ private const val MAX_WEEKS = 6
 internal fun createListOfWeeks(
     year: Int,
     month: Month,
-): List<List<CalendarMonthState.Day>> {
+    selectedDay: Int?,
+    dayRange: IntRange,
+): List<List<DayState>> {
     val localDate = LocalDate(year, month, 1)
     val monthLength = localDate.toJavaLocalDate().lengthOfMonth()
     val firstDayOfWeek = localDate.dayOfWeek
@@ -19,15 +21,23 @@ internal fun createListOfWeeks(
     return List(MAX_WEEKS) { week ->
         if (week == 0) {
             val firstWeekDays = firstDayOfWeek.value..DayOfWeek.values().last().value
-            (firstWeekDays).mapNotNull { dayOfWeekValue ->
-                val dayOfWeek = DayOfWeek(dayOfWeekValue)
-                CalendarMonthState.Day(dayOfWeekValue - weekOffset, dayOfWeek)
+            firstWeekDays.mapNotNull { dayOfWeekValue ->
+                val dayValue = dayOfWeekValue - weekOffset
+                DayState(
+                    day = LocalDate(year, month, dayValue),
+                    isChosen = dayValue == selectedDay,
+                    isActive = dayValue in dayRange,
+                )
             }
         } else {
             DayOfWeek.values().mapNotNull { dayOfWeek ->
                 val dayValue = week * 7 + dayOfWeek.value - weekOffset
                 if (dayValue <= monthLength) {
-                    CalendarMonthState.Day(dayValue, dayOfWeek)
+                    DayState(
+                        day = LocalDate(year, month, dayValue),
+                        isChosen = dayValue == selectedDay,
+                        isActive = dayValue in dayRange,
+                    )
                 } else {
                     null
                 }
