@@ -21,6 +21,7 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.birthdays.design.components.BottomBarItem
 import com.nikitakrapo.birthdays.design.components.BottomNavigationBar
+import com.nikitakrapo.birthdays.feed.BirthdaysFeedScreen
 import com.nikitakrapo.birthdays.mainscreen.MainComponent.MainChild
 import com.nikitakrapo.birthdays.profile.ProfileEditScreen
 import com.nikitakrapo.birthdays.profile.ProfileScreen
@@ -44,12 +45,11 @@ fun MainScreen(
             animation = mainScreenChildrenAnimation(),
         ) {
             when (val instance = it.instance) {
-                is MainChild.BottomBarChild.BirthdaysFeed -> Box(
+                is MainChild.BottomBarChild.BirthdaysFeed -> BirthdaysFeedScreen(
                     modifier = Modifier
                         .statusBarsPadding(),
-                ) {
-                    Text(text = "$instance")
-                }
+                    component = instance.component,
+                )
 
                 is MainChild.BottomBarChild.Wishlist -> Box(
                     modifier = Modifier

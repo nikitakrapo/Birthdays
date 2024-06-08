@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponentImpl
 import com.nikitakrapo.birthdays.model.ProfileInfo
 import com.nikitakrapo.birthdays.profile.ProfileComponentImpl
 import com.nikitakrapo.birthdays.profile.ProfileEditComponentImpl
@@ -44,7 +45,9 @@ class MainComponentImpl(
     private fun child(config: MainConfig, componentContext: ComponentContext): MainComponent.MainChild {
         return when (config) {
             MainConfig.BirthdaysFeed -> MainComponent.MainChild.BottomBarChild.BirthdaysFeed(
-                component = Unit,
+                component = BirthdaysFeedComponentImpl(
+                    componentContext = componentContext,
+                ),
             )
             MainConfig.Wishlist -> MainComponent.MainChild.BottomBarChild.Wishlist(
                 component = Unit,

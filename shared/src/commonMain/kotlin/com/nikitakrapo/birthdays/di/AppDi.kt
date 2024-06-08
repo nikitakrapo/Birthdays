@@ -2,12 +2,12 @@ package com.nikitakrapo.birthdays.di
 
 import com.nikitakrapo.birthdays.account.accountModule
 import com.nikitakrapo.birthdays.cms.pushModule
-import com.nikitakrapo.birthdays.platform.PlatformContext
-import com.nikitakrapo.birthdays.feed.tripsFeedModule
+import com.nikitakrapo.birthdays.feed.birthdaysFeedModule
 import com.nikitakrapo.birthdays.network.AuthorizationTokenProvider
 import com.nikitakrapo.birthdays.network.AuthorizationTokenProviderImpl
 import com.nikitakrapo.birthdays.network.HttpClientProvider
 import com.nikitakrapo.birthdays.network.networkModule
+import com.nikitakrapo.birthdays.platform.PlatformContext
 import com.nikitakrapo.birthdays.repositoriesModule
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
@@ -21,7 +21,7 @@ object AppDi {
                 appModule(platformContext),
                 pushModule,
                 accountModule,
-                tripsFeedModule,
+                birthdaysFeedModule,
                 networkModule,
                 repositoriesModule,
             )

@@ -2,6 +2,7 @@ package com.nikitakrapo.birthdays.mainscreen
 
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponent
 import com.nikitakrapo.birthdays.profile.ProfileComponent
 import com.nikitakrapo.birthdays.profile.ProfileEditComponent
 import com.nikitakrapo.birthdays.wizard.WizardComponent
@@ -22,7 +23,7 @@ interface MainComponent {
     sealed interface MainChild {
 
         sealed interface BottomBarChild : MainChild {
-            class BirthdaysFeed(val component: Unit) : BottomBarChild
+            class BirthdaysFeed(val component: BirthdaysFeedComponent) : BottomBarChild
             class Wishlist(val component: Unit) : BottomBarChild
             class Profile(val component: ProfileComponent) : BottomBarChild
         }
