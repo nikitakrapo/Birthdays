@@ -2,6 +2,7 @@ package com.nikitakrapo.birthdays.feed
 
 import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.birthdays.di.Di
+import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.repositories.birthdays.BirthdaysRepository
 import com.nikitakrapo.birthdays.utils.decompose.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +30,10 @@ class BirthdaysFeedComponentImpl(
     }
 
     override fun onDateSelected(date: LocalDate) {
+        val birthdays = (state.value as? BirthdaysFeedScreenState.Loaded)?.birthdays ?: return
+    }
+
+    override fun onBirthdayClicked(birthday: Birthday) {
         TODO("Not yet implemented")
     }
 
@@ -41,7 +46,7 @@ class BirthdaysFeedComponentImpl(
                         initialDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
                         startDate = LocalDate(2024, 1, 1),
                         endDate = LocalDate(2026, 1, 1),
-                        birthdays = it.map { it.date },
+                        birthdays = it,
                     )
                 },
                 onFailure = { TODO() },

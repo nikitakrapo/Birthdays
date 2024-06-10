@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,15 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.nikitakrapo.birthdays.components.birthdays.BirthdayListItem
 import com.nikitakrapo.birthdays.components.calendar.Calendar
 import com.nikitakrapo.birthdays.components.calendar.data.CalendarRange
 import com.nikitakrapo.birthdays.components.calendar.data.rememberCalendarState
 import com.nikitakrapo.birthdays.components.calendar.info.DateInfo
 import com.nikitakrapo.birthdays.components.calendar.info.DateInfoProvider
 import com.nikitakrapo.birthdays.components.shimmer.ShimmerBox
+import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.utils.Crossfade
-import kotlinx.datetime.LocalDate
 
 @Composable
 fun BirthdaysFeedScreen(
@@ -47,16 +49,16 @@ fun BirthdaysFeedScreen(
                     BirthdaysCalendarShimmer()
                 }
             }
+
             is BirthdaysFeedScreenState.Loaded -> LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth(),
                 contentPadding = PaddingValues(top = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                item {
-                    BirthdaysCalendar(
-                        state = screenState,
-                        component = component,
+                items(screenState.birthdays) {
+                    BirthdayListItem(
+                        birthday = it,
+                        onClick = { component.onBirthdayClicked(it) }
                     )
                 }
             }
@@ -73,7 +75,7 @@ private fun BirthdaysCalendar(
     Box(
         modifier = modifier
             .clip(BirthdaysTheme.shapes.medium)
-            .background(BirthdaysTheme.colorScheme.primaryContainer)
+            .background(BirthdaysTheme.colorScheme.surfaceContainer)
             .padding(16.dp),
     ) {
         val calendarState = rememberCalendarState(
@@ -92,9 +94,9 @@ private fun BirthdaysCalendar(
     }
 }
 
-private fun List<LocalDate>.dateInfoProvider(): DateInfoProvider = DateInfoProvider { date ->
+private fun List<Birthday>.dateInfoProvider(): DateInfoProvider = DateInfoProvider { date ->
     DateInfo(
-        hasEvents = any { it == date },
+        hasEvents = any { it.date == date },
     )
 }
 
@@ -109,6 +111,6 @@ private fun BirthdaysCalendarShimmer(
                 height = 384.dp + 32.dp,
             )
             .clip(BirthdaysTheme.shapes.medium)
-            .background(BirthdaysTheme.colorScheme.primaryContainer),
+            .background(BirthdaysTheme.colorScheme.surfaceContainer),
     )
 }
