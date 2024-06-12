@@ -3,17 +3,21 @@ package com.nikitakrapo.birthdays.feed
 import androidx.compose.animation.core.SnapSpec
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.nikitakrapo.birthdays.components.birthdays.BirthdayListItem
 import com.nikitakrapo.birthdays.components.birthdays.BirthdayListItemShimmer
+import com.nikitakrapo.birthdays.components.shimmer.ShimmerTextLine
+import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 
 @Composable
 fun BirthdaysFeedScreen(
@@ -27,9 +31,19 @@ fun BirthdaysFeedScreen(
         modifier = modifier
             .fillMaxWidth(),
         contentPadding = PaddingValues(top = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
+            item {
+                BirthdayFeedHeaderShimmer(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .padding(
+                            vertical = 8.dp,
+                            horizontal = 16.dp,
+                        ),
+                )
+            }
+
             items(
                 count = 3,
                 key = { "refresh-$it" }
@@ -44,16 +58,30 @@ fun BirthdaysFeedScreen(
 
         items(
             count = lazyPagingItems.itemCount,
-            key = { lazyPagingItems[it]!!.id }
+            key = { lazyPagingItems[it]!!.key() }
         ) { index ->
             val item = lazyPagingItems[index]!!
-            BirthdayListItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .animateItem(placementSpec = SnapSpec()),
-                birthday = item,
-                onClick = { component.onBirthdayClicked(item) },
-            )
+            when (item) {
+                is BirthdayListItem.BirthdayItem -> {
+                    BirthdayListItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateItem(placementSpec = SnapSpec()),
+                        birthday = item.birthday,
+                        onClick = { component.onBirthdayClicked(item.birthday) },
+                    )
+                }
+                is BirthdayListItem.HeaderItem -> {
+                    BirthdayFeedHeader(
+                        modifier = Modifier
+                            .padding(
+                                vertical = 8.dp,
+                                horizontal = 16.dp,
+                            ),
+                        text = item.text,
+                    )
+                }
+            }
         }
 
         if (lazyPagingItems.loadState.append == LoadState.Loading) {
@@ -70,4 +98,31 @@ fun BirthdaysFeedScreen(
         }
     }
     return
+}
+
+@Composable
+private fun BirthdayFeedHeader(
+    text: String,
+    modifier: Modifier,
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = BirthdaysTheme.typography.titleMedium,
+    )
+}
+
+@Composable
+private fun BirthdayFeedHeaderShimmer(
+    modifier: Modifier,
+) {
+    ShimmerTextLine(
+        modifier = modifier,
+        textStyle = BirthdaysTheme.typography.titleMedium,
+    )
+}
+
+private fun BirthdayListItem.key() = when (this) {
+    is BirthdayListItem.BirthdayItem -> birthday.id
+    is BirthdayListItem.HeaderItem -> text
 }

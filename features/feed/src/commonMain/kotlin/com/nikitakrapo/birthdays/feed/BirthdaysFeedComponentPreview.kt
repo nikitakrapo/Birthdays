@@ -13,13 +13,13 @@ object BirthdaysFeedComponentPreview : BirthdaysFeedComponent {
     override val state: StateFlow<BirthdaysFeedScreenState> = MutableStateFlow(
         BirthdaysFeedScreenState.Loading
     )
-    override val birthdaysPagingDataState: Flow<PagingData<Birthday>> = flow {
+    override val birthdaysPagingDataState: Flow<PagingData<BirthdayListItem>> = flow {
         PagingData.from(listOf(
-            Birthday.forPreview(),
-            Birthday.forPreview(),
-            Birthday.forPreview(),
-            Birthday.forPreview(),
-            Birthday.forPreview(),
+            BirthdayListItem.BirthdayItem(Birthday.forPreview()),
+            BirthdayListItem.BirthdayItem(Birthday.forPreview()),
+            BirthdayListItem.BirthdayItem(Birthday.forPreview()),
+            BirthdayListItem.BirthdayItem(Birthday.forPreview()),
+            BirthdayListItem.BirthdayItem(Birthday.forPreview()),
         ))
     }
 

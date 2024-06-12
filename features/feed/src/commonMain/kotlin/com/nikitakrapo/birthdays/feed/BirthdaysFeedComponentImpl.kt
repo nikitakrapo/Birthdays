@@ -1,12 +1,17 @@
 package com.nikitakrapo.birthdays.feed
 
+import androidx.paging.PagingData
+import androidx.paging.insertSeparators
+import androidx.paging.map
 import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.birthdays.di.Di
 import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.repositories.birthdays.BirthdaysRepository
 import com.nikitakrapo.birthdays.utils.decompose.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
@@ -25,7 +30,19 @@ class BirthdaysFeedComponentImpl(
         MutableStateFlow(BirthdaysFeedScreenState.Loading)
     override val state = stateFlow.asStateFlow()
 
-    override val birthdaysPagingDataState = birthdaysRepository.getBirthdaysPaging()
+    override val birthdaysPagingDataState: Flow<PagingData<BirthdayListItem>> = birthdaysRepository.getBirthdaysPaging()
+        .map { pagingData -> pagingData.map { BirthdayListItem.BirthdayItem(it) } }
+        .map { pagingData ->
+            pagingData.insertSeparators { prevItem, currItem ->
+                val prevMonth = prevItem?.birthday?.date?.month
+                val currMonth = currItem?.birthday?.date?.month
+                when {
+                    prevMonth == null && currMonth != null -> BirthdayListItem.HeaderItem(currMonth.name)
+                    prevMonth != null && currMonth != null && prevMonth != currMonth -> BirthdayListItem.HeaderItem(currMonth.name)
+                    else -> null
+                }
+            }
+        }
 
     init {
         fetchBirthdays()

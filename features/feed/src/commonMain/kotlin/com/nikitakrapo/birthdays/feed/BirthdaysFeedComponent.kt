@@ -9,7 +9,7 @@ import kotlinx.datetime.LocalDate
 interface BirthdaysFeedComponent {
 
     val state: StateFlow<BirthdaysFeedScreenState>
-    val birthdaysPagingDataState: Flow<PagingData<Birthday>>
+    val birthdaysPagingDataState: Flow<PagingData<BirthdayListItem>>
 
     fun onDateSelected(date: LocalDate)
     fun onBirthdayClicked(birthday: Birthday)
