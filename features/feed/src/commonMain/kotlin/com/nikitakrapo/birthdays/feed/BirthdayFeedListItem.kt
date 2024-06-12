@@ -2,13 +2,13 @@ package com.nikitakrapo.birthdays.feed
 
 import com.nikitakrapo.birthdays.model.Birthday
 
-sealed interface BirthdayListItem {
+sealed interface BirthdayFeedListItem {
 
-    data class HeaderItem(
+    data class HeaderItemFeed(
         val text: String,
-    ) : BirthdayListItem
+    ) : BirthdayFeedListItem
 
     data class BirthdayItem(
         val birthday: Birthday,
-    ) : BirthdayListItem
+    ) : BirthdayFeedListItem
 }

@@ -62,7 +62,7 @@ fun BirthdaysFeedScreen(
         ) { index ->
             val item = lazyPagingItems[index]!!
             when (item) {
-                is BirthdayListItem.BirthdayItem -> {
+                is BirthdayFeedListItem.BirthdayItem -> {
                     BirthdayListItem(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -71,7 +71,7 @@ fun BirthdaysFeedScreen(
                         onClick = { component.onBirthdayClicked(item.birthday) },
                     )
                 }
-                is BirthdayListItem.HeaderItem -> {
+                is BirthdayFeedListItem.HeaderItemFeed -> {
                     BirthdayFeedHeader(
                         modifier = Modifier
                             .padding(
@@ -122,7 +122,7 @@ private fun BirthdayFeedHeaderShimmer(
     )
 }
 
-private fun BirthdayListItem.key() = when (this) {
-    is BirthdayListItem.BirthdayItem -> birthday.id
-    is BirthdayListItem.HeaderItem -> text
+private fun BirthdayFeedListItem.key() = when (this) {
+    is BirthdayFeedListItem.BirthdayItem -> birthday.id
+    is BirthdayFeedListItem.HeaderItemFeed -> text
 }

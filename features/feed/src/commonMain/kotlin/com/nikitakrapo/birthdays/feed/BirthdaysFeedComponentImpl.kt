@@ -30,15 +30,15 @@ class BirthdaysFeedComponentImpl(
         MutableStateFlow(BirthdaysFeedScreenState.Loading)
     override val state = stateFlow.asStateFlow()
 
-    override val birthdaysPagingDataState: Flow<PagingData<BirthdayListItem>> = birthdaysRepository.getBirthdaysPaging()
-        .map { pagingData -> pagingData.map { BirthdayListItem.BirthdayItem(it) } }
+    override val birthdaysPagingDataState: Flow<PagingData<BirthdayFeedListItem>> = birthdaysRepository.getBirthdaysPaging()
+        .map { pagingData -> pagingData.map { BirthdayFeedListItem.BirthdayItem(it) } }
         .map { pagingData ->
             pagingData.insertSeparators { prevItem, currItem ->
                 val prevMonth = prevItem?.birthday?.date?.month
                 val currMonth = currItem?.birthday?.date?.month
                 when {
-                    prevMonth == null && currMonth != null -> BirthdayListItem.HeaderItem(currMonth.name)
-                    prevMonth != null && currMonth != null && prevMonth != currMonth -> BirthdayListItem.HeaderItem(currMonth.name)
+                    prevMonth == null && currMonth != null -> BirthdayFeedListItem.HeaderItemFeed(currMonth.name)
+                    prevMonth != null && currMonth != null && prevMonth != currMonth -> BirthdayFeedListItem.HeaderItemFeed(currMonth.name)
                     else -> null
                 }
             }
