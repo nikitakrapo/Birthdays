@@ -7,4 +7,15 @@ class Birthday(
     val title: String,
     val date: LocalDate,
     val imageUrl: String?,
-)
+) {
+
+    companion object {
+
+        fun forPreview() = Birthday(
+            id = "123",
+            date = LocalDate(2000, 1, 1),
+            title = "Birthday",
+            imageUrl = "",
+        )
+    }
+}

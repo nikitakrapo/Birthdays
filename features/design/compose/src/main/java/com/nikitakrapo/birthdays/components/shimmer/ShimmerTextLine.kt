@@ -13,15 +13,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import com.nikitakrapo.birthdays.utils.toDpWithDensity
+import com.valentinilk.shimmer.Shimmer
 import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun ShimmerTextLine(
     modifier: Modifier = Modifier,
     textStyle: TextStyle,
+    shimmer: Shimmer? = null,
     width: Dp = 200.dp,
 ) {
-    Box(modifier = modifier.shimmer()) {
+    Box(modifier = modifier.shimmer(shimmer)) {
         Box(
             modifier = Modifier
                 .height(textStyle.lineHeight.toDpWithDensity())

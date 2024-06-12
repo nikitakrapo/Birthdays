@@ -25,6 +25,8 @@ class BirthdaysFeedComponentImpl(
         MutableStateFlow(BirthdaysFeedScreenState.Loading)
     override val state = stateFlow.asStateFlow()
 
+    override val birthdaysPagingDataState = birthdaysRepository.getBirthdaysPaging()
+
     init {
         fetchBirthdays()
     }
@@ -39,7 +41,7 @@ class BirthdaysFeedComponentImpl(
 
     private fun fetchBirthdays() {
         coroutineScope.launch {
-            val birthdaysResult = birthdaysRepository.getBirthdays()
+            val birthdaysResult = Result.success<List<Birthday>>(emptyList())
             birthdaysResult.fold(
                 onSuccess = {
                     stateFlow.value = BirthdaysFeedScreenState.Loaded(

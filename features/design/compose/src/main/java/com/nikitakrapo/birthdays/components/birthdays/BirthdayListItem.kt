@@ -26,8 +26,13 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.nikitakrapo.birthdays.components.shimmer.ShimmerBox
+import com.nikitakrapo.birthdays.components.shimmer.ShimmerTextLine
 import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
+import com.valentinilk.shimmer.ShimmerBounds
+import com.valentinilk.shimmer.rememberShimmer
+import com.valentinilk.shimmer.shimmer
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -63,8 +68,8 @@ fun BirthdayListItem(
                     contentDescription = null,
                 )
             }
+            Spacer(modifier = Modifier.width(16.dp))
         }
-        Spacer(modifier = Modifier.width(16.dp))
         Column {
             Text(
                 text = birthday.title,
@@ -86,6 +91,45 @@ fun BirthdayListItem(
     }
 }
 
+@Composable
+fun BirthdayListItemShimmer(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .widthIn(max = 460.dp)
+            .padding(16.dp)
+            .shimmer(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        val shimmer = rememberShimmer(ShimmerBounds.View)
+        ShimmerBox(
+            modifier = Modifier
+                .size(64.dp)
+                .clip(BirthdaysTheme.shapes.medium),
+            shimmer = shimmer,
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column {
+            ShimmerTextLine(
+                textStyle = BirthdaysTheme.typography.titleMedium,
+                shimmer = shimmer,
+                width = 200.dp,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            ShimmerTextLine(
+                textStyle = BirthdaysTheme.typography.bodyMedium,
+                shimmer = shimmer,
+                width = 100.dp,
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+            imageVector = Icons.AutoMirrored.Outlined.NavigateNext,
+            contentDescription = null,
+        )
+    }
+
+}
+
 @Preview
 @Composable
 private fun BirthdayListItemPreview() {
@@ -100,6 +144,16 @@ private fun BirthdayListItemPreview() {
                 ),
                 onClick = {},
             )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun BirthdayListItemShimmerPreview() {
+    BirthdaysTheme {
+        Surface {
+            BirthdayListItemShimmer()
         }
     }
 }

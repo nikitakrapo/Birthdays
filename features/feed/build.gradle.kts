@@ -19,6 +19,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation(libs.paging.runtime)
+                implementation(libs.paging.compose)
                 implementation(projects.strings)
                 implementation(projects.features.design.compose)
             }

@@ -3,17 +3,22 @@ package com.nikitakrapo.birthdays.repositories.birthdays
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.nikitakrapo.birthdays.model.Birthday
+import kotlinx.coroutines.delay
 import kotlinx.datetime.LocalDate
 import kotlin.random.Random
 
 internal class FakeBirthdaysPagingSource : PagingSource<Int, Birthday>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Birthday> {
+        delay(1000)
         val pageNumber = params.key ?: 0
         val prevKey = if (pageNumber > 0) pageNumber - 1 else null
-        val nextKey = if (pageNumber < 10) pageNumber + 1 else null
+        val nextKey = if (pageNumber < 11) pageNumber + 1 else null
         return LoadResult.Page(
-            data = List(20) { birthday() },
+            data = List(if (nextKey != null) 15 else 5) {
+                birthday(month = pageNumber + 1)
+            }
+                .sortedBy { it.date.dayOfMonth },
             prevKey = prevKey,
             nextKey = nextKey,
         )
@@ -26,10 +31,10 @@ internal class FakeBirthdaysPagingSource : PagingSource<Int, Birthday>() {
         }
     }
 
-    private fun birthday(): Birthday {
+    private fun birthday(month: Int): Birthday {
         return Birthday(
             id = Random.nextInt().toString(),
-            date = birthdays.random(),
+            date = LocalDate(2024, month, Random.nextInt(1, 28)),
             title = "${names.random()} birthday",
             imageUrl = ""
         )
@@ -46,18 +51,5 @@ internal class FakeBirthdaysPagingSource : PagingSource<Int, Birthday>() {
         "Hannah Lewis",
         "Ian Thompson",
         "Jane Scott"
-    )
-
-    private val birthdays = listOf(
-        LocalDate(1990, 4, 15),
-        LocalDate(1985, 6, 21),
-        LocalDate(1992, 12, 3),
-        LocalDate(1988, 9, 9),
-        LocalDate(1995, 2, 27),
-        LocalDate(1991, 11, 13),
-        LocalDate(1987, 8, 30),
-        LocalDate(1993, 7, 14),
-        LocalDate(1989, 5, 24),
-        LocalDate(1994, 10, 8)
     )
 }
