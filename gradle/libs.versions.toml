@@ -25,6 +25,7 @@ material = "1.11.0"
 decompose = "3.0.0"
 ktor = "2.3.11"
 multiplatform-settings = "1.1.1"
+paging = "3.3.0-alpha02-0.5.1" # https://github.com/cashapp/multiplatform-paging/releases
 napier = "2.6.1" # https://github.com/AAkira/Napier
 koin = "3.5.3" # https://github.com/InsertKoinIO/koin
 
@@ -66,6 +67,7 @@ ktor-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-contentNegotiation-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
+paging = { module = "app.cash.paging:paging-common", version.ref = "paging" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 koin = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 

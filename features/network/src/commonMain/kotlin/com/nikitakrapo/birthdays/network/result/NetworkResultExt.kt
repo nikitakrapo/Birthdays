@@ -34,11 +34,11 @@ fun <T : Any> NetworkResult<T>.onError(action: (Exception) -> Unit) {
     }
 }
 
-fun <T : Any> NetworkResult<T>.fold(
-    onSuccess: (T) -> Unit,
-    onError: (Exception) -> Unit,
-) {
-    when (this) {
+inline fun <R, T : Any> NetworkResult<T>.fold(
+    onSuccess: (T) -> R,
+    onError: (Exception) -> R,
+) : R {
+    return when (this) {
         is NetworkResult.Success -> onSuccess(data)
         is NetworkResult.Error -> onError(exception)
     }
@@ -52,6 +52,8 @@ fun <T : Any, R : Any> NetworkResult<T>.map(mapper: (T) -> R): NetworkResult<R> 
 }
 
 fun <T : Any> NetworkResult<T>.getDataOrNull(): T? = (this as? NetworkResult.Success)?.data
+
+fun <T : Any> NetworkResult<T>.getErrorOrNull(): Exception? = (this as? NetworkResult.Error)?.exception
 
 fun <T : Any> NetworkResult<T>.toResult(): Result<T> = when (this) {
     is NetworkResult.Success -> Result.success(data)

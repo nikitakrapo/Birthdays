@@ -12,7 +12,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(libs.paging)
                 api(projects.features.modelsDto)
+                api(projects.features.account)
                 api(projects.features.network)
                 api(projects.features.di)
                 api(projects.features.utils.coroutines)

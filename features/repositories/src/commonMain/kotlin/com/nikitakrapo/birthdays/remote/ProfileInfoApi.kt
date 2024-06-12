@@ -12,9 +12,9 @@ internal class ProfileInfoApi(
     private val httpClient: HttpClient,
 ) {
 
-    suspend fun getProfileInfo(): NetworkResult<ProfileInfoDto> = onIo {
+    suspend fun getProfileInfo(uid: String): NetworkResult<ProfileInfoDto> = onIo {
         getNetworkResult {
-            httpClient.get("profile")
+            httpClient.get("users/$uid/profile")
                 .body<ProfileInfoDto>()
         }
     }

@@ -1,9 +1,10 @@
 package com.nikitakrapo.birthdays.repositories.birthdays
 
+import androidx.paging.PagingData
 import com.nikitakrapo.birthdays.model.Birthday
+import kotlinx.coroutines.flow.Flow
 
 interface BirthdaysRepository {
 
-    // TODO: add date range
-    suspend fun getBirthdays(): Result<List<Birthday>>
+    fun getBirthdaysPaging(): Flow<PagingData<Birthday>>
 }
