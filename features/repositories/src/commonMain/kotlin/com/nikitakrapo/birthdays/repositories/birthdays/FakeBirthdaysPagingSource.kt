@@ -10,7 +10,7 @@ import kotlin.random.Random
 internal class FakeBirthdaysPagingSource : PagingSource<Int, Birthday>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Birthday> {
-        delay(1000)
+        delay(3000)
         val pageNumber = params.key ?: 0
         val prevKey = if (pageNumber > 0) pageNumber - 1 else null
         val nextKey = if (pageNumber < 11) pageNumber + 1 else null

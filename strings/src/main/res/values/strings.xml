@@ -26,6 +26,7 @@
     <string name="edit_birthday">Edit your Birthday</string>
     <string name="network_error">Network error happened</string>
     <string name="wishlist">Wishlist</string>
+    <string name="friends">Friends</string>
 
     <string name = "registration_error_email_wrong_format">Email is wrongly formatted</string>
     <string name = "registration_error_email_already_in_use">Email is already in use</string>

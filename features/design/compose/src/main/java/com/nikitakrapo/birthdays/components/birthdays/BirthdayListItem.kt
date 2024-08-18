@@ -24,6 +24,9 @@ import coil.compose.AsyncImage
 import com.nikitakrapo.birthdays.components.shimmer.ShimmerTextLine
 import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
+import com.valentinilk.shimmer.Shimmer
+import com.valentinilk.shimmer.ShimmerBounds
+import com.valentinilk.shimmer.rememberShimmer
 import com.valentinilk.shimmer.shimmer
 import kotlinx.datetime.LocalDate
 
@@ -76,10 +79,13 @@ fun BirthdayListItem(
 }
 
 @Composable
-fun BirthdayListItemShimmer(modifier: Modifier = Modifier) {
+fun BirthdayListItemShimmer(
+    shimmer: Shimmer,
+    modifier: Modifier = Modifier,
+) {
     ListItem(
         modifier = modifier
-            .shimmer(),
+            .shimmer(shimmer),
         leadingContent = {
             Box(
                 modifier = Modifier
@@ -90,12 +96,14 @@ fun BirthdayListItemShimmer(modifier: Modifier = Modifier) {
         },
         headlineContent = {
             ShimmerTextLine(
+                shimmer = shimmer,
                 modifier = Modifier
                     .width(200.dp),
             )
         },
         supportingContent = {
             ShimmerTextLine(
+                shimmer = shimmer,
                 modifier = Modifier
                     .width(100.dp),
             )
@@ -132,7 +140,32 @@ private fun BirthdayListItemPreview() {
 private fun BirthdayListItemShimmerPreview() {
     BirthdaysTheme {
         Surface {
-            BirthdayListItemShimmer()
+            val shimmer = rememberShimmer(ShimmerBounds.Window)
+            BirthdayListItemShimmer(shimmer)
         }
     }
 }
+
+@Preview
+@Composable
+private fun BirthdayListItemShimmerTransparentPreview() {
+    BirthdaysTheme {
+        Surface {
+            Box {
+                BirthdayListItem(
+                    birthday = Birthday(
+                        id = "123",
+                        title = "Michael Jackson's birthday",
+                        date = LocalDate(2024, 5, 5),
+                        imageUrl = "",
+                    ),
+                    onClick = {},
+                )
+                val shimmer = rememberShimmer(ShimmerBounds.Window)
+                BirthdayListItemShimmer(shimmer)
+            }
+        }
+    }
+}
+
+
