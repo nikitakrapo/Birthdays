@@ -33,12 +33,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.di)
-                api(projects.features.authorization)
+                api(projects.features.authorization.ui)
                 api(projects.features.profile)
                 api(projects.features.feed)
                 api(projects.features.cloudMessaging)
                 api(projects.features.utils.platform)
-                implementation(projects.features.account)
+                implementation(projects.features.authorization.firebase)
                 implementation(projects.features.network)
                 implementation(projects.features.repositories)
                 implementation(projects.features.wizard)

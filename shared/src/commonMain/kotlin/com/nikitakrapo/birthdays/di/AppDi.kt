@@ -1,6 +1,5 @@
 package com.nikitakrapo.birthdays.di
 
-import com.nikitakrapo.birthdays.account.accountModule
 import com.nikitakrapo.birthdays.cms.pushModule
 import com.nikitakrapo.birthdays.feed.birthdaysFeedModule
 import com.nikitakrapo.birthdays.network.AuthorizationTokenProvider
@@ -20,7 +19,7 @@ object AppDi {
             modules(
                 appModule(platformContext),
                 pushModule,
-                accountModule,
+                authorizationModule,
                 birthdaysFeedModule,
                 networkModule,
                 repositoriesModule,

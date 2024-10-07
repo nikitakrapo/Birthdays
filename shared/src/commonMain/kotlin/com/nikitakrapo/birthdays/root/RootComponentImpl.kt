@@ -5,11 +5,10 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.navigate
-import com.nikitakrapo.birthdays.account.Account
-import com.nikitakrapo.birthdays.account.AccountManager
-import com.nikitakrapo.birthdays.account.isAuthorized
-import com.nikitakrapo.birthdays.cms.PushTokenInteractor
 import com.nikitakrapo.birthdays.AuthorizationComponentImpl
+import com.nikitakrapo.birthdays.account.AccountManager
+import com.nikitakrapo.birthdays.account.models.User
+import com.nikitakrapo.birthdays.cms.PushTokenInteractor
 import com.nikitakrapo.birthdays.di.Di
 import com.nikitakrapo.birthdays.mainscreen.MainComponentImpl
 import com.nikitakrapo.birthdays.utils.coroutines.collectIn
@@ -35,22 +34,22 @@ class RootComponentImpl(
         source = navigation,
         serializer = RootConfig.serializer(),
         initialStack = {
-            val config = if (accountManager.isAuthorized) RootConfig.Main else RootConfig.Authorization
+            val config = if (accountManager.user.value != null) RootConfig.Main else RootConfig.Authorization
             listOf(config)
         },
         childFactory = ::child,
     ).asStateFlow()
 
     init {
-        accountManager.account
+        accountManager.user
             .collectIn(coroutineScope, ::handleNewAccount)
         coroutineScope.launch {
             pushTokenInteractor.sendTokenToServer()
         }
     }
 
-    private fun handleNewAccount(account: Account?) {
-        if (account == null) {
+    private fun handleNewAccount(user: User?) {
+        if (user == null) {
             navigation.navigate { listOf(RootConfig.Authorization) }
             coroutineScope.launch {
                 pushTokenInteractor.sendTokenToServer()

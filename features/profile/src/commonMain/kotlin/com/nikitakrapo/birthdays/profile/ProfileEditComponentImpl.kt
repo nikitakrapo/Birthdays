@@ -96,7 +96,7 @@ class ProfileEditComponentImpl(
     }
 
     override fun onConfirmClicked() {
-        val uid = accountManager.account.value?.uid ?: return
+        val uid = accountManager.user.value?.uid ?: return
 
         stateFlow.update { it.copy(isLoading = true) }
         coroutineScope.launch {

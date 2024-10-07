@@ -59,7 +59,7 @@ class ProfileComponentImpl(
 
     private fun fetchUserData() {
         coroutineScope.launch {
-            val uid = accountManager.account.value?.uid
+            val uid = accountManager.user.value?.uid
             val profileInfo = uid?.let { profileRepository.getProfileInfo(it) }?.getOrNull()
             if (profileInfo != null) {
                 stateFlow.value = ProfileScreenState.Loaded(profileInfo)
@@ -70,7 +70,7 @@ class ProfileComponentImpl(
     }
 
     private fun observeUserData() {
-        val uid = accountManager.account.value?.uid ?: return
+        val uid = accountManager.user.value?.uid ?: return
         profileRepository.getProfileInfoFlow(uid)
             .collectIn(coroutineScope) { profileInfo ->
                 stateFlow.value = ProfileScreenState.Loaded(profileInfo)

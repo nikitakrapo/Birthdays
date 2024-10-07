@@ -12,7 +12,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.features.account)
+                api(projects.features.authorization.api)
                 api(projects.features.repositories)
                 api(projects.features.datechooser)
                 api(projects.features.di)

@@ -12,20 +12,26 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(libs.paging)
-                api(projects.features.modelsDto)
                 api(projects.features.authorization.api)
-                api(projects.features.network)
+                api(projects.features.datechooser)
                 api(projects.features.di)
-                api(projects.features.utils.coroutines)
-                implementation(libs.kotlin.serialization)
+                api(projects.features.utils.decompose)
+                implementation(libs.decompose)
                 implementation(libs.napier)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(projects.strings)
+                implementation(projects.features.design.compose)
+                implementation(libs.decompose.extensions.compose)
             }
         }
     }
 }
 
 android {
+    namespace = "com.nikitakrapo.birthdays.authorization.ui"
     moduleConfigurationPlugin.configureAndroidDefaults()
-    namespace = "com.nikitakrapo.birthdays.repositories"
+    moduleConfigurationPlugin.configureCompose()
 }
