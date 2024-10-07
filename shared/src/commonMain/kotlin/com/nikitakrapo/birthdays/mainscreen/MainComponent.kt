@@ -1,6 +1,5 @@
 package com.nikitakrapo.birthdays.mainscreen
 
-import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponent
 import com.nikitakrapo.birthdays.profile.ProfileComponent
@@ -11,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 /**
  * Application's main screen. Basically is a bottom navigation host
  */
-@Stable
 interface MainComponent {
 
     val stack: StateFlow<ChildStack<*, MainChild>>

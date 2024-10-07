@@ -1,3 +1,3 @@
 package com.nikitakrapo.birthdays.platform
 
-expect class PlatformContext
+actual class PlatformContext

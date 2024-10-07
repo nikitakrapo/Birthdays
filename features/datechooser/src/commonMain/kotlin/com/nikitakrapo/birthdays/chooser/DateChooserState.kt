@@ -1,9 +1,7 @@
 package com.nikitakrapo.birthdays.chooser
 
-import androidx.compose.runtime.Stable
 import kotlinx.datetime.LocalDate
 
-@Stable
 data class DateChooserState(
     val initialDate: LocalDate,
     val initialSelectedDate: LocalDate?,
