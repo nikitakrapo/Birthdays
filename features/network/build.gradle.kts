@@ -2,11 +2,12 @@ plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
     alias(libs.plugins.kotlinSerialization)
+    id("birthdays.module-config")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
+    moduleConfigurationPlugin.configureMultiplatformDefaults()
 
     androidTarget {
         compilations.all {

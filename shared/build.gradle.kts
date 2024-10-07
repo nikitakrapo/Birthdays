@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
@@ -8,6 +10,10 @@ plugins {
 kotlin {
     applyDefaultHierarchyTemplate()
 
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -16,6 +22,12 @@ kotlin {
         }
     }
 
+    targets.withType<KotlinNativeTarget>().configureEach {
+        binaries.framework {
+            baseName = "shared"
+            isStatic = true
+        }
+    }
 
     sourceSets {
         val commonMain by getting {

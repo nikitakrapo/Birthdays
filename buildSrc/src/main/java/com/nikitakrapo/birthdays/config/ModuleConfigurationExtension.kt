@@ -67,6 +67,10 @@ abstract class ModuleConfigurationExtension(private val project: Project) {
         project.configure<KotlinMultiplatformExtension> {
             applyDefaultHierarchyTemplate()
 
+            iosX64()
+            iosArm64()
+            iosSimulatorArm64()
+
             sourceSets.getByName("commonMain") {
                 dependencies {
                     implementation(project.libs.napier)
