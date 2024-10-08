@@ -16,7 +16,8 @@ android {
 dependencies {
     implementation(projects.strings)
     implementation(projects.features.experiments)
-    implementation(projects.features.models)
+    // TODO: consider removing models dep
+    api(projects.features.models)
     api(libs.compose.ui)
     api(libs.compose.ui.tooling.preview)
     api(libs.compose.material3)

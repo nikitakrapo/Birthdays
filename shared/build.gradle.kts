@@ -33,26 +33,19 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.di)
-                api(projects.features.authorization.ui)
-                api(projects.features.profile)
-                api(projects.features.feed)
+                api(projects.features.authorization.uiLogic)
+                api(projects.features.profile.uiLogic)
+                api(projects.features.feed.uiLogic)
                 api(projects.features.cloudMessaging)
                 api(projects.features.utils.platform)
                 implementation(projects.features.authorization.firebase)
                 implementation(projects.features.network)
                 implementation(projects.features.repositories)
-                implementation(projects.features.wizard)
+                implementation(projects.features.wizard.uiLogic)
                 implementation(libs.decompose)
                 implementation(projects.features.utils.decompose)
                 implementation(projects.features.utils.coroutines)
                 implementation(libs.koin)
-            }
-        }
-        val androidMain by getting {
-            dependencies {
-                implementation(projects.strings)
-                implementation(projects.features.design.compose)
-                implementation(libs.decompose.extensions.compose)
             }
         }
     }
@@ -61,5 +54,4 @@ kotlin {
 android {
     namespace = "com.nikitakrapo.birthdays"
     moduleConfigurationPlugin.configureAndroidDefaults()
-    moduleConfigurationPlugin.configureCompose()
 }

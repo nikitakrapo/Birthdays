@@ -24,6 +24,10 @@ android {
 }
 
 dependencies {
+    implementation(projects.features.feed.composeUi)
+    implementation(projects.features.authorization.composeUi)
+    implementation(projects.features.wizard.composeUi)
+    implementation(projects.features.profile.composeUi)
     implementation(projects.features.di)
     implementation(projects.features.authorization.firebase)
     implementation(projects.shared)

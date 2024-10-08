@@ -6,7 +6,7 @@ import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponentPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-internal object MainComponentPreview : MainComponent {
+object MainComponentPreview : MainComponent {
     override val stack: StateFlow<ChildStack<*, MainComponent.MainChild>> =
         MutableStateFlow(
             ChildStack(

@@ -63,13 +63,18 @@ abstract class ModuleConfigurationExtension(private val project: Project) {
         }
     }
 
-    fun configureMultiplatformDefaults() {
+    fun configureMultiplatformDefaults(
+        // TODO: refactor function
+        ios: Boolean = true,
+    ) {
         project.configure<KotlinMultiplatformExtension> {
             applyDefaultHierarchyTemplate()
 
-            iosX64()
-            iosArm64()
-            iosSimulatorArm64()
+            if (ios) {
+                iosX64()
+                iosArm64()
+                iosSimulatorArm64()
+            }
 
             sourceSets.getByName("commonMain") {
                 dependencies {

@@ -10,8 +10,8 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.FlingBehavior
-import androidx.compose.foundation.gestures.snapping.SnapFlingBehavior
 import androidx.compose.foundation.gestures.snapping.SnapLayoutInfoProvider
+import androidx.compose.foundation.gestures.snapping.snapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -99,7 +99,8 @@ fun Calendar(
             state = state,
             onNextMonthClicked = {
                 scope.launch {
-                    val index = (monthLazyListState.firstVisibleItemIndex + 1).coerceAtMost(state.numberOfMonths - 1)
+                    val index =
+                        (monthLazyListState.firstVisibleItemIndex + 1).coerceAtMost(state.numberOfMonths - 1)
                     monthLazyListState.animateScrollToItem(index)
                 }
             },
@@ -308,12 +309,15 @@ private fun rememberDateChooserSnapFlingBehavior(
     return remember(decayAnimationSpec, lazyListState) {
         val original = SnapLayoutInfoProvider(lazyListState)
         val snapLayoutInfoProvider = object : SnapLayoutInfoProvider by original {
-            override fun calculateApproachOffset(initialVelocity: Float): Float {
+            override fun calculateApproachOffset(
+                initialVelocity: Float,
+                decayOffset: Float
+            ): Float {
                 return 0.0f
             }
         }
 
-        SnapFlingBehavior(
+        snapFlingBehavior(
             snapLayoutInfoProvider = snapLayoutInfoProvider,
             decayAnimationSpec = decayAnimationSpec,
             snapAnimationSpec = spring(stiffness = Spring.StiffnessMediumLow)
