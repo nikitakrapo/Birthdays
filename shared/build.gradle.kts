@@ -26,6 +26,12 @@ kotlin {
         binaries.framework {
             baseName = "shared"
             isStatic = true
+
+            export(projects.features.authorization.uiLogic)
+            export(libs.decompose)
+            export(libs.essenty.lifecycle)
+            export(libs.essenty.statekeeper)
+            export(libs.firebase.auth.kmp)
         }
     }
 
@@ -38,11 +44,13 @@ kotlin {
                 api(projects.features.feed.uiLogic)
                 api(projects.features.cloudMessaging)
                 api(projects.features.utils.platform)
+                api(libs.decompose)
+                api(libs.essenty.lifecycle)
+                api(libs.essenty.statekeeper)
                 implementation(projects.features.authorization.firebase)
                 implementation(projects.features.network)
                 implementation(projects.features.repositories)
                 implementation(projects.features.wizard.uiLogic)
-                implementation(libs.decompose)
                 implementation(projects.features.utils.decompose)
                 implementation(projects.features.utils.coroutines)
                 implementation(libs.koin)

@@ -5,6 +5,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.navigate
+import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.AuthorizationComponentImpl
 import com.nikitakrapo.birthdays.account.AccountManager
 import com.nikitakrapo.birthdays.account.models.User
@@ -29,7 +30,7 @@ class RootComponentImpl(
 
     private val navigation = StackNavigation<RootConfig>()
 
-    override val stack: StateFlow<ChildStack<*, RootComponent.RootChild>> = childStack(
+    override val stackValue: Value<ChildStack<*, RootComponent.RootChild>> = childStack(
         key = "RootStack",
         source = navigation,
         serializer = RootConfig.serializer(),
@@ -38,7 +39,8 @@ class RootComponentImpl(
             listOf(config)
         },
         childFactory = ::child,
-    ).asStateFlow()
+    )
+    override val stack: StateFlow<ChildStack<*, RootComponent.RootChild>> = stackValue.asStateFlow()
 
     init {
         accountManager.user

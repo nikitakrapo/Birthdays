@@ -6,19 +6,27 @@
 //
 
 import SwiftUI
+import shared
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+    
+    private let root: RootComponent
+    
+    init(_ root: RootComponent) {
+        self.root = root
     }
-}
-
-#Preview {
-    ContentView()
+    
+    var body: some View {
+        StackView(
+            stackValue: StateValue(root.stackValue),
+            getTitle: { _ in "Root view" },
+            onBack: { _ in }
+        ) { child in
+            switch child {
+            case let child as RootComponentRootChild.Main: Text("Main")
+            case let child as RootComponentRootChild.Authorization: AuthorizationScreen(child.component)
+            default: EmptyView()
+            }
+        }
+    }
 }

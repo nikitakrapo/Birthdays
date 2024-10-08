@@ -2,21 +2,21 @@ package com.nikitakrapo.birthdays
 
 import com.arkivanov.decompose.Child
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.value.MutableValue
 import com.nikitakrapo.birthdays.login.LoginComponentPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 object AuthorizationComponentPreview : AuthorizationComponent {
 
-    override val child: StateFlow<ChildStack<*, AuthorizationComponent.AuthorizationChild>> =
-        MutableStateFlow(
-            ChildStack(
-                Child.Created(
-                    configuration = "Main",
-                    instance = AuthorizationComponent.AuthorizationChild.Login(
-                        component = LoginComponentPreview,
-                    )
-                )
+    private val childInstance = ChildStack(
+        Child.Created(
+            configuration = "Main",
+            instance = AuthorizationComponent.AuthorizationChild.Login(
+                component = LoginComponentPreview,
             )
         )
+    )
+
+    override val childValue = MutableValue(childInstance)
+    override val child = MutableStateFlow(childInstance)
 }

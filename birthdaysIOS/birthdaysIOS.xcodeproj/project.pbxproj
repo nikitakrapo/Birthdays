@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C2278BB12CB55F3F00B069E5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2278BB02CB55F3F00B069E5 /* FirebaseAnalytics */; };
+		C2278BB32CB55F3F00B069E5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C2278BB22CB55F3F00B069E5 /* FirebaseAuth */; };
+		C2278BB52CB55F3F00B069E5 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C2278BB42CB55F3F00B069E5 /* FirebaseCore */; };
+		C2278BB72CB55F3F00B069E5 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2278BB62CB55F3F00B069E5 /* FirebaseCrashlytics */; };
+		C2278BBB2CB5614F00B069E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2278BBA2CB5614F00B069E5 /* GoogleService-Info.plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C2ECCEE32CB4358400526B0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C2278BBA2CB5614F00B069E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C2ECCED22CB4358300526B0D /* birthdaysIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = birthdaysIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2ECCEE22CB4358400526B0D /* birthdaysIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = birthdaysIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2ECCEEC2CB4358400526B0D /* birthdaysIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = birthdaysIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,16 +44,6 @@
 			path = birthdaysIOS;
 			sourceTree = "<group>";
 		};
-		C2ECCEE52CB4358400526B0D /* birthdaysIOSTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = birthdaysIOSTests;
-			sourceTree = "<group>";
-		};
-		C2ECCEEF2CB4358400526B0D /* birthdaysIOSUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = birthdaysIOSUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +51,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2278BB12CB55F3F00B069E5 /* FirebaseAnalytics in Frameworks */,
+				C2278BB72CB55F3F00B069E5 /* FirebaseCrashlytics in Frameworks */,
+				C2278BB52CB55F3F00B069E5 /* FirebaseCore in Frameworks */,
+				C2278BB32CB55F3F00B069E5 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +78,8 @@
 		C2ECCEC92CB4358300526B0D = {
 			isa = PBXGroup;
 			children = (
+				C2278BBA2CB5614F00B069E5 /* GoogleService-Info.plist */,
 				C2ECCED42CB4358300526B0D /* birthdaysIOS */,
-				C2ECCEE52CB4358400526B0D /* birthdaysIOSTests */,
-				C2ECCEEF2CB4358400526B0D /* birthdaysIOSUITests */,
 				C2ECCED32CB4358300526B0D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,6 +115,10 @@
 			);
 			name = birthdaysIOS;
 			packageProductDependencies = (
+				C2278BB02CB55F3F00B069E5 /* FirebaseAnalytics */,
+				C2278BB22CB55F3F00B069E5 /* FirebaseAuth */,
+				C2278BB42CB55F3F00B069E5 /* FirebaseCore */,
+				C2278BB62CB55F3F00B069E5 /* FirebaseCrashlytics */,
 			);
 			productName = birthdaysIOS;
 			productReference = C2ECCED22CB4358300526B0D /* birthdaysIOS.app */;
@@ -130,9 +136,6 @@
 			);
 			dependencies = (
 				C2ECCEE42CB4358400526B0D /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				C2ECCEE52CB4358400526B0D /* birthdaysIOSTests */,
 			);
 			name = birthdaysIOSTests;
 			packageProductDependencies = (
@@ -153,9 +156,6 @@
 			);
 			dependencies = (
 				C2ECCEEE2CB4358400526B0D /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				C2ECCEEF2CB4358400526B0D /* birthdaysIOSUITests */,
 			);
 			name = birthdaysIOSUITests;
 			packageProductDependencies = (
@@ -196,6 +196,9 @@
 			);
 			mainGroup = C2ECCEC92CB4358300526B0D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C2278BAF2CB55EFF00B069E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C2ECCED32CB4358300526B0D /* Products */;
 			projectDirPath = "";
@@ -213,6 +216,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2278BBB2CB5614F00B069E5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -577,6 +581,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C2278BAF2CB55EFF00B069E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C2278BB02CB55F3F00B069E5 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2278BAF2CB55EFF00B069E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		C2278BB22CB55F3F00B069E5 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2278BAF2CB55EFF00B069E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		C2278BB42CB55F3F00B069E5 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2278BAF2CB55EFF00B069E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		C2278BB62CB55F3F00B069E5 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2278BAF2CB55EFF00B069E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C2ECCECA2CB4358300526B0D /* Project object */;
 }

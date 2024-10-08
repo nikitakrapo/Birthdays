@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.AuthorizationComponent.AuthorizationChild
 import com.nikitakrapo.birthdays.login.LoginComponentImpl
 import com.nikitakrapo.birthdays.registration.RegistrationComponentImpl
@@ -19,14 +20,15 @@ class AuthorizationComponentImpl(
 
     private val navigation = StackNavigation<AuthorizationConfig>()
 
-    override val child: StateFlow<ChildStack<*, AuthorizationChild>> = childStack(
+    override val childValue: Value<ChildStack<*, AuthorizationChild>> = childStack(
         key = "AuthorizationStack",
         source = navigation,
         handleBackButton = true,
         serializer = AuthorizationConfig.serializer(),
         initialStack = { listOf(AuthorizationConfig.Login) },
         childFactory = ::child,
-    ).asStateFlow()
+    )
+    override val child: StateFlow<ChildStack<*, AuthorizationChild>> = childValue.asStateFlow()
 
     private fun child(
         config: AuthorizationConfig,

@@ -1,6 +1,7 @@
 package com.nikitakrapo.birthdays.root
 
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.AuthorizationComponent
 import com.nikitakrapo.birthdays.mainscreen.MainComponent
 import kotlinx.coroutines.flow.StateFlow
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
  */
 interface RootComponent {
 
+    val stackValue: Value<ChildStack<*, RootChild>>
     val stack: StateFlow<ChildStack<*, RootChild>>
 
     sealed class RootChild {

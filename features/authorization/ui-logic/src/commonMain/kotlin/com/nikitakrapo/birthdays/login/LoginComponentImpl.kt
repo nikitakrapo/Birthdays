@@ -1,9 +1,11 @@
 package com.nikitakrapo.birthdays.login
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.account.AccountManager
 import com.nikitakrapo.birthdays.account.result.LoginResult
 import com.nikitakrapo.birthdays.di.Di
+import com.nikitakrapo.birthdays.utils.decompose.asValue
 import com.nikitakrapo.birthdays.utils.decompose.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +28,7 @@ internal class LoginComponentImpl(
         isLoading = false,
         error = null,
     ))
+    override val stateValue: Value<LoginScreenState> = stateFlow.asValue()
     override val state: StateFlow<LoginScreenState> = stateFlow.asStateFlow()
 
     override fun onEmailTextChanged(text: String) {
