@@ -5,5 +5,6 @@ import dev.gitlive.firebase.auth.FirebaseUser
 internal fun FirebaseUser.toUser(): User {
     return User(
         uid = uid,
+        isAnonymous = isAnonymous,
     )
 }

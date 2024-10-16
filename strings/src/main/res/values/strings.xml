@@ -11,6 +11,8 @@
     <string name="login_login">Login</string>
     <string name="login_create_new_account">Create new account?</string>
     <string name="login_title">Log in to Monke Birthdays</string>
+    <string name="auth_landing_title">Welcome to Monke\u00A0Birthdays!\nMake managing birthdays easier</string>
+    <string name="register_anonymously">Log in as a guest</string>
     <string name="login_username_label">Username</string>
     <string name="login_email_label">Email</string>
     <string name="login_password_label">Password</string>

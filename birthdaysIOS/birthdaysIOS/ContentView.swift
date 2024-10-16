@@ -23,7 +23,7 @@ struct ContentView: View {
             onBack: { _ in }
         ) { child in
             switch child {
-            case let child as RootComponentRootChild.Main: Text("Main")
+            case let child as RootComponentRootChild.Main: MainScreen(child.component)
             case let child as RootComponentRootChild.Authorization: AuthorizationScreen(child.component)
             default: EmptyView()
             }

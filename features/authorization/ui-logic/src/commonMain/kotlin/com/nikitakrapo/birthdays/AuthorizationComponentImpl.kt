@@ -8,6 +8,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.AuthorizationComponent.AuthorizationChild
+import com.nikitakrapo.birthdays.landing.AuthLandingComponentImpl
 import com.nikitakrapo.birthdays.login.LoginComponentImpl
 import com.nikitakrapo.birthdays.registration.RegistrationComponentImpl
 import com.nikitakrapo.birthdays.utils.decompose.asStateFlow
@@ -25,16 +26,28 @@ class AuthorizationComponentImpl(
         source = navigation,
         handleBackButton = true,
         serializer = AuthorizationConfig.serializer(),
-        initialStack = { listOf(AuthorizationConfig.Login) },
+        initialStack = { listOf(AuthorizationConfig.Landing) },
         childFactory = ::child,
     )
     override val child: StateFlow<ChildStack<*, AuthorizationChild>> = childValue.asStateFlow()
+
+    override fun onBackClicked() {
+        navigation.pop()
+    }
 
     private fun child(
         config: AuthorizationConfig,
         componentContext: ComponentContext,
     ): AuthorizationChild {
         return when (config) {
+            AuthorizationConfig.Landing -> AuthorizationChild.Landing(
+                component = AuthLandingComponentImpl(
+                    componentContext = componentContext,
+                    navigateToLogin = {
+                        navigation.bringToFront(AuthorizationConfig.Login)
+                    },
+                )
+            )
             AuthorizationConfig.Login -> AuthorizationChild.Login(
                 component = LoginComponentImpl(
                     componentContext = componentContext,
@@ -46,9 +59,6 @@ class AuthorizationComponentImpl(
             AuthorizationConfig.Registration -> AuthorizationChild.Registration(
                 component = RegistrationComponentImpl(
                     componentContext = componentContext,
-                    navigateBack = {
-                        navigation.pop()
-                    }
                 ),
             )
         }
@@ -56,6 +66,8 @@ class AuthorizationComponentImpl(
 
     @Serializable
     private sealed interface AuthorizationConfig {
+        @Serializable
+        data object Landing : AuthorizationConfig
         @Serializable
         data object Login : AuthorizationConfig
         @Serializable

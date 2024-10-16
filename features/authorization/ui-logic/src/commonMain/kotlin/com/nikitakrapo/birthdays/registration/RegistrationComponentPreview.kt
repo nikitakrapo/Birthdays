@@ -28,5 +28,4 @@ object RegistrationComponentPreview : RegistrationComponent {
     override fun onPasswordTextChanged(text: String) {}
     override fun onSelectBirthdayClicked() {}
     override fun onRegisterClicked() {}
-    override fun onBackClicked() {}
 }

@@ -5,8 +5,10 @@ import com.nikitakrapo.birthdays.account.models.toUser
 import com.nikitakrapo.birthdays.account.result.LoginResult
 import com.nikitakrapo.birthdays.account.result.RegistrationErrorType
 import com.nikitakrapo.birthdays.account.result.RegistrationResult
+import com.nikitakrapo.birthdays.account.result.UpgradeAccountResult
 import com.nikitakrapo.birthdays.utils.coroutines.mapState
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.EmailAuthProvider
 import dev.gitlive.firebase.auth.FirebaseAuthWeakPasswordException
 import dev.gitlive.firebase.auth.auth
 import io.github.aakira.napier.Napier
@@ -31,6 +33,30 @@ class FirebaseAccountManager : AccountManager {
         )
     override val user: StateFlow<User?> = firebaseUser
         .mapState { it?.toUser() }
+
+    override suspend fun registerAnonymously(): LoginResult {
+        return try {
+            val result = auth.signInAnonymously()
+            val user = result.user?.toUser()
+            user?.let { LoginResult.Success(it) } ?: LoginResult.UnknownError(null)
+        } catch (e: Exception) {
+            LoginResult.UnknownError(e.message)
+        }
+    }
+
+    override suspend fun upgradeAccount(email: String, password: String): UpgradeAccountResult {
+        val currentUser = firebaseUser.value ?: return UpgradeAccountResult.NotLoggedIn
+        if (!currentUser.isAnonymous) return UpgradeAccountResult.AlreadyUpgraded
+
+        return try {
+            val credential = EmailAuthProvider.credential(email = email, password = password)
+            val result = currentUser.linkWithCredential(credential)
+            val user = result.user?.toUser()
+            user?.let { UpgradeAccountResult.Success(it) } ?: UpgradeAccountResult.UnknownError(null)
+        } catch (e: Exception) {
+            UpgradeAccountResult.UnknownError(e.message)
+        }
+    }
 
     override suspend fun login(email: String, password: String): LoginResult {
         return try {

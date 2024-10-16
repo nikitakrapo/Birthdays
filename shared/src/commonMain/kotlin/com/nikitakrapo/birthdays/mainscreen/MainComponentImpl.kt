@@ -6,13 +6,13 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponentImpl
 import com.nikitakrapo.birthdays.model.ProfileInfo
 import com.nikitakrapo.birthdays.profile.ProfileComponentImpl
 import com.nikitakrapo.birthdays.profile.ProfileEditComponentImpl
 import com.nikitakrapo.birthdays.utils.decompose.asStateFlow
 import com.nikitakrapo.birthdays.wizard.WizardComponentImpl
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 
 class MainComponentImpl(
@@ -21,14 +21,15 @@ class MainComponentImpl(
 
     private val navigation = StackNavigation<MainConfig>()
 
-    override val stack: StateFlow<ChildStack<*, MainComponent.MainChild>> = childStack(
+    override val stackValue: Value<ChildStack<*, MainComponent.MainChild>> = childStack(
         key = "MainStack",
         source = navigation,
         serializer = MainConfig.serializer(),
         initialStack = { listOf(MainConfig.BirthdaysFeed) },
         childFactory = ::child,
         handleBackButton = true,
-    ).asStateFlow()
+    )
+    override val stack = stackValue.asStateFlow()
 
     override fun onFeedClicked() {
         navigation.bringToFront(MainConfig.BirthdaysFeed)

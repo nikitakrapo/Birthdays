@@ -1,6 +1,7 @@
 package com.nikitakrapo.birthdays.mainscreen
 
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponent
 import com.nikitakrapo.birthdays.profile.ProfileComponent
 import com.nikitakrapo.birthdays.profile.ProfileEditComponent
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
  */
 interface MainComponent {
 
+    val stackValue: Value<ChildStack<*, MainChild>>
     val stack: StateFlow<ChildStack<*, MainChild>>
 
     fun onFeedClicked()

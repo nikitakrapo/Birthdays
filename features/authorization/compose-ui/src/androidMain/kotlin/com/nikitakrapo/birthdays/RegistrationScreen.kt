@@ -28,7 +28,6 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,16 +40,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import com.nikitakrapo.birthdays.chooser.BirthdayChooserDialog
-import com.nikitakrapo.birthdays.components.buttons.BackButton
 import com.nikitakrapo.birthdays.design.components.PasswordTextField
 import com.nikitakrapo.birthdays.registration.RegistrationComponent
 import com.nikitakrapo.birthdays.registration.RegistrationComponentPreview
 import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 import strings.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RegistrationScreen(
     modifier: Modifier = Modifier,
@@ -75,15 +71,6 @@ internal fun RegistrationScreen(
             )
             .imePadding(),
     ) {
-        TopAppBar(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .zIndex(1f),
-            title = {},
-            navigationIcon = {
-                BackButton(onClick = component::onBackClicked)
-            }
-        )
         Column(
             modifier = modifier
                 .fillMaxSize()

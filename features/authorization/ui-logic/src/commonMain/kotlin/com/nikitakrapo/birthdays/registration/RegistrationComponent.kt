@@ -15,7 +15,6 @@ interface RegistrationComponent {
     fun onPasswordTextChanged(text: String)
     fun onSelectBirthdayClicked()
     fun onRegisterClicked()
-    fun onBackClicked()
 
     sealed interface RegistrationDialog {
 

@@ -35,6 +35,6 @@ struct LoginScreen: View {
             Button(action: { component.onDoneClicked() }, label: {
                 Text("Done")
             })
-        }
+        }.padding()
     }
 }

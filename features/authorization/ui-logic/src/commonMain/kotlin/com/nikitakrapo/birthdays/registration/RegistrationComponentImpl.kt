@@ -24,7 +24,6 @@ import kotlinx.serialization.Serializable
 
 internal class RegistrationComponentImpl(
     componentContext: ComponentContext,
-    private val navigateBack: () -> Unit,
 ): RegistrationComponent, ComponentContext by componentContext {
 
     private val coroutineScope = coroutineScope()
@@ -133,10 +132,6 @@ internal class RegistrationComponentImpl(
                 }
             }
         }
-    }
-
-    override fun onBackClicked() {
-        navigateBack()
     }
 
     @Serializable
