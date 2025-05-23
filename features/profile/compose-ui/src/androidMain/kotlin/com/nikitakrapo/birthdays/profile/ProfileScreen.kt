@@ -38,8 +38,8 @@ import strings.R
 
 @Composable
 fun ProfileScreen(
-    modifier: Modifier = Modifier,
     component: ProfileComponent,
+    modifier: Modifier = Modifier,
 ) {
     val state by component.state.collectAsState()
     val showLogoutDialog by component.showLogoutDialog.collectAsState()

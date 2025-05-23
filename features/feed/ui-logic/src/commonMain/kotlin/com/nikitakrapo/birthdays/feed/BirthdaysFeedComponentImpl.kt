@@ -20,6 +20,7 @@ import kotlinx.datetime.toLocalDateTime
 
 class BirthdaysFeedComponentImpl(
     componentContext: ComponentContext,
+    private val openAddBirthday: () -> Unit,
 ) : BirthdaysFeedComponent, ComponentContext by componentContext {
 
     private val coroutineScope = coroutineScope()
@@ -48,8 +49,8 @@ class BirthdaysFeedComponentImpl(
         fetchBirthdays()
     }
 
-    override fun onDateSelected(date: LocalDate) {
-        val birthdays = (state.value as? BirthdaysFeedScreenState.Loaded)?.birthdays ?: return
+    override fun onAddClicked() {
+        openAddBirthday()
     }
 
     override fun onBirthdayClicked(birthday: Birthday) {

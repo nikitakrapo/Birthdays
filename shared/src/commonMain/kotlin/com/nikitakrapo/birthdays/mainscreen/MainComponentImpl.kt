@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
+import com.nikitakrapo.birthdays.AddBirthdayComponentImpl
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponentImpl
 import com.nikitakrapo.birthdays.model.ProfileInfo
 import com.nikitakrapo.birthdays.profile.ProfileComponentImpl
@@ -48,6 +49,14 @@ class MainComponentImpl(
             MainConfig.BirthdaysFeed -> MainComponent.MainChild.BottomBarChild.BirthdaysFeed(
                 component = BirthdaysFeedComponentImpl(
                     componentContext = componentContext,
+                    openAddBirthday = {
+                        navigation.bringToFront(MainConfig.AddBirthday)
+                    }
+                ),
+            )
+            MainConfig.AddBirthday -> MainComponent.MainChild.AddBirthday(
+                component = AddBirthdayComponentImpl(
+                    componentContext = componentContext,
                 ),
             )
             MainConfig.Wishlist -> MainComponent.MainChild.BottomBarChild.Wishlist(
@@ -80,6 +89,9 @@ class MainComponentImpl(
 
         @Serializable
         data object BirthdaysFeed : MainConfig
+
+        @Serializable
+        data object AddBirthday : MainConfig
 
         @Serializable
         data object Wishlist : MainConfig

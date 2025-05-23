@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.datetime.LocalDate
 
 object BirthdaysFeedComponentPreview : BirthdaysFeedComponent {
 
@@ -23,6 +22,6 @@ object BirthdaysFeedComponentPreview : BirthdaysFeedComponent {
         ))
     }
 
-    override fun onDateSelected(date: LocalDate) = Unit
+    override fun onAddClicked() = Unit
     override fun onBirthdayClicked(birthday: Birthday) = Unit
 }

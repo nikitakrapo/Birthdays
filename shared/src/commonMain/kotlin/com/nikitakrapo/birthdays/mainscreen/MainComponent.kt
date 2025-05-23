@@ -2,6 +2,7 @@ package com.nikitakrapo.birthdays.mainscreen
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import com.nikitakrapo.birthdays.AddBirthdayComponent
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponent
 import com.nikitakrapo.birthdays.profile.ProfileComponent
 import com.nikitakrapo.birthdays.profile.ProfileEditComponent
@@ -27,6 +28,8 @@ interface MainComponent {
             class Wishlist(val component: Unit) : BottomBarChild
             class Profile(val component: ProfileComponent) : BottomBarChild
         }
+
+        class AddBirthday(val component: AddBirthdayComponent) : MainChild
 
         class ProfileEdit(val component: ProfileEditComponent) : MainChild
 

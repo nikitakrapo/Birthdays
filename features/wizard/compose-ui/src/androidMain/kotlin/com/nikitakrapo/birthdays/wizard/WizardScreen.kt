@@ -12,8 +12,8 @@ import com.nikitakrapo.birthdays.theme.BirthdaysTheme
 
 @Composable
 fun WizardScreen(
-    modifier: Modifier = Modifier,
     component: WizardComponent,
+    modifier: Modifier = Modifier,
 ) {
     val dialogSlot by component.dialogSlot.collectAsState()
 

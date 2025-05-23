@@ -42,6 +42,7 @@ kotlin {
                 api(projects.features.authorization.uiLogic)
                 api(projects.features.profile.uiLogic)
                 api(projects.features.feed.uiLogic)
+                api(projects.features.addBirthday.uiLogic)
                 api(projects.features.cloudMessaging)
                 api(projects.features.utils.platform)
                 api(libs.decompose)

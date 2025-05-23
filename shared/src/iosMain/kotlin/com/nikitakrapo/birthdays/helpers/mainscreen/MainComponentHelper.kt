@@ -26,6 +26,7 @@ val MainComponent.selectedTab: BottomBarItem?
                 index = ProfileIndex,
                 instance = instance,
             )
+            is MainComponent.MainChild.AddBirthday,
             is MainComponent.MainChild.ProfileEdit,
             is MainComponent.MainChild.Wizard -> null
         }

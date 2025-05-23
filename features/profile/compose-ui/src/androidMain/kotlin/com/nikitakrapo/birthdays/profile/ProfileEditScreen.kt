@@ -41,8 +41,8 @@ import strings.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileEditScreen(
-    modifier: Modifier = Modifier,
     component: ProfileEditComponent,
+    modifier: Modifier = Modifier,
 ) {
     val state by component.state.collectAsState()
     val dialogSlot by component.dialogSlot.collectAsState()

@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.birthdays.AddBirthdayScreen
 import com.nikitakrapo.birthdays.design.components.BottomBarItem
 import com.nikitakrapo.birthdays.design.components.BottomNavigationBar
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedScreen
@@ -46,9 +47,15 @@ fun MainScreen(
         ) {
             when (val instance = it.instance) {
                 is MainChild.BottomBarChild.BirthdaysFeed -> BirthdaysFeedScreen(
+                    component = instance.component,
                     modifier = Modifier
                         .statusBarsPadding(),
+                )
+
+                is MainChild.AddBirthday -> AddBirthdayScreen(
                     component = instance.component,
+                    modifier = Modifier
+                        .statusBarsPadding(),
                 )
 
                 is MainChild.BottomBarChild.Wishlist -> Box(
@@ -59,20 +66,20 @@ fun MainScreen(
                 }
 
                 is MainChild.BottomBarChild.Profile -> ProfileScreen(
+                    component = instance.component,
                     modifier = Modifier
                         .statusBarsPadding(),
-                    component = instance.component,
                 )
 
                 is MainChild.ProfileEdit -> ProfileEditScreen(
+                    component = instance.component,
                     modifier = Modifier
                         .statusBarsPadding(),
-                    component = instance.component,
                 )
 
                 is MainChild.Wizard -> WizardScreen(
-                    modifier = Modifier,
                     component = instance.component,
+                    modifier = Modifier,
                 )
             }
         }

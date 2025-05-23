@@ -13,7 +13,7 @@ internal class FakeBirthdaysPagingSource : PagingSource<Int, Birthday>() {
         delay(3000)
         val pageNumber = params.key ?: 0
         val prevKey = if (pageNumber > 0) pageNumber - 1 else null
-        val nextKey = if (pageNumber < 11) pageNumber + 1 else null
+        val nextKey = if (pageNumber < 2) pageNumber + 1 else null
         return LoadResult.Page(
             data = List(if (nextKey != null) 15 else 5) {
                 birthday(month = pageNumber + 1)

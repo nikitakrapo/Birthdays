@@ -6,7 +6,7 @@
     <string name="birthdays">Birthdays</string>
     <string name="profile">Profile</string>
     <string name="cd_overflow_menu">More</string>
-    <string name="cd_add_trip">Add trip</string>
+    <string name="cd_add_birthday">Add birthday</string>
     <string name="cd_back">Go back</string>
     <string name="login_login">Login</string>
     <string name="login_create_new_account">Create new account?</string>
