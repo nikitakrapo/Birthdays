@@ -20,6 +20,6 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.birthdays.add.ui-logic"
+    namespace = "com.nikitakrapo.birthdays.add.ui_logic"
     moduleConfigurationPlugin.configureAndroidDefaults()
 }

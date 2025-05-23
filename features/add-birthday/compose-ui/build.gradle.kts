@@ -19,7 +19,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nikitakrapo.birthdays.add.compose-ui"
+    namespace = "com.nikitakrapo.birthdays.add.compose_ui"
     moduleConfigurationPlugin.configureAndroidDefaults()
     moduleConfigurationPlugin.configureCompose()
 }
