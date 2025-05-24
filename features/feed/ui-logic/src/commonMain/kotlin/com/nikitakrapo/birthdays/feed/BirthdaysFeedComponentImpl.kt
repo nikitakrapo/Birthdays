@@ -1,6 +1,7 @@
 package com.nikitakrapo.birthdays.feed
 
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import com.arkivanov.decompose.ComponentContext
