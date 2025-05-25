@@ -7,7 +7,6 @@ import com.nikitakrapo.birthdays.network.result.fold
 import com.nikitakrapo.birthdays.remote.BirthdaysApi
 
 internal class BirthdaysPagingSource(
-    private val uid: String,
     private val birthdaysApi: BirthdaysApi,
 ) : PagingSource<Int, Birthday>() {
 
@@ -15,7 +14,6 @@ internal class BirthdaysPagingSource(
         val pageNumber = params.key ?: 0
 
         val response = birthdaysApi.getBirthdays(
-            uid = uid,
             page = pageNumber,
             pageSize = params.loadSize
         )

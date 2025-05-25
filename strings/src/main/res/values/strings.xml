@@ -8,6 +8,8 @@
     <string name="cd_overflow_menu">More</string>
     <string name="cd_add_birthday">Add birthday</string>
     <string name="cd_back">Go back</string>
+    <string name="name_label">Friend\'s name</string>
+    <string name="birthday_date_label">Birthday date</string>
     <string name="login_login">Login</string>
     <string name="login_create_new_account">Create new account?</string>
     <string name="login_title">Log in to Monke Birthdays</string>

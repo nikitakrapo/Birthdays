@@ -8,10 +8,12 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.AddBirthdayComponentImpl
+import com.nikitakrapo.birthdays.di.Di
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponentImpl
 import com.nikitakrapo.birthdays.model.ProfileInfo
 import com.nikitakrapo.birthdays.profile.ProfileComponentImpl
 import com.nikitakrapo.birthdays.profile.ProfileEditComponentImpl
+import com.nikitakrapo.birthdays.repositories.birthdays.BirthdaysRepository
 import com.nikitakrapo.birthdays.utils.decompose.asStateFlow
 import com.nikitakrapo.birthdays.wizard.WizardComponentImpl
 import kotlinx.serialization.Serializable
@@ -57,6 +59,10 @@ class MainComponentImpl(
             MainConfig.AddBirthday -> MainComponent.MainChild.AddBirthday(
                 component = AddBirthdayComponentImpl(
                     componentContext = componentContext,
+                    repository = Di.inject<BirthdaysRepository>().value,
+                    closeScreen = {
+                        navigation.pop()
+                    }
                 ),
             )
             MainConfig.Wishlist -> MainComponent.MainChild.BottomBarChild.Wishlist(
