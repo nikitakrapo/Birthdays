@@ -14,6 +14,7 @@ kotlin {
                 implementation(projects.features.di)
                 implementation(projects.features.utils.decompose)
                 implementation(libs.decompose)
+                implementation(libs.bundles.mvikotlin)
             }
         }
     }

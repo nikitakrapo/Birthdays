@@ -1,6 +1,7 @@
 package com.nikitakrapo.birthdays.feed
 
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import com.arkivanov.decompose.ComponentContext
@@ -32,6 +33,7 @@ class BirthdaysFeedComponentImpl(
     override val state = stateFlow.asStateFlow()
 
     override val birthdaysPagingDataState: Flow<PagingData<BirthdayFeedListItem>> = birthdaysRepository.getBirthdaysPaging()
+        .cachedIn(coroutineScope)
         .map { pagingData -> pagingData.map { BirthdayFeedListItem.BirthdayItem(it) } }
         .map { pagingData ->
             pagingData.insertSeparators { prevItem, currItem ->

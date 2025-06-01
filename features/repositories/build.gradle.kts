@@ -13,6 +13,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.paging)
+                api(libs.kotlin.datetime)
                 api(projects.features.modelsDto)
                 api(projects.features.authorization.api)
                 api(projects.features.network)
