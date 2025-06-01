@@ -12,6 +12,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(libs.multiplatformSettings)
                 implementation(libs.napier)
                 implementation(libs.koin)
             }

@@ -5,5 +5,5 @@ import com.nikitakrapo.birthdays.account.FirebaseAccountManager
 import org.koin.dsl.module
 
 internal val authorizationModule = module {
-    single<AccountManager> { FirebaseAccountManager() }
+    single<AccountManager> { FirebaseAccountManager(userRepository = get()) }
 }

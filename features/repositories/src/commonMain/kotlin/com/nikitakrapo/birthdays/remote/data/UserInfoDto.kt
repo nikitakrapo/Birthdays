@@ -1,12 +1,11 @@
-package com.nikitakrapo.birthdays.account.models
+package com.nikitakrapo.birthdays.remote.data
 
-import kotlinx.datetime.LocalDate
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User(
+internal data class UserInfoDto(
     @SerialName("uid") val uid: String,
     @SerialName("displayName") val displayName: String,
-    @SerialName("birthdayDate") val birthdayDate: LocalDate,
+    @SerialName("birthdayDate") val birthdayDate: String,
 )

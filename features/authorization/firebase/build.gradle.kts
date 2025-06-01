@@ -20,8 +20,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.authorization.api)
+                api(projects.features.repositories)
+                api(projects.features.network)
+                implementation(projects.features.utils.platform)
                 implementation(projects.features.di)
                 implementation(projects.features.utils.coroutines)
+                implementation(libs.multiplatformSettings)
                 implementation(libs.kotlin.coroutines)
                 implementation(libs.napier)
                 implementation(libs.kotlin.datetime)

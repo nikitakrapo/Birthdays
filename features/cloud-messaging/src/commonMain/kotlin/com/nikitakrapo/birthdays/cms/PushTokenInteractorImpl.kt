@@ -1,6 +1,7 @@
 package com.nikitakrapo.birthdays.cms
 
 import com.nikitakrapo.birthdays.di.Di
+import com.nikitakrapo.birthdays.platform.createSettings
 import com.nikitakrapo.birthdays.platform.getDeviceId
 import com.nikitakrapo.birthdays.utils.coroutines.onIo
 import com.russhwolf.settings.set
@@ -13,7 +14,7 @@ class PushTokenInteractorImpl(
     private val httpClient: HttpClient,
 ) : PushTokenInteractor {
 
-    private val pushTokenSettings = pushTokenSettings(Di.get())
+    private val pushTokenSettings = createSettings("push_token", platformContext = Di.get())
 
     override suspend fun sendTokenToServer(): Unit = onIo {
         val request = PushTokenUpdateRequest(

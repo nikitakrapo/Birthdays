@@ -15,7 +15,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -56,13 +55,9 @@ fun AuthLandingScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            TextButton(
-                onClick = component::onSkipClicked,
-            ) {
-                Text(text = stringResource(R.string.register_anonymously))
-            }
+            Spacer(modifier = Modifier.weight(1f))
+
             FilledTonalButton(
                 onClick = component::onLoginClicked,
             ) {

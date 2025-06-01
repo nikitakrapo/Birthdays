@@ -1,6 +1,7 @@
 plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
+    alias(libs.plugins.kotlinSerialization)
     id("birthdays.module-config")
 }
 
@@ -21,6 +22,7 @@ kotlin {
             dependencies {
                 implementation(projects.features.di)
                 implementation(libs.kotlin.coroutines)
+                implementation(libs.kotlin.serialization)
                 implementation(libs.napier)
                 implementation(libs.kotlin.datetime)
                 implementation(libs.firebase.auth.kmp)

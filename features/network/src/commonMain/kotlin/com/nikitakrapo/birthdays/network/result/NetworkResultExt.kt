@@ -1,5 +1,7 @@
 package com.nikitakrapo.birthdays.network.result
 
+import io.ktor.http.parsing.ParseException
+
 suspend fun <T : Any> wrapWithNetworkResult(action: suspend () -> TripsBackendResponse<T>): NetworkResult<T> {
     return try {
         val result = action().result
@@ -44,9 +46,16 @@ inline fun <R, T : Any> NetworkResult<T>.fold(
     }
 }
 
-fun <T : Any, R : Any> NetworkResult<T>.map(mapper: (T) -> R): NetworkResult<R> {
+fun <T : Any, R : Any> NetworkResult<T>.map(mapper: (T) -> R?): NetworkResult<R> {
     return when (this) {
-        is NetworkResult.Success -> NetworkResult.Success(mapper(data))
+        is NetworkResult.Success -> {
+            val mapResult: R? = mapper(data)
+            if (mapResult != null) {
+                NetworkResult.Success(mapResult)
+            } else {
+                NetworkResult.Error(ParseException("Unable to parse $data"))
+            }
+        }
         is NetworkResult.Error -> NetworkResult.Error(exception)
     }
 }

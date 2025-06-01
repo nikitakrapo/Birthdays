@@ -13,5 +13,4 @@ object AuthLandingComponentPreview : AuthLandingComponent {
     override val state = MutableStateFlow(stateInstance)
 
     override fun onLoginClicked() = Unit
-    override fun onSkipClicked() = Unit
 }

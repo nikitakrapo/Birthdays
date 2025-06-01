@@ -10,6 +10,4 @@ interface AuthLandingComponent {
     val state: StateFlow<LandingScreenState>
 
     fun onLoginClicked()
-
-    fun onSkipClicked()
 }
