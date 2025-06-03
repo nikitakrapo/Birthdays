@@ -65,8 +65,10 @@ class MainComponentImpl(
                     componentContext = componentContext,
                     repository = Di.inject<BirthdaysRepository>().value,
                     closeScreen = {
-                        feedRefreshTrigger.triggerRefresh()
                         navigation.pop()
+                    },
+                    onBirthdayAdded = {
+                        feedRefreshTrigger.triggerRefresh()
                     },
                 ),
             )

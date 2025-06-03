@@ -16,11 +16,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 class BirthdaysFeedComponentImpl(
     componentContext: ComponentContext,
@@ -56,32 +51,11 @@ class BirthdaysFeedComponentImpl(
             }
         }
 
-    init {
-        fetchBirthdays()
-    }
-
     override fun onAddClicked() {
         openAddBirthday()
     }
 
     override fun onBirthdayClicked(birthday: Birthday) {
         TODO("Not yet implemented")
-    }
-
-    private fun fetchBirthdays() {
-        coroutineScope.launch {
-            val birthdaysResult = Result.success<List<Birthday>>(emptyList())
-            birthdaysResult.fold(
-                onSuccess = {
-                    stateFlow.value = BirthdaysFeedScreenState.Loaded(
-                        initialDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date,
-                        startDate = LocalDate(2024, 1, 1),
-                        endDate = LocalDate(2026, 1, 1),
-                        birthdays = it,
-                    )
-                },
-                onFailure = { TODO() },
-            )
-        }
     }
 }

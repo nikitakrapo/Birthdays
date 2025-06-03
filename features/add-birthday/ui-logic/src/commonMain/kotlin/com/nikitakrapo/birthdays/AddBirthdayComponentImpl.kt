@@ -22,6 +22,7 @@ class AddBirthdayComponentImpl(
     componentContext: ComponentContext,
     private val repository: BirthdaysRepository,
     private val closeScreen: () -> Unit,
+    private val onBirthdayAdded: () -> Unit,
 ) : AddBirthdayComponent, ComponentContext by componentContext {
 
     private val scope = coroutineScope()
@@ -36,7 +37,10 @@ class AddBirthdayComponentImpl(
     init {
         store.labels.collectIn(scope) {
             when (it) {
-                Label.BirthdayAddSucceeded -> closeScreen()
+                Label.BirthdayAddSucceeded -> {
+                    onBirthdayAdded()
+                    closeScreen()
+                }
                 Label.BirthdayAddFailed -> {}
             }
         }
