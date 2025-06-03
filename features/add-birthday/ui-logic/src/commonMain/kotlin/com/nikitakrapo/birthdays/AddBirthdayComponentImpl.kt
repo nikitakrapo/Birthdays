@@ -36,9 +36,8 @@ class AddBirthdayComponentImpl(
     init {
         store.labels.collectIn(scope) {
             when (it) {
-                // TODO: handle labels correctly
                 Label.BirthdayAddSucceeded -> closeScreen()
-                Label.BirthdayAddFailed -> closeScreen()
+                Label.BirthdayAddFailed -> {}
             }
         }
     }

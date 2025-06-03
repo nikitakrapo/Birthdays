@@ -102,6 +102,18 @@ fun AddBirthdayScreen(
                     .fillMaxWidth(),
             )
 
+            state.error?.let { errorText ->
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = errorText,
+                    style = BirthdaysTheme.typography.bodyLarge,
+                    color = BirthdaysTheme.colorScheme.error,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                )
+            }
+
             if (source.collectIsPressedAsState().value) {
                 datePickerShown = true
             }

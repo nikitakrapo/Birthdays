@@ -9,10 +9,13 @@ import com.nikitakrapo.birthdays.di.Di
 import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.repositories.birthdays.BirthdaysRepository
 import com.nikitakrapo.birthdays.utils.decompose.coroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
@@ -21,6 +24,7 @@ import kotlinx.datetime.toLocalDateTime
 
 class BirthdaysFeedComponentImpl(
     componentContext: ComponentContext,
+    refreshTrigger: BirthdaysFeedRefreshTrigger,
     private val openAddBirthday: () -> Unit,
 ) : BirthdaysFeedComponent, ComponentContext by componentContext {
 
@@ -32,8 +36,13 @@ class BirthdaysFeedComponentImpl(
         MutableStateFlow(BirthdaysFeedScreenState.Loading)
     override val state = stateFlow.asStateFlow()
 
-    override val birthdaysPagingDataState: Flow<PagingData<BirthdayFeedListItem>> = birthdaysRepository.getBirthdaysPaging()
-        .cachedIn(coroutineScope)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override val birthdaysPagingDataState: Flow<PagingData<BirthdayFeedListItem>> = refreshTrigger.triggers
+        .onStart { emit(Unit) }
+        .flatMapConcat {
+            birthdaysRepository.getBirthdaysPaging()
+                .cachedIn(coroutineScope)
+        }
         .map { pagingData -> pagingData.map { BirthdayFeedListItem.BirthdayItem(it) } }
         .map { pagingData ->
             pagingData.insertSeparators { prevItem, currItem ->

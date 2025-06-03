@@ -10,7 +10,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.features.repositories)
+                api(projects.features.repositories)
                 implementation(projects.features.di)
                 implementation(projects.features.utils.decompose)
                 implementation(libs.decompose)

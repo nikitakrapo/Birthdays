@@ -11,7 +11,8 @@ class AddBirthdayComponentPreview(
         isAddActive = true,
         yearRange = 1900..2025,
         lastSelectableDatetimeMs = LocalDate(2025,5,25)
-            .toEpochDays().toLong() * 86_400_000
+            .toEpochDays().toLong() * 86_400_000,
+        error = "Some error occured\nDetails: ...",
     ),
 ) : AddBirthdayComponent {
     override val state = MutableStateFlow(state)

@@ -10,6 +10,7 @@ import com.arkivanov.decompose.value.Value
 import com.nikitakrapo.birthdays.AddBirthdayComponentImpl
 import com.nikitakrapo.birthdays.di.Di
 import com.nikitakrapo.birthdays.feed.BirthdaysFeedComponentImpl
+import com.nikitakrapo.birthdays.feed.BirthdaysFeedRefreshTrigger
 import com.nikitakrapo.birthdays.model.ProfileInfo
 import com.nikitakrapo.birthdays.profile.ProfileComponentImpl
 import com.nikitakrapo.birthdays.profile.ProfileEditComponentImpl
@@ -19,8 +20,10 @@ import com.nikitakrapo.birthdays.wizard.WizardComponentImpl
 import kotlinx.serialization.Serializable
 
 class MainComponentImpl(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
 ) : MainComponent, ComponentContext by componentContext {
+
+    private val feedRefreshTrigger = BirthdaysFeedRefreshTrigger()
 
     private val navigation = StackNavigation<MainConfig>()
 
@@ -51,6 +54,7 @@ class MainComponentImpl(
             MainConfig.BirthdaysFeed -> MainComponent.MainChild.BottomBarChild.BirthdaysFeed(
                 component = BirthdaysFeedComponentImpl(
                     componentContext = componentContext,
+                    refreshTrigger = feedRefreshTrigger,
                     openAddBirthday = {
                         navigation.bringToFront(MainConfig.AddBirthday)
                     }
@@ -61,8 +65,9 @@ class MainComponentImpl(
                     componentContext = componentContext,
                     repository = Di.inject<BirthdaysRepository>().value,
                     closeScreen = {
+                        feedRefreshTrigger.triggerRefresh()
                         navigation.pop()
-                    }
+                    },
                 ),
             )
             MainConfig.Wishlist -> MainComponent.MainChild.BottomBarChild.Wishlist(

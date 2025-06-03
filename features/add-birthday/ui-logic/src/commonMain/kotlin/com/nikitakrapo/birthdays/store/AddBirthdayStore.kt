@@ -38,6 +38,8 @@ private sealed interface Msg {
     data class NameTextChanged(val text: String) : Msg
 
     data class DateChanged(val date: LocalDate) : Msg
+
+    data class ErrorStateChanged(val error: String?) : Msg
 }
 
 internal fun AddBirthdayStore(
@@ -52,6 +54,7 @@ internal fun AddBirthdayStore(
             isAddActive = false,
             yearRange = 1900..Clock.System.now().toLocalDateTime(TimeZone.UTC).year,
             lastSelectableDatetimeMs = Clock.System.now().toEpochMilliseconds(),
+            error = null,
         ),
         executorFactory = {
             ExecutorImpl(
@@ -75,7 +78,10 @@ private class ExecutorImpl(
                     val result = repository.addBirthday(state.nameText, state.date)
                     when (result) {
                         is NetworkResult.Success -> publish(Label.BirthdayAddSucceeded)
-                        is NetworkResult.Error -> publish(Label.BirthdayAddFailed)
+                        is NetworkResult.Error -> {
+                            dispatch(Msg.ErrorStateChanged(result.exception.message))
+                            publish(Label.BirthdayAddFailed)
+                        }
                     }
                 }
             }
@@ -93,6 +99,9 @@ private object ReducerImpl : Reducer<AddBirthdayState, Msg> {
             is Msg.DateChanged -> copy(
                 date = msg.date,
                 isAddActive = nameText.isNotBlank()
+            )
+            is Msg.ErrorStateChanged -> copy(
+                error = msg.error,
             )
         }
     }

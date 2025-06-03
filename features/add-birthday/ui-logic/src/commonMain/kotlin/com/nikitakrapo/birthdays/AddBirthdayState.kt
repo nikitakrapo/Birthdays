@@ -10,6 +10,7 @@ data class AddBirthdayState(
     val isAddActive: Boolean,
     val yearRange: IntRange,
     val lastSelectableDatetimeMs: Long,
+    val error: String?,
 ) {
 
     val dateText = date?.format(LocalDate.Format {
