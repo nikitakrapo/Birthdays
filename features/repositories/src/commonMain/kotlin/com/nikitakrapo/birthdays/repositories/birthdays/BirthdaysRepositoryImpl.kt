@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.network.result.NetworkResult
+import com.nikitakrapo.birthdays.network.result.map
 import com.nikitakrapo.birthdays.remote.BirthdaysApi
 import com.nikitakrapo.birthdays.remote.data.AddBirthdayDto
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +22,7 @@ internal class BirthdaysRepositoryImpl(
                 displayDate = date.format(LocalDate.Formats.ISO),
                 displayName = name,
             )
-        )
+        ).map { }
     }
 
     override fun getBirthdaysPaging(): Flow<PagingData<Birthday>> {

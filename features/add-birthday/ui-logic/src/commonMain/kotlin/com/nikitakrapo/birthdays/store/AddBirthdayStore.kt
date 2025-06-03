@@ -79,7 +79,7 @@ private class ExecutorImpl(
                     when (result) {
                         is NetworkResult.Success -> publish(Label.BirthdayAddSucceeded)
                         is NetworkResult.Error -> {
-                            dispatch(Msg.ErrorStateChanged(result.exception.message))
+                            dispatch(Msg.ErrorStateChanged(result.message))
                             publish(Label.BirthdayAddFailed)
                         }
                     }

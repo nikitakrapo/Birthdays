@@ -19,6 +19,7 @@ object HttpClientProvider {
     private val tokenProvider by Di.inject<AuthorizationTokenProvider>()
 
     fun httpClient() = httpClient {
+        expectSuccess = true
         install(DefaultRequest) {
             url(NetworkConfig.baseUrl)
             header(HttpHeaders.ContentType, ContentType.Application.Json)

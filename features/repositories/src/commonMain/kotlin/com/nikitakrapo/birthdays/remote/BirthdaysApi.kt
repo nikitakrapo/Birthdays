@@ -5,6 +5,7 @@ import com.nikitakrapo.birthdays.model.Birthday
 import com.nikitakrapo.birthdays.network.result.NetworkResult
 import com.nikitakrapo.birthdays.network.result.getNetworkResult
 import com.nikitakrapo.birthdays.remote.data.AddBirthdayDto
+import com.nikitakrapo.birthdays.remote.data.AddBirthdayFullBirthdayDto
 import com.nikitakrapo.birthdays.remote.data.BirthdaysResponseDto
 import com.nikitakrapo.birthdays.utils.coroutines.onIo
 import com.nikitakrapo.network.utils.paging.PagingQueryParameters
@@ -22,12 +23,15 @@ internal class BirthdaysApi(
 
     suspend fun addLocalBirthday(
         request: AddBirthdayDto,
-    ): NetworkResult<Unit> = onIo {
+    ): NetworkResult<Birthday> = onIo {
         return@onIo getNetworkResult {
             httpClient.post("birthdays") {
                 setBody(request)
             }
-            Unit
+                .body<AddBirthdayFullBirthdayDto>()
+                .birthday
+                .toBirthday()
+                ?: throw SerializationException()
         }
     }
 

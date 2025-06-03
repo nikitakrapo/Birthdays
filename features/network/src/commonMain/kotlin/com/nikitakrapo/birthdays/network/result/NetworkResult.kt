@@ -8,5 +8,6 @@ sealed interface NetworkResult<out T : Any> {
 
     class Error(
         val exception: Exception,
+        val message: String = exception.message ?: "Unknown exception",
     ) : NetworkResult<Nothing>
 }
