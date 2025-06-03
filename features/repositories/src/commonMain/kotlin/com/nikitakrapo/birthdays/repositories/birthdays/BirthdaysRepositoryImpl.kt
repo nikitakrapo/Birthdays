@@ -18,16 +18,16 @@ internal class BirthdaysRepositoryImpl(
     override suspend fun addBirthday(name: String, date: LocalDate): NetworkResult<Unit> {
         return api.addLocalBirthday(
             request = AddBirthdayDto(
-                date = date.format(LocalDate.Formats.ISO),
-                name = name,
+                displayDate = date.format(LocalDate.Formats.ISO),
+                displayName = name,
             )
         )
     }
 
     override fun getBirthdaysPaging(): Flow<PagingData<Birthday>> {
         return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = { FakeBirthdaysPagingSource() },
+            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+            pagingSourceFactory = { BirthdaysPagingSource(birthdaysApi = api) },
         ).flow
     }
 }

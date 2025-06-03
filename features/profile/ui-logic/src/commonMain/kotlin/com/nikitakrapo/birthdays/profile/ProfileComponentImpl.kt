@@ -59,9 +59,9 @@ class ProfileComponentImpl(
 
     private fun fetchUserData() {
         coroutineScope.launch {
-            val uid = accountManager.user.value?.uid
-            val profileInfo = uid?.let { profileRepository.getProfileInfo(it) }?.getOrNull()
-            if (profileInfo != null) {
+            val user = accountManager.user.value
+            if (user != null) {
+                val profileInfo = ProfileInfo(username = user.displayName, birthday = user.birthdayDate)
                 stateFlow.value = ProfileScreenState.Loaded(profileInfo)
             } else {
                 stateFlow.value = ProfileScreenState.Error

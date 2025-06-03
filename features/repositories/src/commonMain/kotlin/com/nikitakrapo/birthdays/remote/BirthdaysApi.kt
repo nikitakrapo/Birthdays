@@ -32,15 +32,14 @@ internal class BirthdaysApi(
     }
 
     suspend fun getBirthdays(
-        page: Int,
-        pageSize: Int,
+        offset: Int,
+        count: Int,
     ): NetworkResult<List<Birthday>> = onIo {
         return@onIo getNetworkResult {
             val response = httpClient.get("birthdays") {
-                parameter(PagingQueryParameters.PAGE, page)
-                parameter(PagingQueryParameters.PAGE_SIZE, pageSize)
-            }
-                .body<BirthdaysResponseDto>()
+                parameter(PagingQueryParameters.OFFSET, offset)
+                parameter(PagingQueryParameters.COUNT, count)
+            }.body<BirthdaysResponseDto>()
             response.birthdays?.mapNotNull { it.toBirthday() }
                 ?: throw SerializationException()
         }

@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 class BirthdayDto(
     @SerialName("id") val id: String?,
-    @SerialName("title") val title: String?,
-    @SerialName("date") val date: String?,
-    @SerialName("imageUrl") val imageUrl: String?,
+    @SerialName("displayName") val displayName: String?,
+    @SerialName("birthdayDate") val birthdayDate: String?,
 )

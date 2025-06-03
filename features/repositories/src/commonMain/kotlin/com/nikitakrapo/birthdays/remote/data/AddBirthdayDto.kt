@@ -1,8 +1,10 @@
 package com.nikitakrapo.birthdays.remote.data
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class AddBirthdayDto(
-    @SerialName("date") val date: String,
-    @SerialName("name") val name: String,
+    @SerialName("displayName") val displayName: String,
+    @SerialName("birthdayDate") val displayDate: String,
 )

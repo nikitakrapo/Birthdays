@@ -12,10 +12,11 @@ internal class BirthdaysPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Birthday> {
         val pageNumber = params.key ?: 0
+        val offset = pageNumber * params.loadSize
 
         val response = birthdaysApi.getBirthdays(
-            page = pageNumber,
-            pageSize = params.loadSize
+            offset = offset,
+            count = params.loadSize
         )
 
         val data = response.fold(
